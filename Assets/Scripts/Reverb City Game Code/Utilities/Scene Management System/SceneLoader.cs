@@ -1,0 +1,109 @@
+﻿using System.Threading.Tasks;
+using DreamersInc.ServiceLocatorSystem;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace DreamersInc.SceneManagement
+{
+    public class SceneLoader : MonoBehaviour
+    {
+        [SerializeField] private Image loadingBar;
+        [SerializeField] private float fillSpeed = .5f;
+        [SerializeField] private Canvas loadingCanvas;
+        [SerializeField] private Camera loadingCamera;
+        [SerializeField] private Camera mainCamera;
+        [SerializeField] private SceneGroup[] sceneGroups;
+        
+        private float targetProgress;
+        private bool isLoading;
+
+        private readonly SceneGroupManager manager = new SceneGroupManager();
+        
+
+        private async void Start()
+        {
+            ServiceLocator.Global.Register(this.GetType(), this);
+            #if UNITY_EDITOR
+            await LoadSceneGroup(1);
+          //  await ServiceLocator.Global.Get<MainMenuManager>().Init();
+            
+            #else
+            await LoadSceneGroup(0);
+            await ServiceLocator.Global.Get<MainMenuManager>().Init();
+            
+#endif
+            
+        }
+
+        private void Update()
+        {
+            if(isLoading)return;
+            float currentFillAmount = loadingBar.fillAmount;
+            float progressDiff = Mathf.Abs(currentFillAmount - targetProgress);
+            float dynamicFillSpeed = progressDiff * fillSpeed;
+            loadingBar.fillAmount = Mathf.Lerp(currentFillAmount, targetProgress, Time.deltaTime * dynamicFillSpeed);
+            
+        }
+        
+        private void OnDestroy()
+        {
+            if(ServiceLocator.Global.TryGet<SceneLoader>(out _ )) 
+                ServiceLocator.Global.Unregister(GetType(), this);
+        }
+        
+        public async Task LoadSceneGroup(int index)
+        {  
+            loadingBar.fillAmount = 0f;
+            targetProgress = 1.0f;
+
+            if (index < 0 || index >= sceneGroups.Length)
+            {
+                Debug.LogError($"Invalid scene group index {index}");
+                return;
+            }
+
+            LoadingProgress progress = new LoadingProgress();
+            progress.Progressed += target => targetProgress = Mathf.Max(target, targetProgress);
+            
+            EnableLoadingCanvas();
+            ServiceLocator.Global.Get<LevelChanger>().FadeIn();
+            await manager.LoadScenes(sceneGroups[index], progress);
+            ServiceLocator.Global.Get<LevelChanger>().FadeOutManually();
+            await Task.Delay(1000);
+            EnableLoadingCanvas(false);
+            
+            
+        }
+
+
+
+
+        public async Task ReplaceSceneGroup(int index)
+        {
+            loadingBar.fillAmount = 0f;
+            targetProgress = 1.0f;
+
+            if (index < 0 || index >= sceneGroups.Length)
+            {
+                Debug.LogError($"Invalid scene group index {index}");
+                return;
+            }
+
+            LoadingProgress progress = new LoadingProgress();
+            progress.Progressed += target => targetProgress = Mathf.Max(target, targetProgress);
+            
+            EnableLoadingCanvas();
+            await manager.ReplaceActiveScene(sceneGroups[index], progress,false);
+            EnableLoadingCanvas(false);
+            
+        }
+        void EnableLoadingCanvas(bool enable = true)
+        {
+            isLoading = enable;
+            loadingCanvas.gameObject.SetActive(enable);
+            loadingCanvas.gameObject.SetActive(enable);
+            loadingCamera.gameObject.SetActive(enable);
+            mainCamera.gameObject.SetActive(!enable);
+        }
+    }
+}
