@@ -101,10 +101,9 @@ namespace DreamersInc.SceneManagement
         void EnableLoadingCanvas(bool enable = true)
         {
             isLoading = enable;
-            loadingCanvas.gameObject.SetActive(enable);
-            loadingCanvas.gameObject.SetActive(enable);
             loadingCamera.gameObject.SetActive(enable);
             mainCamera.gameObject.SetActive(!enable);
+            
         }
     }
 }
