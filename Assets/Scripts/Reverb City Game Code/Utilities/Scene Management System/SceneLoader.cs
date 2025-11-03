@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DreamersInc.ReverbCity.GameCode;
 using DreamersInc.ServiceLocatorSystem;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,8 +25,8 @@ namespace DreamersInc.SceneManagement
         {
             ServiceLocator.Global.Register(this.GetType(), this);
             #if UNITY_EDITOR
-            await LoadSceneGroup(1);
-          //  await ServiceLocator.Global.Get<MainMenuManager>().Init();
+            await LoadSceneGroup(0);
+            await ServiceLocator.Global.Get<MainMenuManager>().Init();
             
             #else
             await LoadSceneGroup(0);
@@ -68,7 +69,7 @@ namespace DreamersInc.SceneManagement
             EnableLoadingCanvas();
             ServiceLocator.Global.Get<LevelChanger>().FadeIn();
             await manager.LoadScenes(sceneGroups[index], progress);
-            ServiceLocator.Global.Get<LevelChanger>().FadeOutManually();
+            await ServiceLocator.Global.Get<LevelChanger>().FadeOutManually();
             await Task.Delay(1000);
             EnableLoadingCanvas(false);
             

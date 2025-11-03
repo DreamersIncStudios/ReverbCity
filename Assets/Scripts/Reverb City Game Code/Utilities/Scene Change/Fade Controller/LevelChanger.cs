@@ -20,6 +20,12 @@ public class LevelChanger : MonoBehaviour
 
         animator = GetComponent<Animator>();
     }
+    private void OnDisable()
+    {
+    
+        ServiceLocator.Global.Unregister(this.GetType(), this);
+
+    }
 
     private void Start()
     {
