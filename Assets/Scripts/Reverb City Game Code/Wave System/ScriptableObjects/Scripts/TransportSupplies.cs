@@ -1,42 +1,34 @@
+using System;
+using DreamersInc.ReverbCity;
 using DreamersInc.WaveSystem.interfaces;
 using UnityEngine;
 namespace DreamersInc.WaveSystem
 {
     [CreateAssetMenu(menuName = "Wave Rules/Create TimeRule", fileName = "TransportSupplies", order = 0)]
     
-    public class TransportSupplies: ScriptableObject, IWaveRule
+    public class TransportSupplies: WaveRule
     {
-        [Header("Reward")] 
-        [SerializeField] private uint credits, exp;
-        public uint Credits => credits;
-        public uint Exp => exp;
-        public void Init()
+
+        public override void Reset()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+            
         }
-        public void Execute()
+
+        public override void Tick()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
-        public void Reset()
+
+        public override bool IsFinished { get; }
+        public override void PassedTrial()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
-        public void PassedTrial()
+
+        public override void FailTrial()
         {
-            throw new System.NotImplementedException();
-        }
-        public void FailTrial()
-        {
-            throw new System.NotImplementedException();
-        }
-        public bool Pass
-        {
-            get;
-        }
-        public uint DifficultyRate
-        {
-            get;
+            throw new NotImplementedException();
         }
     }
 }

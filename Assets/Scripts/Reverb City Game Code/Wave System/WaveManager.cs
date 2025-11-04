@@ -1,33 +1,31 @@
-using Unity.Collections;
-using Unity.Entities;
-using UnityEngine;
+using System.Collections.Generic;
+using DreamersInc.WaveSystem.interfaces;
+using ImprovedTimers;
 
 namespace DreamersInc.ReverbCity
 {
-
-
-    public struct WaveManager : IComponentData
+    public static class WaveManager
     {
-        public uint WaveCount;
-        public uint Failures;
-        public Difficulty Difficulty;
-        public bool IsGameOver => Failures >= (uint)( Difficulty);
-        public uint WaveNumber;
-        public WaveRules WaveRules;
-
-    }
-    
-    public enum Difficulty
-    {
-        Easy = 7,
-        Normal = 5,
-        Hard = 2
-    }
-
-    public struct WaveRules
-    {
+        private static readonly List<WaveRule> waves;
+        private static readonly List<WaveRule> sweepWave;
         
-        public int SpawnRate;
-        public int SpawnQty;
+        public static void RegisterWave(WaveRule wave) => waves.Add(wave);
+        public static void DeregisterWave(WaveRule wave) => waves.Remove(wave);
+
+        public static void UpdateWaves()
+        {
+        }
+
+        public static void Clear()
+        {
+            sweepWave.RefreshWith(waves);
+            foreach (var timer in sweepWave) {
+                timer.Dispose();
+            }
+            
+            waves.Clear();
+            sweepWave.Clear();
+        }
     }
+
 }
