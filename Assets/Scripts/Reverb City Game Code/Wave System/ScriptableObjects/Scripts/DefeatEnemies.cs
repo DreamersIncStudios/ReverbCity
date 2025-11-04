@@ -7,6 +7,13 @@ namespace DreamersInc.WaveSystem
 
     public class DefeatEnemies : ScriptableObject, IWaveRule
     {
+        [Header("Rule Criteria")]
+        [SerializeField] private int enemyCount;
+        [Header("Reward")] 
+        [SerializeField] private uint credits, exp;
+        public uint Credits => credits;
+        public uint Exp => exp;
+        
         public void Init()
         {
             throw new System.NotImplementedException();

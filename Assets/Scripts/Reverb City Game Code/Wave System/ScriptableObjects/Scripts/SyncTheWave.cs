@@ -5,6 +5,10 @@ namespace DreamersInc.WaveSystem
     [CreateAssetMenu(menuName = "Wave Rules/Create SyncTheWave", fileName = "SyncTheWave", order = 0)]
     public class SyncTheWave: ScriptableObject, IWaveRule
     {
+        [Header("Reward")] 
+        [SerializeField] private uint credits, exp;
+        public uint Credits => credits;
+        public uint Exp => exp;
         public void Init()
         {
             throw new System.NotImplementedException();

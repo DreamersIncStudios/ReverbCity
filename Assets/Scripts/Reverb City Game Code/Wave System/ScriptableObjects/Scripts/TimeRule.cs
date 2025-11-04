@@ -8,7 +8,6 @@ namespace DreamersInc.WaveSystem
     public class TimeRule : ScriptableObject, IWaveRule
     {
         [SerializeField] float Duration;
-        private uint exp, credits;
         public bool Pass { get; private set;}
         public uint DifficultyRate => difficultyRate;
         [Range(1,50)]
@@ -16,6 +15,11 @@ namespace DreamersInc.WaveSystem
         private uint difficultyRate;
 
         private CountdownTimer countdown;
+
+        [Header("Reward")] 
+        [SerializeField] private uint credits, exp;
+        public uint Credits => credits;
+        public uint Exp => exp;
         public void Init()
         {
             

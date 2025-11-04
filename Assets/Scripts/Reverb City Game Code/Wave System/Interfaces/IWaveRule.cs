@@ -6,6 +6,8 @@ namespace DreamersInc.WaveSystem.interfaces
 
     public interface IWaveRule
     {
+        uint Credits { get; }
+        uint Exp{ get; }
         public void Init();
         public void Execute();
         public void Reset();
