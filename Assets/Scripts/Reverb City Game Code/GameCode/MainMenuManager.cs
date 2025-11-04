@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using DreamersInc.SceneManagement;
 using DreamersInc.ServiceLocatorSystem;
 using UnityEngine;
 namespace DreamersInc.ReverbCity.GameCode
@@ -20,6 +21,10 @@ namespace DreamersInc.ReverbCity.GameCode
         {
 
             ServiceLocator.Global.Get<LevelChanger>().FadeIn();
+        }
+        public async void StartGame()
+        {
+            await ServiceLocator.Global.Get<SceneLoader>().LoadSceneGroup(1);
         }
     }
 }

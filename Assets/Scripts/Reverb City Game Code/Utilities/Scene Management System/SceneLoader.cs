@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DreamersInc.ReverbCity;
 using DreamersInc.ReverbCity.GameCode;
 using DreamersInc.ServiceLocatorSystem;
 using UnityEngine;
@@ -72,7 +73,8 @@ namespace DreamersInc.SceneManagement
             await ServiceLocator.Global.Get<LevelChanger>().FadeOutManually();
             await Task.Delay(1000);
             EnableLoadingCanvas(false);
-            
+            if (ServiceLocator.Global.TryGet<ILevelManager>(out var levelManager))
+                await levelManager.Init();
             
         }
 
