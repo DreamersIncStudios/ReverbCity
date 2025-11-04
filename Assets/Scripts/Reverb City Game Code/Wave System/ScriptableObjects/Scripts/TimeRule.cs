@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace DreamersInc.WaveSystem
 {
+    [CreateAssetMenu(menuName = "Wave Rules/Create TimeRule", fileName = "TimeRule", order = 0)]
     public class TimeRule : ScriptableObject, IWaveRule
     {
         [SerializeField] float Duration;
@@ -48,6 +49,5 @@ namespace DreamersInc.WaveSystem
         {
             // get Manager Singleton Failures ++
         }
-
     }
 }
