@@ -8,7 +8,6 @@ namespace DreamersInc.ReverbCity
         
         public async Task Init()
         {
-
             ServiceLocator.Global.Get<LevelChanger>().FadeIn();
         }
         

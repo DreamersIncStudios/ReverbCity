@@ -6,7 +6,7 @@ namespace DreamersInc.Trackers
         {
         }
 
-        public override void Increment()
+        public override void Increment(int value = 1)
         {
             if (IsCounting && CurrentValue>0)
                 CurrentValue--;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine.UIElements;
 
-namespace DreamersInc.MoonShot.GameCode.UI
+namespace DreamersInc.ReverbCity.GameCode.UI
 {
     public  static class UIExtensionMethods
     {

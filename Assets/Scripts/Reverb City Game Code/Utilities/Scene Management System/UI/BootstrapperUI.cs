@@ -2,7 +2,7 @@ using System.Collections;
 using DreamersInc.UIToolkitHelpers;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static DreamersInc.MoonShot.GameCode.UI.UIExtensionMethods;
+using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
 public class BootstrapperUI : UIManager
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created

@@ -11,7 +11,7 @@ namespace DreamersInc.Trackers
          
         }
 
-        public override void Increment()
+        public override void Increment(int value = 1)
         {
             if (!timer.IsRunning)
             {
@@ -19,7 +19,7 @@ namespace DreamersInc.Trackers
             }
             timer.Reset();
             timer.Start();
-            CurrentValue++;
+            CurrentValue+=value;
             
         }
 

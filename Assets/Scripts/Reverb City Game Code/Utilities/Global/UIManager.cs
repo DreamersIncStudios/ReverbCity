@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using DreamersInc.MoonShot.GameCode.UI;
+using DreamersInc.ReverbCity.GameCode.UI;
 using JetBrains.Annotations;
 using Unity.Entities;
 using UnityEngine;
@@ -27,8 +27,8 @@ namespace DreamersInc.UIToolkitHelpers
             Root = document.rootVisualElement;
 
             Root.styleSheets.Add(_styleSheet);
-            var em = World.DefaultGameObjectInjectionWorld.EntityManager;
-            runningEntitySingleton = em.CreateEntityQuery(typeof(RunningTag)).GetSingletonEntity();
+            //var em = World.DefaultGameObjectInjectionWorld.EntityManager;
+            //runningEntitySingleton = em.CreateEntityQuery(typeof(RunningTag)).GetSingletonEntity();
             yield return new WaitForEndOfFrame();
         }
 

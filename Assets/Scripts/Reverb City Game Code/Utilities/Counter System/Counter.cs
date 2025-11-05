@@ -58,7 +58,7 @@ namespace DreamersInc.Trackers{
         }
 
 
-        public abstract void Increment();
+        public abstract void Increment(int value = 1);
         public abstract bool IsFinished { get; }
         
         public void Resumer() => IsCounting = true;
