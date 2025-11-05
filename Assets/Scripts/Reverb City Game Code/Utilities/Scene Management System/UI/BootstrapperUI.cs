@@ -3,7 +3,7 @@ using DreamersInc.UIToolkitHelpers;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
-public class BootstrapperUI : UIManager
+public class BootstrapperUI : UIController
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
