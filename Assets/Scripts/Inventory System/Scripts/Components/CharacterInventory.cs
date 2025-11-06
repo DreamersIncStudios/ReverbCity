@@ -1,7 +1,7 @@
 using Dreamers.InventorySystem.Base;
 using Stats.Entities;
 using Dreamers.InventorySystem.Interfaces;
-using DreamersInc.MoonShot.GameCode.UI;
+
 using DreamersInc.ServiceLocatorSystem;
 using Unity.Entities;
 using UnityEngine;
@@ -10,8 +10,7 @@ namespace Dreamers.InventorySystem
 {
     public class CharacterInventory : IComponentData
     {
-        public PauseController pauseController;
-        public PauseView view;
+
         public uint Gold { get; private set; }
 
         public InventoryBase Inventory;
@@ -47,13 +46,7 @@ namespace Dreamers.InventorySystem
             Inventory.Init(inventory);
             Equipment = new();
             Equipment.Init(equipment, ref player, entity);
-            view = ServiceLocator.Global.Get<PauseView>();
-            pauseController = new PauseController.Builder(view, ref player)
-                .WithStartingWeapon(equipment.EquippedWeapons)
-               .WithStartingArmor(equipment.EquippedArmors)
-                .WithStartingInventory(inventory.ItemsInInventory)
-                .WithPlayer(ref player)
-                .Build();
+
 
         }
 
