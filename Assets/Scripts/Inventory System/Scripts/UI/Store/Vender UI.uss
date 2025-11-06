@@ -1,0 +1,126 @@
+:root{
+    --roboto-font-definition: url("project://database/Assets/Systems/Game Scripts/UI Elements/Fonts/RobotoCondensed-Regular.ttf");
+    --hypik-font: url("project://database/Assets/Systems/Game Scripts/UI Elements/Fonts/hypik.otf");
+    --magnetar-font: url("project://database/Assets/Systems/Game Scripts/UI Elements/Fonts/Magnetar.otf");
+
+}
+.hide {
+    display: none;
+    -unity-background-image-tint-color: rgb(248, 248, 248);
+}
+.Background{
+    flex-grow: 1;
+    width: auto;
+    height: auto;
+    max-height: none;
+    max-width: none;
+    background-color: rgba(53, 56, 78, 0.95);
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    border-width: 5px;
+    border-color: grey;
+    padding: 10px;
+}
+Label {
+    font-size: 36px;
+    -unity-font-style: bold;
+    -unity-font-definition: var(--roboto-font-definition);
+}
+.containerG{
+    flex-grow: 1;
+    width: 1500px;
+    height: 80%;
+    max-height: none;
+    max-width: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.5);
+    -unity-font-definition: var(--roboto-font-definition);
+    font-size: 36px;
+    padding: 10px;
+}
+.container{
+    flex-grow: 1;
+    width: auto;
+    height: auto;
+    max-height: none;
+    max-width: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.5);
+    -unity-font-definition: var(--roboto-font-definition);
+
+}
+
+.panel{
+    border-radius: 3px;
+    border-width: 5px;
+    border-color: grey;
+}
+.optionPanel{
+    width: 30%;
+}
+.inventory{
+
+}
+
+.cartPanel{
+max-width: 30%;
+}
+
+.slotContainer {
+    flex-grow: 1;
+    padding-top: 20px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+}
+
+
+.slot {
+    width: 90px;
+    height: 90px;
+    margin: 4px;
+}
+
+.slotFrame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90px;
+    height: 90px;
+    -unity-slice-scale: 0.8;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: grey;
+}
+
+.slotIcon {
+    padding: 4px;
+    flex-shrink: 0;
+    flex-grow: 1;
+}
+
+.stackCount {
+    position: absolute;
+    color: white;
+    bottom: 0;
+    right: 0;
+    font-size: 18px;
+}
+
+.ghostIcon {
+    visibility: hidden;
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: none;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: grey;
+}
