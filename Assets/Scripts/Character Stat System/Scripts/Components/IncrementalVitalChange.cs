@@ -39,24 +39,25 @@ namespace Stats
     {
         protected override void OnUpdate()
         {
-            Entities.WithStructuralChanges().WithAll<BaseCharacterComponent>().ForEach(
-                (Entity entity, DynamicBuffer<IncrementalVitalChange> changes) =>
+            foreach (var (changes, entity)
+                     in SystemAPI.Query<DynamicBuffer<IncrementalVitalChange>>().WithEntityAccess())
+            {
+                foreach (var vitalChange in changes)
                 {
-                    foreach (var vitalChange in changes)
+                    switch (vitalChange.Vital)
                     {
-                        switch (vitalChange.Vital)
-                        {
-                            case VitalName.Health:
-                                EntityManager.AddComponentData(entity, new AdjustHealth(value: vitalChange.ChangeRate, Entity.Null));//Todo add entity ref
-                                break;
-                            case VitalName.Mana:
-                                EntityManager.AddComponentData(entity, new AdjustMana(value: vitalChange.ChangeRate));
-                                break;
-                        }
+                        case VitalName.Health:
+                            EntityManager.AddComponentData(entity, new AdjustHealth(value: vitalChange.ChangeRate, Entity.Null)); //Todo add entity ref
+                            break;
+                        case VitalName.Mana:
+                            EntityManager.AddComponentData(entity, new AdjustMana(value: vitalChange.ChangeRate));
+                            break;
                     }
-                    
-                }).Run();
-      
+                }
+
+            }
         }
+
     }
+    
 }
