@@ -9,3 +9,25 @@
     align-items: center;
 
 }
+.PopUpPanel{
+    width: 60%;
+    border-width: 10px;
+    border-color: grey;
+    justify-content: center;
+    align-self: center;
+}
+.Header{
+    color: floralwhite;
+    -unity-font-style: bold;
+    font-size: 60;
+}
+
+.Body{
+    color: floralwhite;
+    font-size: 25;
+}
+.StartButton{
+    height: 75px;
+    width: 300px;
+    font-size: 40;
+}

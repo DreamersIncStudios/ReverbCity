@@ -316,6 +316,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UISceneManager
   document: {fileID: 1229409018}
   _styleSheet: {fileID: 7433441132597879392, guid: 84db7862e66c9b542aa77da671ca9017, type: 3}
+  headerText: 'Welcome To Reverb City '
+  bodyText: talksjdlkf
+  buttonText: 'Start '
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -163,6 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21dae12f13a4d6ba72ed41c554c17c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DreamersInc.ReverbCity.ReverbLevelManager
+  headerText: 'Welcome To Reverb City '
+  bodyText: 
+  buttonText: Start
 --- !u!1 &418168306
 GameObject:
   m_ObjectHideFlags: 0
