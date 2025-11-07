@@ -22,9 +22,7 @@ public class LevelChanger : MonoBehaviour
     }
     private void OnDisable()
     {
-    
         ServiceLocator.Global.Unregister(this.GetType(), this);
-
     }
 
     private void Start()

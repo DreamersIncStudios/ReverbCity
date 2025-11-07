@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab3fe1e95a8943d6a99c23c7f78d0ff, type: 3}
   m_Name: 5 min wave
   m_EditorClassIdentifier: Assembly-CSharp::DreamersInc.WaveSystem.TimeRule
-  WaveDuration: 0
+  WaveDuration: 5

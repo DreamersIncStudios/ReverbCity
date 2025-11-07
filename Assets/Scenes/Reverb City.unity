@@ -166,6 +166,7 @@ MonoBehaviour:
   headerText: 'Welcome To Reverb City '
   bodyText: 
   buttonText: Start
+  TestRule: {fileID: 11400000, guid: 5ee5e4b13c7e24958bd8d349b0955cf5, type: 2}
 --- !u!1 &367489995
 GameObject:
   m_ObjectHideFlags: 0

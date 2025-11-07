@@ -43,12 +43,13 @@ namespace DreamersInc.ReverbCity
         {
             var hudDoc = UIManager.GetUI(UIType.HUD);
             var popUpPanel = Create<PopUpPanel>();
-            var panel = Create<WaveUIPanel>();
+            var panel = Create<WaveUIPanel>("hide");
             hudDoc.rootVisualElement.Add(popUpPanel);
             hudDoc.rootVisualElement.Add(panel);
             buttonAction += () =>
             {
                 TestRule.Start();
+                panel.RemoveFromClassList("hide");
             };
             popUpPanel.SetText(headerText, bodyText);
             popUpPanel.SetButton(buttonText, buttonAction);

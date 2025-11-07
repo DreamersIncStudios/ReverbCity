@@ -31,3 +31,13 @@
     width: 300px;
     font-size: 40;
 }
+WaveUIPanel{
+    width: 20%;
+    height: 100%;
+    align-self: flex-end;
+    margin: 20px;
+}
+.WaveInfo{
+    color: white;
+    font-size: 20;
+}
