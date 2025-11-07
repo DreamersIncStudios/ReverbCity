@@ -4,12 +4,12 @@ using DreamersInc.WaveSystem.interfaces;
 using UnityEngine;
 namespace DreamersInc.WaveSystem
 {
-    [CreateAssetMenu(menuName = "Wave Rules/Create TimeRule", fileName = "TransportSupplies", order = 0)]
+    [CreateAssetMenu(menuName = "Wave Rules/Create transport", fileName = "TransportSupplies", order = 0)]
     
     public class TransportSupplies: WaveRule
     {
 
-        public override void Reset()
+        public override void ResetWave()
         {
             throw new NotImplementedException();
             

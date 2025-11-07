@@ -19,7 +19,7 @@ namespace DreamersInc.WaveSystem
             timer.Start();
         }
 
-        public override void Reset()
+        public override void ResetWave()
         {
             timer.Reset();
             

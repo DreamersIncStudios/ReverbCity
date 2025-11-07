@@ -9,7 +9,7 @@ namespace DreamersInc.WaveSystem
 {
     public class ScoreHitRating:WaveRule
     {
-        public override void Reset()
+        public override void ResetWave()
         {
             throw new NotImplementedException();
             

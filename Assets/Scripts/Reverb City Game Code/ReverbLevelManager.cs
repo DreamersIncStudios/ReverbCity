@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DreamersInc.ReverbCity.UI;
 using DreamersInc.ServiceLocatorSystem;
 using DreamersInc.UIToolkitHelpers;
+using DreamersInc.WaveSystem.interfaces;
 using UnityEngine;
 using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
 namespace DreamersInc.ReverbCity
@@ -19,6 +20,8 @@ namespace DreamersInc.ReverbCity
         private string buttonText;
         [SerializeField]
         private Action buttonAction;
+
+        public WaveRule TestRule;
         public async Task Init()
         {
             ServiceLocator.Global.Get<LevelChanger>().FadeIn();
@@ -40,8 +43,13 @@ namespace DreamersInc.ReverbCity
         {
             var hudDoc = UIManager.GetUI(UIType.HUD);
             var popUpPanel = Create<PopUpPanel>();
+            var panel = Create<WaveUIPanel>();
             hudDoc.rootVisualElement.Add(popUpPanel);
-            
+            hudDoc.rootVisualElement.Add(panel);
+            buttonAction += () =>
+            {
+                TestRule.Start();
+            };
             popUpPanel.SetText(headerText, bodyText);
             popUpPanel.SetButton(buttonText, buttonAction);
         }

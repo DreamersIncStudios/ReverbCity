@@ -5,12 +5,11 @@ using UnityEngine;
 namespace DreamersInc.WaveSystem
 {
     
-    [CreateAssetMenu(menuName = "Wave Rules/Create TimeRule", fileName = "Defeat Enemy", order = 0)]
 
     public class DefeatEnemies : WaveRule
     {
      
-        public override void Reset()
+        public override void ResetWave()
         {
             throw new NotImplementedException();
             

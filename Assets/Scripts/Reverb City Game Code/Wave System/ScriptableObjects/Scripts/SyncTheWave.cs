@@ -8,7 +8,7 @@ namespace DreamersInc.WaveSystem
     public class SyncTheWave: WaveRule
     {
    
-        public override void Reset()
+        public override void ResetWave()
         {
             throw new NotImplementedException();
             

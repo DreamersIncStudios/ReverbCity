@@ -32,7 +32,7 @@ namespace DreamersInc.WaveSystem.interfaces
         public void Resume() => IsRunning = true;
         public void Pause() => IsRunning = false;
 
-        public abstract void Reset();
+        public abstract void ResetWave();
         
         public abstract void Tick();
         public abstract bool IsFinished { get; }
