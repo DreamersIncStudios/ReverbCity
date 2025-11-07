@@ -14,7 +14,7 @@ namespace DreamersInc.WaveSystem.interfaces
         public Action OnWaveEnd = delegate { };
         public bool IsRunning { get; private set; }
 
-        public void Start()
+        public virtual void Start()
         {
             if(IsRunning) return;
             IsRunning = true;

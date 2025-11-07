@@ -10,18 +10,27 @@ namespace DreamersInc.WaveSystem
     public class TimeRule : WaveRule
     {
       
+        [SerializeField] float WaveDuration;
+        private CountdownTimer timer;
+        public override void Start()
+        {
+            base.Start();
+            timer = new CountdownTimer(WaveDuration);
+            timer.Start();
+        }
+
         public override void Reset()
         {
-            throw new NotImplementedException();
+            timer.Reset();
             
         }
 
         public override void Tick()
         {
-            throw new NotImplementedException();
+            
         }
 
-        public override bool IsFinished { get; }
+        public override bool IsFinished => timer.IsFinished;
         public override void PassedTrial()
         {
             throw new NotImplementedException();
