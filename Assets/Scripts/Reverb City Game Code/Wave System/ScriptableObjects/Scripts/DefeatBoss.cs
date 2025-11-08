@@ -1,7 +1,6 @@
 using System;
-using DreamersInc.ReverbCity;
 using DreamersInc.WaveSystem.interfaces;
-using UnityEngine;
+
 namespace DreamersInc.WaveSystem
 {
     public class DefeatBoss: WaveRule

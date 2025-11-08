@@ -1,7 +1,6 @@
 using System;
 using DreamersInc.ReverbCity;
 using DreamersInc.UIToolkitHelpers;
-using DreamersInc.Utils;
 using DreamersInc.WaveSystem.interfaces;
 using ImprovedTimers;
 using Unity.Properties;
@@ -17,11 +16,14 @@ namespace DreamersInc.WaveSystem
       
         [SerializeField] float WaveDuration;
         private CountdownTimer timer;
-
+        [SerializeField] float SpawnInterval;
+        private float interval;
+        [SerializeField] int spawnCount;
         [CreateProperty] public string WaveDurationProperty => timer.IsFinished ? "Wave Completed" : $"Wave  Time Remaining {timer.CurrentTime}";
-        public override void Start()
+        public override void StartWave(uint waveLevel)
         {
-            base.Start();
+            base.StartWave(waveLevel);
+            WaveLevel = waveLevel; 
             timer = new CountdownTimer(WaveDuration*60);
             timer.Start();
             var hudUI = UIManager.GetUI(UIType.HUD);
@@ -44,7 +46,16 @@ namespace DreamersInc.WaveSystem
 
         public override void Tick()
         {
-            
+            if (IsRunning && interval > 0)
+            {
+                interval -= Time.deltaTime;
+            }
+
+            if (IsRunning && interval <= 0)
+            {
+                Debug.Log($"Spawn {spawnCount* WaveLevel}");
+                interval = SpawnInterval/WaveLevel;
+            }
         }
 
         public override bool IsFinished => timer.IsFinished;

@@ -13,11 +13,13 @@ namespace DreamersInc.WaveSystem.interfaces
         public Action OnWaveStart = delegate { };
         public Action OnWaveEnd = delegate { };
         public bool IsRunning { get; private set; }
+        protected uint WaveLevel;
 
-        public virtual void Start()
+        public virtual void StartWave(uint waveLevel)
         {
             if(IsRunning) return;
             IsRunning = true;
+            WaveLevel = waveLevel;
             WaveManager.RegisterWave(this);
             OnWaveStart.Invoke();
         }

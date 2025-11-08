@@ -48,7 +48,7 @@ namespace DreamersInc.ReverbCity
             hudDoc.rootVisualElement.Add(panel);
             buttonAction += () =>
             {
-                TestRule.Start();
+                TestRule.StartWave(2);
                 panel.RemoveFromClassList("hide");
             };
             popUpPanel.SetText(headerText, bodyText);
