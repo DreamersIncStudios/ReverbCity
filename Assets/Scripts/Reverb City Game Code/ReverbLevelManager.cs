@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DreamersInc.ReverbCity.GameCode;
 using DreamersInc.ReverbCity.UI;
 using DreamersInc.ServiceLocatorSystem;
 using DreamersInc.UIToolkitHelpers;
@@ -26,6 +27,11 @@ namespace DreamersInc.ReverbCity
         {
             ServiceLocator.Global.Get<LevelChanger>().FadeIn();
             await Task.Delay(2000);
+            var speakers = GameObject.FindObjectsByType<Speaker>(FindObjectsSortMode.None);
+            foreach (var speaker in speakers)
+            {
+                await speaker.Init();
+            }
             await CreateUI();
         }
         

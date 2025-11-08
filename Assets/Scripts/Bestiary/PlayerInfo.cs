@@ -8,5 +8,6 @@ namespace Bestiary
         public SerializableGuid Guid { get; set; }
         public uint Level => level;
         [SerializeField] private uint level;
+        [SerializeField] private GameObject prefab;
     }
 }
