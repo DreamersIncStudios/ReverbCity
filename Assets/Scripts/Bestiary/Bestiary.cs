@@ -21,6 +21,9 @@ namespace Bestiary
         static readonly List<CreatureInfo> CreatureInfos = new List<CreatureInfo>();
         static readonly List<StructureInfo> StructureInfos = new List<StructureInfo>();
         
+        static readonly Dictionary<uint, WaveInfo> NPCSpawnForWaves = new Dictionary<uint, WaveInfo>();
+        static readonly List<Entity> StructureEntities = new List<Entity>();
+        
         public static void AddPlayerInfo(PlayerInfo info) => PlayerInfos.Add(info);
         public static void AddCreatureInfo(CreatureInfo info) => CreatureInfos.Add(info);
         public static void AddStructureInfo(StructureInfo info) => StructureInfos.Add(info);
@@ -29,8 +32,6 @@ namespace Bestiary
         public static CreatureInfo GetCreatureInfo(SerializableGuid guid) => CreatureInfos.Find(x => x.Guid == guid);
         public static StructureInfo GetStructureInfo(SerializableGuid guid) => StructureInfos.Find(x => x.Guid == guid);
 
-        static readonly Dictionary<int, WaveInfo> NPCSpawnForWaves;
-        static readonly List<Entity> StructureEntities;
         static Entity playerEntity;
 
         
@@ -70,6 +71,11 @@ namespace Bestiary
             LoadDatabase();
             return Object.Instantiate( CreatureInfos.FirstOrDefault(creature => creature.Guid == id));
         }
+        public static CreatureInfo GetCreature()
+        {
+            LoadDatabase();
+            return Object.Instantiate( CreatureInfos[0]);
+        }
 
         public static bool TryGetCreature(SerializableGuid id, out CreatureInfo info)
         {
@@ -89,7 +95,7 @@ namespace Bestiary
         }
 
         
-        public static void RegisterNPCEnemy(int waveNumber, Entity entity)
+        public static void RegisterNPCEnemy(uint waveNumber, Entity entity)
         {
             if (NPCSpawnForWaves.TryGetValue(waveNumber, out var waveInfo))
             {
@@ -108,7 +114,7 @@ namespace Bestiary
         public static void RegisterStructure(Entity entity) => StructureEntities.Add(entity);
         public static void RegisterPlayer(Entity entity) => playerEntity = entity;
 
-        public static void DeregisterNPCEnemy(int waveNumber, Entity entity)
+        public static void DeregisterNPCEnemy(uint waveNumber, Entity entity)
         {
             if (NPCSpawnForWaves.TryGetValue(waveNumber, out var waveInfo))
             {

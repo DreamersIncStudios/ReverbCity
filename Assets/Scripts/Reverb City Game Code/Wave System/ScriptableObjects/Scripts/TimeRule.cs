@@ -1,4 +1,5 @@
 using System;
+using Bestiary;
 using DreamersInc.ReverbCity;
 using DreamersInc.UIToolkitHelpers;
 using DreamersInc.WaveSystem.interfaces;
@@ -7,6 +8,7 @@ using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
+using static Bestiary.Bestiary;
 
 namespace DreamersInc.WaveSystem
 {
@@ -53,8 +55,13 @@ namespace DreamersInc.WaveSystem
 
             if (IsRunning && interval <= 0)
             {
-                Debug.Log($"Spawn {spawnCount* WaveLevel}");
-                interval = SpawnInterval/WaveLevel;
+                for (int i = 0; i < spawnCount* WaveLevel; i++)
+                {
+                    var info = GetCreature();
+                    var entity = new CharacterBuilder(info.Name).Build();
+                    //RegisterNPCEnemy(WaveLevel,entity);
+                }
+                interval = SpawnInterval*60/WaveLevel;
             }
         }
 

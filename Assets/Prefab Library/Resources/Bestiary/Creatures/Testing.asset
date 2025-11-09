@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8d5aaf26d54b708aaf7ab042fed279, type: 3}
   m_Name: Testing
   m_EditorClassIdentifier: Assembly-CSharp::Bestiary.CreatureInfo
-  Name: e1cf8d83-64aa-4ca6-a064-c8175f03655b
+  Name: 2C6BC458474C577FA0DE5D8C3182D627
   guid:
-    Part1: 3788475779
-    Part2: 1285973162
-    Part3: 399008928
-    Part4: 1533346655
+    Part1: 745260120
+    Part2: 1196185471
+    Part3: 2698927500
+    Part4: 830658087
   level: 0
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 2699185704830635926, guid: 5aef8a887e1204d5bad50c9daeaed3ee, type: 3}
