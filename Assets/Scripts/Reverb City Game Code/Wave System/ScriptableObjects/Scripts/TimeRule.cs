@@ -8,7 +8,7 @@ using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
-using static Bestiary.Bestiary;
+using static Bestiary.BestiaryManager;
 
 namespace DreamersInc.WaveSystem
 {
@@ -57,9 +57,8 @@ namespace DreamersInc.WaveSystem
             {
                 for (int i = 0; i < spawnCount* WaveLevel; i++)
                 {
-                    var info = GetCreature();
-                    var entity = new CharacterBuilder(info.Name).Build();
-                    //RegisterNPCEnemy(WaveLevel,entity);
+                    SpawnNPC(new SerializableGuid(), Vector3.zero, 2);
+
                 }
                 interval = SpawnInterval*60/WaveLevel;
             }

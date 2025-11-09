@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using Sirenix.OdinInspector;
+using Stats;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,10 +12,10 @@ namespace Bestiary
         public SerializableGuid Guid => guid;
         public string Name;
        [SerializeField] private SerializableGuid guid;
-       public uint Level => level;
-        [SerializeField] private uint level;
-        public GameObject Prefab;
-        
+       public PlayerCharacterClass Stats=>stats;
+       [SerializeField] PlayerCharacterClass stats;
+        public GameObject Prefab=>prefab;
+        [SerializeField] GameObject prefab;
         
         [HorizontalGroup("ItemSplit", 0.5f), VerticalGroup("ItemSplit/Left"), Button(ButtonSizes.Large),
          GUIColor(0.4f, 0.8f, 1)]
@@ -28,5 +30,16 @@ namespace Bestiary
             GUIUtility.systemCopyBuffer = guid.ToHexString();
                 }
 
+    }
+
+    public partial class BestiaryManager
+    {
+        public static Task SpawnNPC(SerializableGuid guid, Vector3 position, uint waveLevel)
+        {
+            var info = GetCreature();
+            var entity = new CharacterBuilder(info.Name).Build();
+            RegisterNPCEnemy(waveLevel,entity);
+            return Task.CompletedTask;
+        }
     }
 }

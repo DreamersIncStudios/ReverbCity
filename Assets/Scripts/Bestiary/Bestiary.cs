@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Global.Component;
+using Stats;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
@@ -15,7 +16,7 @@ using SphereCollider = UnityEngine.SphereCollider;
 
 namespace Bestiary
 {
-    public static class Bestiary
+    public static partial class BestiaryManager
     {
         static readonly List<PlayerInfo> PlayerInfos = new List<PlayerInfo>();
         static readonly List<CreatureInfo> CreatureInfos = new List<CreatureInfo>();
@@ -126,15 +127,7 @@ namespace Bestiary
         {
             public List<Entity> Entity;
         }
-
-        public static bool SpawnNPC()
-        {
-            return false;
-        }
-        public static bool SpawnPlayer()
-        {
-            return false;
-        }
+        
         
         public static bool SpawnStructure()
         {
@@ -168,10 +161,9 @@ namespace Bestiary
             private GameObject model;
             private string tag;
             
-            public CharacterBuilder WithModel(GameObject go, Vector3 position, quaternion rot, string tagging,
-                out GameObject spawned)
+            public CharacterBuilder WithModel(GameObject go, Vector3 position, quaternion rot, string tagging)
             {
-                spawned = model = Object.Instantiate(go);
+                model = Object.Instantiate(go);
                 model.transform.position = position;
                 model.transform.rotation = rot;
 
@@ -280,7 +272,7 @@ namespace Bestiary
     public interface ICharacterInfo
     {
         SerializableGuid Guid { get; }
-        public uint Level { get; }
+        public PlayerCharacterClass Stats { get; }
 
     }
 }

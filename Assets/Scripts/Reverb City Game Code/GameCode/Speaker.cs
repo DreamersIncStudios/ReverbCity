@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Unity.Entities;
 using UnityEngine;
-using static Bestiary.Bestiary;
+using static Bestiary.BestiaryManager;
 namespace DreamersInc.ReverbCity.GameCode
 {
  
