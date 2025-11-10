@@ -596,6 +596,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DreamersInc.ReverbCity.GameCode.MainMenuManager
   canvas: {fileID: 180800433}
+  playerGuids:
+  - 28D521C84842556610FAA3B9366FC162
+  - 73DD519E42A5C6E8237E32A520B82651
 --- !u!43 &1042431501
 Mesh:
   m_ObjectHideFlags: 0

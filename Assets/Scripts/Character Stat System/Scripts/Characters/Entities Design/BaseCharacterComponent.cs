@@ -20,7 +20,7 @@ namespace Stats.Entities
         private ElementDamageModStat[] elementalDamageMods;
         public bool InPlay;
         public bool InvincibleMode;
-        public uint SpawnID;// { get; private set; }
+        public SerializableGuid SpawnID;// { get; private set; }
         [HideInInspector] public GameObject GORepresentative;
         [HideInInspector] public uint CharacterID;
         [Range(0, 9999)]

@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DreamersInc.ReverbCity.GameCode;
 using DreamersInc.ReverbCity.UI;
+using DreamersInc.SceneManagement;
 using DreamersInc.ServiceLocatorSystem;
 using DreamersInc.UIToolkitHelpers;
 using DreamersInc.WaveSystem.interfaces;
 using UnityEngine;
 using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
+using static Bestiary.BestiaryManager;
 namespace DreamersInc.ReverbCity
 {
     public class ReverbLevelManager : MonoBehaviour, ILevelManager
@@ -22,11 +25,17 @@ namespace DreamersInc.ReverbCity
         [SerializeField]
         private Action buttonAction;
 
+
+        [Header("Spawn Settings")]
+        [SerializeField] List<Transform> spawnPoints;
+        [Header("Wave Settings")]
         public WaveRule TestRule;
+        [SerializeField] float timeBetweenWaves;
         public async Task Init()
         {
+            await SpawnPlayer(GameMaster.GetPlayerGuid(), spawnPoints[0].position);
             ServiceLocator.Global.Get<LevelChanger>().FadeIn();
-            await Task.Delay(2000);
+            await Task.Delay(1000);
             var speakers = GameObject.FindObjectsByType<Speaker>(FindObjectsSortMode.None);
             foreach (var speaker in speakers)
             {

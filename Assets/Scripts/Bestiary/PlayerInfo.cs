@@ -46,9 +46,15 @@ namespace Bestiary
             var info = GetPlayerInfo(guid);
             var playerEntity = new CharacterBuilder(info.name).
                 WithModel(info.Prefab, position, Quaternion.identity, "Player").
+                WithEntityPhysics(info.PhysicsInfo, true).
+                WithStats(info.Stats,guid,2,info.Name).
+                WithMovement(info.Move,CreatureType.biped,false).
+                WithAnimation().
+                WithPlayerControl().
             Build();
             RegisterPlayer(playerEntity);
             return Task.CompletedTask;
         }
     }
+    public enum CreatureType { biped, quadruped, mecha, spirit, stationary, flying }
 }

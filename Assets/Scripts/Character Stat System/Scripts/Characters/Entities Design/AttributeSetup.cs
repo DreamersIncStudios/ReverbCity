@@ -12,7 +12,7 @@ namespace Stats.Entities
     public partial class BaseCharacterComponent : IComponentData
     {
 
-        public void SetupDataEntity(ICharacterData BaseStats, string name, uint Exp=0,uint spawnID = 0)
+        public void SetupDataEntity(ICharacterData BaseStats, string name, uint Exp=0,SerializableGuid spawnID = new SerializableGuid())
         {
             Init();
             Name = name;

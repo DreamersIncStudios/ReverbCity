@@ -12,5 +12,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3924fef06d4a179bf4a816178d5a6e, type: 3}
   m_Name: Skye
   m_EditorClassIdentifier: Assembly-CSharp::Bestiary.PlayerInfo
-  level: 0
-  prefab: {fileID: 0}
+  guid:
+    Part1: 1943884190
+    Part2: 1118160616
+    Part3: 595473061
+    Part4: 548939345
+  Name: 
+  stats:
+    level: 0
+    strength: 0
+    vitality: 0
+    awareness: 0
+    speed: 0
+    skill: 0
+    resistance: 0
+    concentration: 0
+    willPower: 0
+    charisma: 0
+    luck: 0
+    difficultyMod: 0
+    levelMod: 0
+  prefab: {fileID: 542105128857803620, guid: 566c49719cc2f564494e31beb468b65b, type: 3}
+  PhysicsInfo:
+    BelongsTo:
+      Category00: 0
+      Category01: 0
+      Category02: 0
+      Category03: 0
+      Category04: 0
+      Category05: 0
+      Category06: 0
+      Category07: 0
+      Category08: 0
+      Category09: 0
+      Category10: 0
+      Category11: 0
+      Category12: 0
+      Category13: 0
+      Category14: 0
+      Category15: 0
+      Category16: 0
+      Category17: 0
+      Category18: 0
+      Category19: 0
+      Category20: 0
+      Category21: 0
+      Category22: 0
+      Category23: 0
+      Category24: 0
+      Category25: 0
+      Category26: 0
+      Category27: 0
+      Category28: 0
+      Category29: 0
+      Category30: 0
+      Category31: 0
+    CollidesWith:
+      Category00: 0
+      Category01: 0
+      Category02: 0
+      Category03: 0
+      Category04: 0
+      Category05: 0
+      Category06: 0
+      Category07: 0
+      Category08: 0
+      Category09: 0
+      Category10: 0
+      Category11: 0
+      Category12: 0
+      Category13: 0
+      Category14: 0
+      Category15: 0
+      Category16: 0
+      Category17: 0
+      Category18: 0
+      Category19: 0
+      Category20: 0
+      Category21: 0
+      Category22: 0
+      Category23: 0
+      Category24: 0
+      Category25: 0
+      Category26: 0
+      Category27: 0
+      Category28: 0
+      Category29: 0
+      Category30: 0
+      Category31: 0
+  Move:
+    EquipResetTimer: 0
+    MovingTurnSpeed: 0
+    StationaryTurnSpeed: 0
+    JumpPower: 0
+    GravityMultiplier: 1.79
+    RunCycleLegOffset: 0
+    MoveSpeedMultiplier: 0
+    AnimSpeedMultiplier: 0
+    GroundCheckDistance: 0
+    CombatCapable: 0

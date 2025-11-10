@@ -277,7 +277,10 @@ MonoBehaviour:
   headerText: 'Welcome To Reverb City '
   bodyText: 
   buttonText: Start
+  spawnPoints:
+  - {fileID: 1351045443}
   TestRule: {fileID: 11400000, guid: 5ee5e4b13c7e24958bd8d349b0955cf5, type: 2}
+  timeBetweenWaves: 0
 --- !u!1 &367489995
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +292,7 @@ GameObject:
   - component: {fileID: 367489998}
   - component: {fileID: 367489997}
   - component: {fileID: 367489996}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -535,6 +538,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1351045442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1351045443}
+  m_Layer: 0
+  m_Name: Spawn Point 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1351045443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351045442}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2029651726
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,3 +706,4 @@ SceneRoots:
   - {fileID: 367489998}
   - {fileID: 566141053}
   - {fileID: 150885399}
+  - {fileID: 1351045443}
