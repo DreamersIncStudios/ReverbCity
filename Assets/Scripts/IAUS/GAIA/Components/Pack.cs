@@ -1,0 +1,192 @@
+using System;
+using System.Collections.Generic;
+using Stats.Entities;
+using Unity.Collections;
+using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Transforms;
+using UnityEngine;
+
+
+namespace DreamersIncStudio.GAIACollective
+{
+//Todo Make entire a builder or Factory for packs
+
+    public struct Pack : IComponentData
+    {
+        public bool Filled
+        {
+            get
+            {
+                if (Requirements.Length == 0)
+                {
+                    Debug.Log("no requirements");
+                    return true;
+                }
+
+                // Manual loop to get the sum of QtyInfo.x
+                var count = 0;
+                for (var i = 0; i < Requirements.Length; i++)
+                {
+                    count += Requirements[i].QtyInfo.x;
+                }
+
+                return count == MemberCount;
+            }
+        }
+
+        public FixedList128Bytes<PackRole> Requirements;
+        public FixedList512Bytes<SerializableGuid> LocationMapGuids;
+        public Entity LeaderEntity;
+        public float CohesionFactor;
+        public float TravelRadius => 55 * CohesionFactor;
+        public float SeparationFactor;
+        public float AlignmentFactor;
+        public float3 HerdCenter; // Central point for the herd
+        public int MemberCount;
+        public uint BiomeID;
+        public Role Role;
+        public PackState State;
+        public PackCommunication Communication;
+
+        private static int2 Need(int required, Size size) => new int2(required * Mod(size), 0);
+
+        private static int Mod(Size size)
+        {
+            return size switch
+            {
+                Size.small => 1,
+                Size.medium => 2,
+                Size.large => 3,
+                Size.huge => 4,
+                _ => throw new ArgumentOutOfRangeException(nameof(size), size, null)
+            };
+        }
+
+        public static Pack AssaultTeam(uint BiomeID, Size size, FixedList512Bytes<SerializableGuid> guids) => new Pack()
+        {
+            State = PackState.Spawned,
+            Requirements = new FixedList128Bytes<PackRole>()
+            {
+                new PackRole(Role.Recon, Need(2, size)),
+                new PackRole(Role.Combat, Need(5, size)),
+                new PackRole(Role.Scavengers, Need(1, size)),
+                new PackRole(Role.Transport, Need(0, size)),
+                new PackRole(Role.Acquisition, Need(0, size)),
+                new PackRole(Role.Support, Need(2, size))
+            },
+            CohesionFactor = 1.0f,
+            SeparationFactor = 2.0f,
+            AlignmentFactor = 0.5f,
+            BiomeID = BiomeID,
+            Role = Role.Combat,
+            LocationMapGuids = guids
+        };
+
+
+        public static Pack Support(uint BiomeID, Size size, FixedList512Bytes<SerializableGuid> guids) => new Pack()
+        {
+            State = PackState.Spawned,
+            Requirements = new FixedList128Bytes<PackRole>()
+            {
+                new PackRole(Role.Recon, Need(3, size)),
+                new PackRole(Role.Combat, Need(2, size)),
+                new PackRole(Role.Scavengers, Need(0, size)),
+                new PackRole(Role.Transport, Need(1, size)),
+                new PackRole(Role.Acquisition, Need(0, size)),
+                new PackRole(Role.Support, Need(3, size)),
+            },
+            CohesionFactor = 1.0f,
+            SeparationFactor = 2.0f,
+            AlignmentFactor = 0.5f,
+            BiomeID = BiomeID,
+            Role = Role.Support,
+            LocationMapGuids = guids
+        };
+    }
+
+    public struct PackMember : IComponentData
+    {
+        public Entity PackEntity;
+
+        public PackMember(Entity packEntity)
+        {
+            PackEntity = packEntity;
+        }
+    }
+
+    public struct PackRole
+    {
+        public Role Role;
+
+        /// <summary>
+        /// Represents the quantity information for a role: 
+        /// x = required amount, y = currently assigned amount.
+        /// </summary>
+        public int2 QtyInfo;
+
+        public PackRole(Role role, int2 qtyInfo)
+        {
+            Role = role;
+            QtyInfo = qtyInfo;
+        }
+    }
+
+    [InternalBufferCapacity(0)]
+    public struct PackList : IBufferElementData
+    {
+        public Entity PackMember;
+        public Role MemberRole;
+
+        public PackList(Entity entity, Role Role)
+        {
+            PackMember = entity;
+            MemberRole = Role;
+        }
+    }
+
+    public enum Role
+    {
+        Recon,
+        Combat,
+        Scavengers,
+        Transport,
+        Acquisition,
+        Support
+    }
+
+    public enum PackState
+    {
+        Spawned,
+        Filled,
+        LookingForMembers,
+        Disbanded,
+        Destroyed,
+        Active
+    }
+
+    public enum PackCommunication
+    {
+        LineOfSight, // Pack members only know about each other if they are in line of sight
+        LocalRadio, // Pack members know about each other if they are within a certain range
+        DispatchedRadio // Pack members know about each other
+    }
+    
+     public partial class AIStatLinkSystem : SystemBase
+        {
+            protected override void OnUpdate()
+            {
+               
+                
+                var lookup = GetComponentLookup<AIStat>();
+                foreach(var (pack, stat) in SystemAPI.Query<PackMember,AIStat>().WithAll<PackStatUpdate>())
+                {
+                    var packStat = lookup[pack.PackEntity];
+                    packStat.CurHealth += stat.CurHealth;
+                    packStat.MaxHealth += stat.MaxHealth;
+                    packStat.CurMana += stat.CurMana;
+                    packStat.MaxMana += stat.MaxMana;
+                }
+            }
+        }
+}

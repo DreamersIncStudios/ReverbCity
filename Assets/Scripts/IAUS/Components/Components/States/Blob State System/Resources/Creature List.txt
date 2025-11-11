@@ -1,0 +1,16 @@
+Normal,Grunt,0,Patrol;Wait;Attack;WanderQuadrant
+Normal,Grunt,1,Patrol;Wait;Attack;WanderQuadrant
+Normal,Grunt,2,Patrol;Wait;Attack;WanderQuadrant;Traverse
+Normal,Grunt,3,Patrol;Wait;Attack;WanderQuadrant;Traverse
+Normal,NPC,0,Traverse;Wait;RetreatToLocation;FindCover;RetreatToQuadrant
+Normal,NPC,1,Traverse;Wait;RetreatToLocation;FindCover;RetreatToQuadrant
+Normal,NPC,2,Traverse;Wait;RetreatToLocation;FindCover;RetreatToQuadrant
+Normal,NPC,3,Traverse;Wait;RetreatToLocation;FindCover;RetreatToQuadrant
+Normal,Daemon,0,Terrorize;Heal_Self_Item;Retreat;Attack;Guard;GroupUp;Attack;WanderQuadrant;Wait;CallBackUp
+Normal,Daemon,1,Terrorize;Heal_Self_Item;Retreat;Attack;Guard;GroupUp;Attack;WanderQuadrant;Wait;CallBackUp
+Normal,Daemon,2,Terrorize;Heal_Self_Item;Retreat;Attack;Guard;GroupUp;Attack;WanderQuadrant;Wait;CallBackUp
+Normal,Daemon,3,Terrorize;Heal_Self_Item;Retreat;Attack;Guard;GroupUp;Attack;WanderQuadrant;Wait;CallBackUp
+Normal,Beast,0,Patrol;Wait;Attack;WanderQuadrant
+Normal,Beast,1,Patrol;Wait;Attack;WanderQuadrant
+Normal,Beast,2,Patrol;Wait;Attack;WanderQuadrant
+Normal,Beast,3,Patrol;Wait;Attack;WanderQuadrant
