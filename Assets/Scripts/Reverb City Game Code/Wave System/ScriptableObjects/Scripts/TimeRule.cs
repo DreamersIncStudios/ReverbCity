@@ -41,36 +41,41 @@ namespace DreamersInc.WaveSystem
            });
            panel.Add(label);
 
-           GlobalFunctions.RandomPoint(Vector3.zero, 750, out spawnPosition);
+           GlobalFunctions.RandomPoint(Vector3.zero, 750, out Vector3 testing);
+           spawnPosition = testing;  
         }
         public override void Stop()
         {
             base.Stop();
             spawnPosition = Vector3.zero;
+            spawned = 0;
+            interval = 0;
         }
         public override void ResetWave()
         {
             timer.Reset();
             
         }
-
+        private int spawned;
         public override void Tick()
         {
             if (spawnPosition == Vector3.zero)
             {
                 GlobalFunctions.RandomPoint(Vector3.zero, 750, out Vector3 testing);
                 spawnPosition = testing;    
+                return;
             }
             if (IsRunning && interval > 0)
             {
                 interval -= Time.deltaTime;
             }
 
-            if (IsRunning && interval <= 0)
+            if (IsRunning && interval <= 0 && spawned < spawnCount)
             {
-                for (int i = 0; i < spawnCount * WaveLevel; i++)
+                for (int i = 0; i < 4 * WaveLevel; i++)
                 {
                     SpawnNPC(new SerializableGuid(), spawnPosition, 2);
+                    spawned++;
                 }
 
                 interval = SpawnInterval * 60 / WaveLevel;

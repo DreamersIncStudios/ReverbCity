@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: 5 min wave
   m_EditorClassIdentifier: Assembly-CSharp::DreamersInc.WaveSystem.TimeRule
   WaveDuration: 5
-  SpawnInterval: 10
+  SpawnInterval: 2
   spawnCount: 100
