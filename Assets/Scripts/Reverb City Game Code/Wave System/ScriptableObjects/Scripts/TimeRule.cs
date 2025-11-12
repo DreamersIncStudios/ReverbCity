@@ -105,16 +105,25 @@ namespace DreamersInc.WaveSystem
             }
         }
 
+        void CompleteWave()
+        {
+            BestiaryManager.KillWaveNpcs(WaveLevel);
+        }
 
         public override bool IsFinished => timer.IsFinished;
         public override void PassedTrial()
         {
-            throw new NotImplementedException();
+        CompleteWave();
+        Debug.Log($"Wave Completed. Reward player with {Credits}gold and {Exp}exp");
+        Debug.Log("Start Wave Cool down timer");
         }
 
         public override void FailTrial()
         {
-            throw new NotImplementedException();
+            CompleteWave();
+            WaveManager.Fails++;
+            Debug.Log($"Wave Failed. Player died");
+            Debug.Log("Start Wave Cool down timer");
         }
     }
 }

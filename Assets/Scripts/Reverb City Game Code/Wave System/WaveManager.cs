@@ -14,6 +14,8 @@ namespace DreamersInc.ReverbCity
         private static readonly List<WaveRule> SweepWave= new List<WaveRule>();
 
         public static uint PlayerLevel;
+        public static uint Fails { get; set; }
+
         public static void RegisterWave(WaveRule wave) => Waves.Add(wave);
         public static void DeregisterWave(WaveRule wave) => Waves.Remove(wave);
 

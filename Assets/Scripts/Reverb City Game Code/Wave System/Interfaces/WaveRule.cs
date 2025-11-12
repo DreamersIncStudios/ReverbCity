@@ -8,8 +8,8 @@ namespace DreamersInc.WaveSystem.interfaces
 
     public abstract class WaveRule: ScriptableObject, IDisposable
     {
-        uint Credits { get; }
-        uint Exp{ get; }
+        protected uint Credits { get; }
+        protected uint Exp{ get; }
         public Action OnWaveStart = delegate { };
         public Action OnWaveEnd = delegate { };
         public bool IsRunning { get; private set; }

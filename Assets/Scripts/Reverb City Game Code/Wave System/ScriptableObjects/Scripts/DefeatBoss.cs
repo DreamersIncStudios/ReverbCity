@@ -17,6 +17,11 @@ namespace DreamersInc.WaveSystem
             throw new NotImplementedException();
         }
 
+        public override void FailCheck()
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool IsFinished { get; }
         public override void PassedTrial()
         {

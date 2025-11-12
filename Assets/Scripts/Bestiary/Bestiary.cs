@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using DreamersInc.DamageSystem;
 using Stats;
 using Unity.Entities;
 using UnityEngine;
@@ -93,19 +95,38 @@ namespace Bestiary
         {
             if (NPCSpawnForWaves.TryGetValue(waveNumber, out var waveInfo))
             {
-                waveInfo.Entity.Add(entity);
+                waveInfo.Entities.Add(entity);
             }
             else
             {
                 NPCSpawnForWaves.Add(waveNumber, new WaveInfo()
                 {
-                    Entity = new List<Entity>()
+                    Entities = new List<Entity>()
                     {
                         entity
                     }
                 });
             }
 
+        }
+
+        public static void KillWaveNpcs(uint waveNumber)
+        {
+            try
+            {
+                
+                NPCSpawnForWaves.TryGetValue(waveNumber, out var waveInfo);
+                var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+                foreach (var entity in waveInfo.Entities)
+                {
+                    manager.AddComponent<DeathTag>(entity);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public static void RegisterStructure(Entity entity) => StructureEntities.Add(entity);
@@ -115,13 +136,13 @@ namespace Bestiary
         {
             if (NPCSpawnForWaves.TryGetValue(waveNumber, out var waveInfo))
             {
-                waveInfo.Entity.Remove(entity);
+                waveInfo.Entities.Remove(entity);
             }
         }
 
         public class WaveInfo
         {
-            public List<Entity> Entity;
+            public List<Entity> Entities;
         }
 
 

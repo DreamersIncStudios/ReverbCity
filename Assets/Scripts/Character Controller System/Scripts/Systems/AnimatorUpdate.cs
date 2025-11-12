@@ -32,29 +32,32 @@ namespace MotionSystem.Systems
 
         protected override void OnUpdate()
         {
-            Entities
-                .ForEach((Animator Anim, Transform transform, Rigidbody RB, ref CharControllerE control) =>
-                {
-                    if (control.Move.magnitude > 1f && control.AI)
+            foreach (var (control,entity) in SystemAPI.Query<RefRW<CharControllerE>
+                     >().WithEntityAccess().WithAll<Animator, Rigidbody,Transform>())
+            {
+                var Anim = SystemAPI.ManagedAPI.GetComponent<Animator>(entity);
+                var RB = SystemAPI.ManagedAPI.GetComponent<Rigidbody>(entity);
+                var transform = Anim.transform;
+                    if (control.ValueRO.Move.magnitude > 1f && control.ValueRO.AI)
                     {
-                        control.Move.Normalize();
-                        control.Move = transform.InverseTransformDirection(control.Move);
-                        control.Move = Vector3.ProjectOnPlane(control.Move, control.GroundNormal);
+                        control.ValueRW.Move.Normalize();
+                        control.ValueRW.Move = transform.InverseTransformDirection(control.ValueRO.Move);
+                        control.ValueRW.Move = Vector3.ProjectOnPlane(control.ValueRO.Move, control.ValueRO.GroundNormal);
                     }
 
-                    var m_ForwardAmount = control.Move.z;
-                    var m_TurnAmount = Mathf.Atan2(control.Move.x, control.Move.z);
+                    var m_ForwardAmount = control.ValueRO.Move.z;
+                    var m_TurnAmount = Mathf.Atan2(control.ValueRO.Move.x, control.ValueRO.Move.z);
 
-                    if (!control.Targetting)
+                    if (!control.ValueRO.Targetting)
                     {
-                        float turnSpeed = Mathf.Lerp(control.m_StationaryTurnSpeed, control.m_MovingTurnSpeed,
+                        float turnSpeed = Mathf.Lerp(control.ValueRO.m_StationaryTurnSpeed, control.ValueRO.m_MovingTurnSpeed,
                             m_ForwardAmount);
                         transform.Rotate(0, m_TurnAmount * turnSpeed * SystemAPI.Time.fixedDeltaTime, 0);
                     }
                     else
                     {
-                        m_TurnAmount = control.Move.x;
-                        if (!control.AI)
+                        m_TurnAmount = control.ValueRO.Move.x;
+                        if (!control.ValueRO.AI)
                         {
                             if (CameraControl.Instance.Target.LookAt != null)
                             {
@@ -67,16 +70,16 @@ namespace MotionSystem.Systems
                         }
                     }
 
-                    if (control.IsGrounded)
+                    if (control.ValueRO.IsGrounded)
                     {
-                        HandleGroundedMovement(control, Anim, RB);
+                        HandleGroundedMovement(control.ValueRO, Anim, RB);
                     }
                     else
                     {
-                        HandleAirborneMovement(control, Anim, RB);
+                        HandleAirborneMovement(control.ValueRO, Anim, RB);
                     }
 
-                    if (control.ApplyRootMotion)
+                    if (control.ValueRO.ApplyRootMotion)
                     {
                         Anim.applyRootMotion = true;
                     }
@@ -90,11 +93,11 @@ namespace MotionSystem.Systems
                     // Update the animator parameters
                     Anim.SetFloat(Forward, m_ForwardAmount, 0.1f, SystemAPI.Time.fixedDeltaTime);
                     Anim.SetFloat(Turn, m_TurnAmount, 0.1f, SystemAPI.Time.fixedDeltaTime);
-                    Anim.SetBool(Crouch, control.Crouch);
-                    Anim.SetBool(OnGround, control.IsGrounded);
+                    Anim.SetBool(Crouch, control.ValueRO.Crouch);
+                    Anim.SetBool(OnGround, control.ValueRO.IsGrounded);
 
 
-                    if (!control.IsGrounded)
+                    if (!control.ValueRO.IsGrounded)
                     {
                         Anim.SetFloat(Jump, RB.linearVelocity.y);
                     }
@@ -104,19 +107,19 @@ namespace MotionSystem.Systems
                     // and assumes one leg passes the other at the normalized clip times of 0.0 and 0.5)
                     var runCycle =
                         Mathf.Repeat(
-                            Anim.GetCurrentAnimatorStateInfo(0).normalizedTime + control.m_RunCycleLegOffset, 1);
+                            Anim.GetCurrentAnimatorStateInfo(0).normalizedTime + control.ValueRO.m_RunCycleLegOffset, 1);
                     var jumpLeg = (runCycle < k_Half ? 1 : -1) * m_ForwardAmount;
 
-                    if (control.IsGrounded)
+                    if (control.ValueRO.IsGrounded)
                     {
                         Anim.SetFloat(JumpLeg, jumpLeg);
                     }
 
                     // the anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
                     // which affects the movement speed because of the root motion.
-                    if (control is { IsGrounded: true, Move: { magnitude: > 0 } })
+                    if (control.ValueRO is { IsGrounded: true, Move: { magnitude: > 0 } })
                     {
-                        Anim.speed = control.m_AnimSpeedMultiplier;
+                        Anim.speed = control.ValueRO.m_AnimSpeedMultiplier;
                     }
                     else
                     {
@@ -124,10 +127,10 @@ namespace MotionSystem.Systems
                         Anim.speed = 1;
                     }
 
-                    control.Jump = false;
+                    control.ValueRW.Jump = false;
 
-                    control.Speed = RB.linearVelocity.magnitude;
-                }).WithoutBurst().Run();
+                    control.ValueRW.Speed = RB.linearVelocity.magnitude;
+            };
 
             Entities.WithAll<CombatCapable>().ForEach((Animator Anim, Transform transform, Rigidbody RB,
                 ref CharControllerE control) =>
