@@ -1,9 +1,12 @@
 using System;
 using Bestiary;
 using DreamersInc.ReverbCity;
+using DreamersInc.SceneManagement;
 using DreamersInc.UIToolkitHelpers;
 using DreamersInc.WaveSystem.interfaces;
 using ImprovedTimers;
+using Stats.Entities;
+using Unity.Entities;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -24,6 +27,8 @@ namespace DreamersInc.WaveSystem
         [SerializeField] int spawnCount;
         [CreateProperty] public string WaveDurationProperty => timer.IsFinished ? "Wave Completed" : $"Wave  Time Remaining {timer.CurrentTime}";
         private Vector3 spawnPosition = new Vector3();
+        
+        EntityManager entityManager;
         public override void StartWave(uint waveLevel)
         {
             base.StartWave(waveLevel);
@@ -42,7 +47,8 @@ namespace DreamersInc.WaveSystem
            panel.Add(label);
 
            GlobalFunctions.RandomPoint(Vector3.zero, 750, out Vector3 testing);
-           spawnPosition = testing;  
+           spawnPosition = testing; 
+           entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         }
         public override void Stop()
         {
@@ -59,6 +65,7 @@ namespace DreamersInc.WaveSystem
         private int spawned;
         public override void Tick()
         {
+            
             if (spawnPosition == Vector3.zero)
             {
                 GlobalFunctions.RandomPoint(Vector3.zero, 750, out Vector3 testing);
@@ -81,6 +88,23 @@ namespace DreamersInc.WaveSystem
                 interval = SpawnInterval * 60 / WaveLevel;
             }
         }
+
+        public override void FailCheck()
+        {
+            var stats = entityManager.GetComponentObject<BaseCharacterComponent>(GameMaster.PlayerEntity);
+            if (stats.CurHealth == 0)
+            {
+                Stop();
+                FailTrial(); 
+                return;
+            }
+
+            if (timer.IsFinished)
+            {
+                PassedTrial();
+            }
+        }
+
 
         public override bool IsFinished => timer.IsFinished;
         public override void PassedTrial()

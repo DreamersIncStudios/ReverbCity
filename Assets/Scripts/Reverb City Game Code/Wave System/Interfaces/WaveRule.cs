@@ -31,6 +31,9 @@ namespace DreamersInc.WaveSystem.interfaces
             WaveManager.DeregisterWave(this);
             OnWaveEnd.Invoke();
         }
+
+        public abstract void FailCheck();
+
         public void Resume() => IsRunning = true;
         public void Pause() => IsRunning = false;
 

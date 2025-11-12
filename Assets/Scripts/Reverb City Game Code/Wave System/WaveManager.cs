@@ -23,6 +23,7 @@ namespace DreamersInc.ReverbCity
             SweepWave.RefreshWith(Waves);
             foreach (var wave in SweepWave) {
                 wave.Tick();
+                wave.FailCheck();
             }
         }
         public static void StopWaves()
