@@ -12,11 +12,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8d5aaf26d54b708aaf7ab042fed279, type: 3}
   m_Name: Testing
   m_EditorClassIdentifier: Assembly-CSharp::Bestiary.CreatureInfo
-  Name: 2C6BC458474C577FA0DE5D8C3182D627
+  Name: Test dmmy
   guid:
-    Part1: 745260120
-    Part2: 1196185471
-    Part3: 2698927500
-    Part4: 830658087
-  level: 0
-  Prefab: {fileID: 2699185704830635926, guid: 5aef8a887e1204d5bad50c9daeaed3ee, type: 3}
+    Part1: 1216700013
+    Part2: 1293807236
+    Part3: 2369042088
+    Part4: 3749617873
+  stats:
+    level: 2
+    strength: 10
+    vitality: 10
+    awareness: 10
+    speed: 10
+    skill: 10
+    resistance: 10
+    concentration: 10
+    willPower: 10
+    charisma: 10
+    luck: 10
+    difficultyMod: 1
+    levelMod: 1
+  prefab: {fileID: 2699185704830635926, guid: 5aef8a887e1204d5bad50c9daeaed3ee, type: 3}
+  PhysicsInfo:
+    BelongsTo:
+      Category00: 0
+      Category01: 0
+      Category02: 0
+      Category03: 0
+      Category04: 0
+      Category05: 0
+      Category06: 0
+      Category07: 0
+      Category08: 0
+      Category09: 0
+      Category10: 0
+      Category11: 0
+      Category12: 0
+      Category13: 0
+      Category14: 0
+      Category15: 0
+      Category16: 0
+      Category17: 0
+      Category18: 0
+      Category19: 0
+      Category20: 0
+      Category21: 0
+      Category22: 0
+      Category23: 0
+      Category24: 0
+      Category25: 0
+      Category26: 0
+      Category27: 0
+      Category28: 0
+      Category29: 0
+      Category30: 0
+      Category31: 0
+    CollidesWith:
+      Category00: 0
+      Category01: 0
+      Category02: 0
+      Category03: 0
+      Category04: 0
+      Category05: 0
+      Category06: 0
+      Category07: 0
+      Category08: 0
+      Category09: 0
+      Category10: 0
+      Category11: 0
+      Category12: 0
+      Category13: 0
+      Category14: 0
+      Category15: 0
+      Category16: 0
+      Category17: 0
+      Category18: 0
+      Category19: 0
+      Category20: 0
+      Category21: 0
+      Category22: 0
+      Category23: 0
+      Category24: 0
+      Category25: 0
+      Category26: 0
+      Category27: 0
+      Category28: 0
+      Category29: 0
+      Category30: 0
+      Category31: 0
+  Move:
+    EquipResetTimer: 5
+    MovingTurnSpeed: 360
+    StationaryTurnSpeed: 180
+    JumpPower: 12
+    GravityMultiplier: 2
+    RunCycleLegOffset: 0.2
+    MoveSpeedMultiplier: 1.1
+    AnimSpeedMultiplier: 1
+    GroundCheckDistance: 0.2
+    CombatCapable: 1

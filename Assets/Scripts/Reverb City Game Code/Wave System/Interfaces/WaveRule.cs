@@ -24,7 +24,7 @@ namespace DreamersInc.WaveSystem.interfaces
             OnWaveStart.Invoke();
         }
 
-        public void Stop()
+        public virtual void Stop()
         {
             if(!IsRunning) return;
             IsRunning = false;

@@ -43,7 +43,11 @@ namespace DreamersInc.WaveSystem
 
            GlobalFunctions.RandomPoint(Vector3.zero, 750, out spawnPosition);
         }
-
+        public override void Stop()
+        {
+            base.Stop();
+            spawnPosition = Vector3.zero;
+        }
         public override void ResetWave()
         {
             timer.Reset();
@@ -52,19 +56,25 @@ namespace DreamersInc.WaveSystem
 
         public override void Tick()
         {
+            if (spawnPosition == Vector3.zero)
+            {
+                GlobalFunctions.RandomPoint(Vector3.zero, 750, out Vector3 testing);
+                spawnPosition = testing;    
+            }
             if (IsRunning && interval > 0)
             {
                 interval -= Time.deltaTime;
             }
 
-            if (!IsRunning || !(interval <= 0))
-                return;
-            for (int i = 0; i < spawnCount* WaveLevel; i++)
+            if (IsRunning && interval <= 0)
             {
-                SpawnNPC(new SerializableGuid(), spawnPosition, 2);
+                for (int i = 0; i < spawnCount * WaveLevel; i++)
+                {
+                    SpawnNPC(new SerializableGuid(), spawnPosition, 2);
+                }
 
+                interval = SpawnInterval * 60 / WaveLevel;
             }
-            interval = SpawnInterval*60/WaveLevel;
         }
 
         public override bool IsFinished => timer.IsFinished;

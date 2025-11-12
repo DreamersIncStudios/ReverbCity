@@ -164,7 +164,13 @@ namespace Bestiary
                 };
                 data.SetupDataEntity(stats, name, exp, spawnID);
                 manager.AddComponentObject(entity, data);
-                model.GetComponent<Damageable>().SetData(entity, data);
+
+                if (!model.TryGetComponent<Damageable>(out var damageable))
+                {
+                    damageable = model.AddComponent<Damageable>();
+                }
+                damageable.SetData(entity, data); 
+                
                 this.character = data;
 
                 var baseEntityArch = manager.CreateArchetype(

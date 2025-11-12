@@ -42,6 +42,7 @@ namespace Bestiary
         {
             var info = GetCreature();
             var entity = new CharacterBuilder(info.Name).
+                WithModel(info.Prefab, position, Quaternion.identity, "NPC").
                 WithEntityPhysics(info.PhysicsInfo, true).
                 WithStats(info.Stats, guid, waveLevel, info.Name).
                 WithMovement(info.Move,CreatureType.biped,false).
