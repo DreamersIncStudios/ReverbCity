@@ -4,8 +4,6 @@ using Unity.Entities;
 using System.Collections.Generic;
 using AISenses.VisionSystems.Combat;
 using DreamersInc.CombatSystem;
-using UnityEngine.InputSystem;
-using DreamersInc.InputSystems;
 using PrimeTween;
 
 // ReSharper disable Unity.BurstLoadingManagedType

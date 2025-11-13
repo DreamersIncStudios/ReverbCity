@@ -20,7 +20,7 @@ MonoBehaviour:
     Part4: 1861909089
   _desc: 'The Vitalis Infusion is a potent elixir that represents the perfect fusion
     of ancient magic and cutting-edge technology. '
-  _icon: {fileID: 21300000, guid: 321584be9b725454682adb942b064b75, type: 3}
+  _icon: {fileID: 0}
   _value: 100
   _type: 1
   _questItem: 0

@@ -4,23 +4,20 @@ using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace DreamersInc.CharacterControllerSys.VFX
 {
-    public class VFXDatabase : MonoBehaviour
+    public static class VFXDatabase
     {
-        public static VFXDatabase Instance;
-        public TextAsset VFXList;
-        List<VFXInfo> vfxInfos;
-        bool VFXLoaded;
-        bool PoolLoaded;
+        public static TextAsset VFXList;
+        static List<VFXInfo> vfxInfos;
+        static bool VFXLoaded;
+        static bool PoolLoaded;
 
-        private void Awake()
+        private static void Init()
         {
-            if (Instance == null)
-                Instance = this;
-            else
-                Destroy(this.gameObject);
+        
 
             loadVFX();
             var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
@@ -28,23 +25,17 @@ namespace DreamersInc.CharacterControllerSys.VFX
                 typeof(LocalTransform),
                 typeof(LocalToWorld)
             );
-            Entity baseDataEntity = manager.CreateEntity(baseEntityArch);
-                manager.SetName(baseDataEntity, "VFX Data");
-            manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
-            manager.AddComponentObject(baseDataEntity, new VFXSpawnMaster()
-            {
-                VFXspawn = this
-            });
-            manager.AddComponentData(baseDataEntity, new vfxTag());
 
         }
 
-        public void loadVFX()
+        private static GameObject pool;
+        public static void loadVFX()
         {
             VFXLoaded = true;
             VFXList = Resources.Load<TextAsset>("VFX/Combo Damage");
             var lines = VFXList.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             vfxInfos = new List<VFXInfo>();
+            pool = new GameObject("VFX Pool");
             for (int i = 0; i < lines.Length; i++)
             {
                 var parts = lines[i].Split(',');
@@ -54,20 +45,20 @@ namespace DreamersInc.CharacterControllerSys.VFX
                     ID = int.Parse(parts[0]),
                     PoolObject = Resources.Load<GameObject>(parts[1])
                 };
-                temp.CreatePool(this.gameObject);
+                temp.CreatePool(pool);
                 vfxInfos.Add(temp);
             }
         }
 
-        void DestoryVFXPool()
+        static void DestoryVFXPool()
         {
-            foreach (Transform item in transform)
+            foreach (Transform item in pool.transform)
             {
-                Destroy(item.gameObject);
+                Object.Destroy(item.gameObject);
             }
         }
 
-        public void PlayVFX(int ID, Vector3 Pos, Vector3 Rot, float DelayStart = 0.0f, float lifeTime = 0.0f)
+        public static void PlayVFX(int ID, Vector3 Pos, Vector3 Rot, float DelayStart = 0.0f, float lifeTime = 0.0f)
         {
             if (!VFXLoaded)
             {
@@ -78,7 +69,7 @@ namespace DreamersInc.CharacterControllerSys.VFX
             GetVFX(ID).Play(Pos, Rot, DelayStart, lifeTime);
         }
 
-        public void PlayVFX(int ID, Vector3 Pos, float lifeTime = 0.0f)
+        public static void PlayVFX(int ID, Vector3 Pos, float lifeTime = 0.0f)
         {
             if (!VFXLoaded)
             {
@@ -89,7 +80,7 @@ namespace DreamersInc.CharacterControllerSys.VFX
             GetVFX(ID).Play(Pos, lifeTime);
         }
 
-        public VFXInfo GetVFX(int id)
+        public static VFXInfo GetVFX(int id)
         {
             VFXInfo temp = new();
             foreach (var item in vfxInfos)

@@ -20,7 +20,7 @@ MonoBehaviour:
     Part4: 3088614107
   _desc: 'The Arcane Revitalizer is a mystical elixir that swiftly replenishes a
     user''s mana reserves, making it a must-have for spellcasters. '
-  _icon: {fileID: 21300000, guid: dc09d7137acc9d14fa1182c83d2329cb, type: 3}
+  _icon: {fileID: 0}
   _value: 600
   _type: 1
   _questItem: 0

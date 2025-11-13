@@ -101,7 +101,7 @@ namespace DreamersInc.ComboSystem
             if (prob < ChanceToPlay)
             {
                 Vector3 forwardPos = characterTransform.forward * Forward + characterTransform.up * Up;
-                VFXDatabase.Instance.PlayVFX(ID, characterTransform.position + forwardPos, characterTransform.rotation.eulerAngles + Rot, 0, LifeTime);
+                VFXDatabase.PlayVFX(ID, characterTransform.position + forwardPos, characterTransform.rotation.eulerAngles + Rot, 0, LifeTime);
             }
         }
     }
