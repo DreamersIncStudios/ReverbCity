@@ -111,3 +111,11 @@ MonoBehaviour:
     AnimSpeedMultiplier: 1
     GroundCheckDistance: 0.3
     CombatCapable: 1
+  equipment:
+    EquippedWeapons:
+    - {fileID: 11400000, guid: bf4006afa2a071e48a0c570d4cc4c32a, type: 2}
+    EquippedArmors: []
+  inventory:
+    ItemsInInventory:
+    - {fileID: 11400000, guid: 4ba69aa96cff729468da473ef84abd6a, type: 2}
+    MaxInventorySize: 0

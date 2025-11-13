@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9061c84dc9451994898d160340d439a5, type: 3}
+  m_Name: Vitalis Infusion 2
+  m_EditorClassIdentifier: 
+  _itemName: 
+  _itemID:
+    Part1: 3107357910
+    Part2: 1074926763
+    Part3: 2810487992
+    Part4: 1861909089
+  _desc: 'The Vitalis Infusion is a potent elixir that represents the perfect fusion
+    of ancient magic and cutting-edge technology. '
+  _icon: {fileID: 21300000, guid: 321584be9b725454682adb942b064b75, type: 3}
+  _value: 100
+  _type: 1
+  _questItem: 0
+  maxStackCount: 50
+  dropProbability: 0
+  RecoveryItems:
+  - rid: 5495730843955494912
+  references:
+    version: 2
+    RefIds:
+    - rid: 5495730843955494912
+      type: {class: HealthItem, ns: Dreamers.InventorySystem, asm: InventorySystem}
+      data:
+        amount: 900

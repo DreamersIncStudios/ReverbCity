@@ -29,7 +29,7 @@ namespace Bestiary
         public static StructureInfo GetStructureInfo(SerializableGuid guid) => StructureInfos.Find(x => x.Guid == guid);
 
         static Entity playerEntity;
-
+        public static Entity PlayerEntity => playerEntity;
 
         static public bool IsLoaded { get; private set; }
 

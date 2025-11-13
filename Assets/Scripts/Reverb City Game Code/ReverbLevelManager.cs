@@ -54,7 +54,7 @@ namespace DreamersInc.ReverbCity
             ServiceLocator.Global.Unregister(typeof(ILevelManager), this);
         }
 
-        async Task CreateUI()
+        Task CreateUI()
         {
             var hudDoc = UIManager.GetUI(UIType.HUD);
             var popUpPanel = Create<PopUpPanel>();
@@ -68,6 +68,7 @@ namespace DreamersInc.ReverbCity
             };
             popUpPanel.SetText(headerText, bodyText);
             popUpPanel.SetButton(buttonText, buttonAction);
+            return Task.CompletedTask;
         }
     }
 }

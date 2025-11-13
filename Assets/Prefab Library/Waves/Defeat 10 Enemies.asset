@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ab3fe1e95a8943d6a99c23c7f78d0ff, type: 3}
-  m_Name: 5 min wave
-  m_EditorClassIdentifier: Assembly-CSharp::DreamersInc.WaveSystem.TimeRule
-  WaveDuration: 0.5
-  SpawnInterval: 2
-  spawnCount: 100
+  m_Script: {fileID: 11500000, guid: ee4e703755df4a57b1e401df5f5453fa, type: 3}
+  m_Name: Defeat 10 Enemies
+  m_EditorClassIdentifier: Assembly-CSharp::DreamersInc.WaveSystem.DefeatEnemies
+  MaxSpawnCount: 50
+  requiredEnemiesToDefeat: 10
+  SpawnInterval: 1

@@ -21,10 +21,11 @@ namespace DreamersInc.ReverbCity.GameCode
         {
             ServiceLocator.Global.Unregister(GetType(), this);
         }
-        public async Task Init()
+        public Task Init()
         {
 
             ServiceLocator.Global.Get<LevelChanger>().FadeIn();
+            return Task.CompletedTask;
         }
         public async void StartGame()
         {

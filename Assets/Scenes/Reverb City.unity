@@ -279,8 +279,8 @@ MonoBehaviour:
   buttonText: Start
   spawnPoints:
   - {fileID: 1351045443}
-  TestRule: {fileID: 11400000, guid: 5ee5e4b13c7e24958bd8d349b0955cf5, type: 2}
-  timeBetweenWaves: 0
+  TestRule: {fileID: 11400000, guid: 3a27569223676d840a08824a8af8b621, type: 2}
+  timeBetweenWaves: 2
 --- !u!1 &367489995
 GameObject:
   m_ObjectHideFlags: 0

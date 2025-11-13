@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using Dreamers.InventorySystem.Base;
+using DreamersInc.ComboSystem;
 using Global.Component;
 using MotionSystem.Components;
 using Sirenix.OdinInspector;
@@ -21,7 +23,13 @@ namespace Bestiary
         public PhysicsInfo PhysicsInfo;
         public MovementData Move;
 
-        
+        [Header("Combat")]
+        public ComboSO Combo;
+        [Header("Inventory")]
+        public EquipmentSave Equipment => equipment;
+        [SerializeField]private EquipmentSave equipment;
+        public InventorySave Inventory => inventory;
+        [SerializeField]private InventorySave inventory;
             
         
         [HorizontalGroup("ItemSplit", 0.5f), VerticalGroup("ItemSplit/Left"), Button(ButtonSizes.Large),
@@ -48,7 +56,9 @@ namespace Bestiary
                 WithModel(info.Prefab, position, Quaternion.identity, "Player").
                 WithEntityPhysics(info.PhysicsInfo, true).
                 WithStats(info.Stats,guid,2,info.Name).
+                WithInventorySystem(info.Inventory, info.Equipment).
                 WithMovement(info.Move,CreatureType.biped,false).
+                WithCombat(info.Combo).
                 WithAnimation().
                 WithPlayerControl().
             Build();

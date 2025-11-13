@@ -1,6 +1,11 @@
 using System;
+using Bestiary;
 using DreamersInc.ReverbCity;
+using DreamersInc.UIToolkitHelpers;
+using Unity.Properties;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
 
 namespace DreamersInc.WaveSystem.interfaces
 {
@@ -13,6 +18,7 @@ namespace DreamersInc.WaveSystem.interfaces
         public Action OnWaveStart = delegate { };
         public Action OnWaveEnd = delegate { };
         public bool IsRunning { get; private set; }
+        [CreateProperty] protected string WaveLevelProperty=>"This need to be overriden";
         protected uint WaveLevel;
 
         public virtual void StartWave(uint waveLevel)
@@ -22,6 +28,20 @@ namespace DreamersInc.WaveSystem.interfaces
             WaveLevel = waveLevel;
             WaveManager.RegisterWave(this);
             OnWaveStart.Invoke();
+            SetUILabel();
+        }
+        protected void SetUILabel()
+        {
+            var hudUI = UIManager.GetUI(UIType.HUD);
+            var panel = hudUI.rootVisualElement.Q<WaveUIPanel>();
+            var label = Create<Label>("WaveInfo");
+            label.dataSource = this;
+            label.SetBinding(nameof(Label.text), new DataBinding()
+            {
+                dataSourcePath = new PropertyPath(nameof(WaveLevelProperty)),
+                bindingMode = BindingMode.ToTarget
+            });
+            panel.Add(label);
         }
 
         public virtual void Stop()
@@ -31,7 +51,12 @@ namespace DreamersInc.WaveSystem.interfaces
             WaveManager.DeregisterWave(this);
             OnWaveEnd.Invoke();
         }
-
+        protected void CompleteWave()
+        {
+            Stop();
+            BestiaryManager.KillWaveNpcs(WaveLevel);
+            
+        }
         public abstract void FailCheck();
 
         public void Resume() => IsRunning = true;

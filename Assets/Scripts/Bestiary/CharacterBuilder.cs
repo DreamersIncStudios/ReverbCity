@@ -1,5 +1,7 @@
 ﻿using System;
 using AISenses.VisionSystems.Combat;
+using Dreamers.InventorySystem;
+using Dreamers.InventorySystem.Base;
 using DreamersInc;
 using DreamersInc.CombatSystem;
 using DreamersInc.ComboSystem;
@@ -148,6 +150,7 @@ namespace Bestiary
                 return this;
             }
             BaseCharacterComponent character;
+            private ComboSO combo;
             public CharacterBuilder WithStats(ICharacterData stats, SerializableGuid spawnID, uint playerLevel, string name, uint exp = 0,
                 bool InvincibleMode = false, bool limitHp = false,
                 uint limit = 0, bool clone = false)
@@ -293,6 +296,31 @@ namespace Bestiary
                 return this;
             }
 
+            public CharacterBuilder WithInventorySystem(InventorySave infoInventory, EquipmentSave infoEquipment)
+            {
+                if (entity == Entity.Null || !model) return this;
+
+                CharacterInventory inventory = new();
+                inventory.AddGold(200);
+                manager.AddComponentData(entity, inventory);
+                manager.GetComponentData<CharacterInventory>(entity).Setup(entity, infoInventory, infoEquipment, ref character);
+
+                return this;
+            }
+            public CharacterBuilder WithCombat(ComboSO infoCombo)
+            {
+                this.combo = infoCombo;
+                if (entity == Entity.Null) return this;
+                if (model == null) return this;
+                manager.AddComponent<StorePrimaryWeapon>(entity);
+
+                var comboInfo = Object.Instantiate(infoCombo);
+                manager.AddComponentObject(entity, new PlayerComboComponent
+                {
+                    Combo = comboInfo
+                });
+                return this;
+            }
         }
     }
 }
