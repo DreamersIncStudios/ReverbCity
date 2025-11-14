@@ -321,6 +321,11 @@ namespace Bestiary
                 });
                 return this;
             }
+            public CharacterBuilder WithVFX()
+            {
+                model.GetComponent<VFXControl>().Init(combo);
+                return this;
+            }
         }
     }
 }

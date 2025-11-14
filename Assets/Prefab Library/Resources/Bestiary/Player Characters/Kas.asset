@@ -111,6 +111,7 @@ MonoBehaviour:
     AnimSpeedMultiplier: 1
     GroundCheckDistance: 0.3
     CombatCapable: 1
+  Combo: {fileID: 11400000, guid: 78bc12d66e2c6d44e9474545435cb293, type: 2}
   equipment:
     EquippedWeapons:
     - {fileID: 11400000, guid: bf4006afa2a071e48a0c570d4cc4c32a, type: 2}

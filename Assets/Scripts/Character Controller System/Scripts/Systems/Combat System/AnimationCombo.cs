@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 //using DreamerInc.CombatSystem;
-using Random = UnityEngine.Random;
-using DreamersInc.CharacterControllerSys.VFX;
 using UnityEngine.Serialization;
 
 namespace DreamersInc.ComboSystem
@@ -49,7 +47,7 @@ namespace DreamersInc.ComboSystem
         public float TransitionDuration;
         public float TransitionOffset;
         [FormerlySerializedAs("EndofCurrentAnim")] public float EndOfCurrentAnim;
-        public VFX AttackVFX;
+        public VFXSO AttackVFXSO;
         [Tooltip(" testing Value")]
         public float Chance;
         [Range(-1, 100)]
@@ -83,27 +81,6 @@ namespace DreamersInc.ComboSystem
             Delay -= time;
         }
 
-    }
-    [Serializable]
-    public struct VFX
-    {
-        public int ID;
-        public float Forward, Up;
-        public Vector3 Rot;
-        [Tooltip("Time in Milliseconds")]
-        public float LifeTime;
-        [Range(0, 100)]
-        public int ChanceToPlay;
-        public bool Play => ID != 0;
-        public void SpawnVFX(Transform characterTransform)
-        {
-            int prob = Mathf.RoundToInt(Random.Range(0, 99));
-            if (prob < ChanceToPlay)
-            {
-                Vector3 forwardPos = characterTransform.forward * Forward + characterTransform.up * Up;
-                VFXDatabase.PlayVFX(ID, characterTransform.position + forwardPos, characterTransform.rotation.eulerAngles + Rot, 0, LifeTime);
-            }
-        }
     }
 
 

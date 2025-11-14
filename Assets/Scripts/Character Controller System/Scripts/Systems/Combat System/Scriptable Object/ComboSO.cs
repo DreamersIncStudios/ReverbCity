@@ -93,9 +93,9 @@ namespace DreamersInc.ComboSystem
             return new AnimationTrigger();
         }
 
-        public VFX GetVFX(AnimatorStateInfo state, bool style = false)
+        public VFXSO GetVFX(AnimatorStateInfo state, bool style = false)
         {
-            return GetTrigger(state, style).AttackVFX;
+            return GetTrigger(state, style).AttackVFXSO;
         }
 
         public int GetAnimationComboIndex(AnimatorStateInfo state)

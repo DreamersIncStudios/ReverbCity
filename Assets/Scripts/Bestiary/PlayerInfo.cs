@@ -59,6 +59,7 @@ namespace Bestiary
                 WithInventorySystem(info.Inventory, info.Equipment).
                 WithMovement(info.Move,CreatureType.biped,false).
                 WithCombat(info.Combo).
+                WithVFX().
                 WithAnimation().
                 WithPlayerControl().
             Build();
