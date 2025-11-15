@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: 2
   PreviousCombo: 0
-  comboList: 
+  comboList:
   - CurrentAnim: 1
     triggerAnimIndex: 4
     Alternate: 0
@@ -28,13 +28,7 @@ MonoBehaviour:
       TransitionDuration: 0.2
       TransitionOffset: 0.05
       EndOfCurrentAnim: 0.65
-      AttackVFX:
-        ID: 2
-        Forward: 0
-        Up: 0
-        Rot: {x: 0, y: 0, z: 70}
-        LifeTime: 1
-        ChanceToPlay: 100
+      AttackVFXSO: {fileID: 11400000, guid: 41d0a2cbe977c484d892285a48e3e89b, type: 2}
       Chance: 0
       ChanceForNextAttack: 0
       Delay: 0
@@ -51,13 +45,7 @@ MonoBehaviour:
       TransitionDuration: 0.1
       TransitionOffset: 0
       EndOfCurrentAnim: 0.53
-      AttackVFX:
-        ID: 3
-        Forward: 0
-        Up: 0
-        Rot: {x: 0, y: 0, z: 0}
-        LifeTime: 1
-        ChanceToPlay: 100
+      AttackVFXSO: {fileID: 11400000, guid: 53cdd2658ebd37d429611f9b0655f5b0, type: 2}
       Chance: 0
       ChanceForNextAttack: 0
       Delay: 0
@@ -74,13 +62,7 @@ MonoBehaviour:
       TransitionDuration: 0.25
       TransitionOffset: 0.06
       EndOfCurrentAnim: 0.55
-      AttackVFX:
-        ID: 0
-        Forward: 0
-        Up: 0
-        Rot: {x: 0, y: 0, z: 0}
-        LifeTime: 0
-        ChanceToPlay: 0
+      AttackVFXSO: {fileID: 0}
       Chance: 0
       ChanceForNextAttack: 0
       Delay: 0
@@ -97,13 +79,7 @@ MonoBehaviour:
       TransitionDuration: 0.25
       TransitionOffset: 0.24
       EndOfCurrentAnim: 0.615
-      AttackVFX:
-        ID: 1
-        Forward: 0.2
-        Up: 0.9
-        Rot: {x: 0, y: 0, z: 0}
-        LifeTime: 1
-        ChanceToPlay: 100
+      AttackVFXSO: {fileID: 11400000, guid: 6b00443af8368e54e9282cef6e34441f, type: 2}
       Chance: 0
       ChanceForNextAttack: 0
       Delay: 0
@@ -120,13 +96,7 @@ MonoBehaviour:
       TransitionDuration: 0.25
       TransitionOffset: 0
       EndOfCurrentAnim: 0.78
-      AttackVFX:
-        ID: 1
-        Forward: 0.2
-        Up: 0.9
-        Rot: {x: 0, y: 0, z: 0}
-        LifeTime: 1
-        ChanceToPlay: 100
+      AttackVFXSO: {fileID: 11400000, guid: 6b00443af8368e54e9282cef6e34441f, type: 2}
       Chance: 0
       ChanceForNextAttack: 0
       Delay: 0

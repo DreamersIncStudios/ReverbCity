@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793a77098e0b4fed8ff0b041c39a48c7, type: 3}
+  m_Name: Sword Slash 4
+  m_EditorClassIdentifier: CharacterControllerSystem::DreamersInc.ComboSystem.VFXSO
+  Name: 'testing '
+  ID:
+    Part1: 471860335
+    Part2: 1179623320
+    Part3: 1980547510
+    Part4: 1153584087
+  Prefab: {fileID: 1919708242137258, guid: e60d36cff17a1ce4db49ef54f9e72f61, type: 3}
+  CreatePoolOnLoad: 1
+  KeepPoolAlive: 1
+  Forward: 0.5
+  Up: 0.75
+  Rot: {x: 0, y: 0, z: 0}
+  LifeTime: 0.7
+  ChanceToPlay: 100

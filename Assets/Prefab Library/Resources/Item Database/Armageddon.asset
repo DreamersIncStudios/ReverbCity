@@ -34,7 +34,7 @@ MonoBehaviour:
   slot: 0
   upgradeable: 0
   quality: 4
-  model: {fileID: 3318177017313635978, guid: b5d104d00f166cf4ab1b4804e8a4d08f, type: 3}
+  model: {fileID: 768388355683239013, guid: b5d104d00f166cf4ab1b4804e8a4d08f, type: 3}
   levelRqd: 0
   equipToHuman: 1
   alwaysDrawn: 1
