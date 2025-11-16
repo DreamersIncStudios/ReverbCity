@@ -165,6 +165,7 @@ namespace MotionSystem.Systems
         /// <param name="value">True or False by int .</param>
         public void DoDamage(int value)
         {
+      
             if (!meleeDamage)
             {
                 GetWeapons();

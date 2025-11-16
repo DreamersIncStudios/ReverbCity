@@ -82,6 +82,7 @@ namespace Stats
                 };
             }
             var damageToProcess = -Mathf.FloorToInt(amount * defense * Random.Range(.92f, 1.08f)* damageElementMod);
+            Debug.Log(damageToProcess + " HP of damage to target ");
             manager.AddComponentData(SelfEntityRef, new AdjustHealth(damageToProcess, damageDealerEntity, level));
         }
         public void SetData(Entity entity, BaseCharacterComponent character) {

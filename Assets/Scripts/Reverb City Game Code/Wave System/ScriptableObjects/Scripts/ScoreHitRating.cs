@@ -20,6 +20,10 @@ namespace DreamersInc.WaveSystem
             throw new NotImplementedException();
         }
 
+        public override void IncrementDefeat(int value = 1)
+        {
+            throw new NotImplementedException();
+        }
         public override void FailCheck()
         {
             throw new NotImplementedException();

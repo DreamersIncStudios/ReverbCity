@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using DreamersIncStudio.FactionSystem;
 using Global.Component;
 using MotionSystem.Components;
 using Sirenix.OdinInspector;
@@ -17,6 +18,8 @@ namespace Bestiary
        public PlayerCharacterClass Stats=>stats;
        [SerializeField] PlayerCharacterClass stats;
         public GameObject Prefab=>prefab;
+        public FactionNames FactionID;
+        public int Influence;
         [SerializeField] GameObject prefab;
         public PhysicsInfo PhysicsInfo;
         public MovementData Move;
@@ -46,6 +49,7 @@ namespace Bestiary
                 WithEntityPhysics(info.PhysicsInfo, true).
                 WithStats(info.Stats, guid, waveLevel, info.Name).
                 WithMovement(info.Move,CreatureType.biped,false).
+                WithFactionInfluence(info.FactionID, info.Influence, 1).
                 Build();
             RegisterNPCEnemy(waveLevel,entity);
             return Task.CompletedTask;

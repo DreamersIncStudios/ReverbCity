@@ -5,7 +5,9 @@ using Dreamers.InventorySystem.Base;
 using DreamersInc;
 using DreamersInc.CombatSystem;
 using DreamersInc.ComboSystem;
+using DreamersInc.InfluenceMapSystem;
 using DreamersInc.ServiceLocatorSystem;
+using DreamersIncStudio.FactionSystem;
 using DreamersStudio.CameraControlSystem;
 using Global.Component;
 using MotionSystem.Components;
@@ -151,6 +153,8 @@ namespace Bestiary
             }
             BaseCharacterComponent character;
             private ComboSO combo;
+            private FactionNames factionID;
+            private uint classLevel;
             public CharacterBuilder WithStats(ICharacterData stats, SerializableGuid spawnID, uint playerLevel, string name, uint exp = 0,
                 bool InvincibleMode = false, bool limitHp = false,
                 uint limit = 0, bool clone = false)
@@ -253,10 +257,7 @@ namespace Bestiary
                
                 return this;
             }
-            public Entity Build()
-            {
-                return entity;
-            }
+      
 
             public CharacterBuilder WithPlayerControl()
             {
@@ -325,6 +326,40 @@ namespace Bestiary
             {
                 model.GetComponent<VFXControl>().Init(combo);
                 return this;
+            }
+            public CharacterBuilder WithFactionInfluence(FactionNames factionID, int influenceValue, uint classLevel,
+                float3 centerOffset = default,
+                bool isPlayer = false)
+            {
+                if (entity == Entity.Null) return this;
+                if (!model) return this;
+
+
+                this.factionID = factionID;
+                this.classLevel = classLevel;
+            
+                    manager.AddComponentData(entity,
+                        new InfluenceComponent(this.factionID, influenceValue, 50));
+                
+
+                manager.AddComponentData(entity, new AITarget()
+                {
+                    FactionID = (FactionNames)factionID,
+                    NumOfEntityTargetingMe = 3,
+                    CanBeTargetByPlayer = isPlayer,
+                    Type = TargetType.Character,
+                    level = classLevel,
+                    CenterOffset = centerOffset
+                });
+
+       
+
+                return this;
+            }
+            
+            public Entity Build()
+            {
+                return entity;
             }
         }
     }

@@ -12,11 +12,12 @@ namespace DreamersInc.WaveSystem
     {
         [SerializeField] uint MaxSpawnCount;
         [SerializeField] uint requiredEnemiesToDefeat;
-        [CreateProperty] public new string WaveLevelProperty => $"Enemies to Defeat {requiredEnemiesToDefeat}/{spawnCount}"; 
+        [CreateProperty] public new string WaveLevelProperty => $"Enemies to Defeat {defeated}/{requiredEnemiesToDefeat}"; 
         private Vector3 spawnPosition = new Vector3();
         [SerializeField] float SpawnInterval;
         private float interval;
         private uint spawnCount;
+        private uint defeated;
         public override void StartWave(uint waveLevel)
         {
             base.StartWave(waveLevel);
@@ -28,7 +29,7 @@ namespace DreamersInc.WaveSystem
                  
             if (spawnPosition == Vector3.zero)
             {
-                GlobalFunctions.RandomPoint(Vector3.zero, 750, out Vector3 testing);
+                GlobalFunctions.RandomPoint(Vector3.zero, 50, out Vector3 testing);
                 spawnPosition = testing;    
                 return;
             }
@@ -47,6 +48,10 @@ namespace DreamersInc.WaveSystem
 
                 interval = SpawnInterval * 60 / WaveLevel;
             }
+        }
+        public override void IncrementDefeat(int value = 1)
+        {
+            throw new NotImplementedException();
         }
         public override void FailCheck()
         {

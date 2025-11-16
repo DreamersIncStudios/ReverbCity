@@ -32,6 +32,8 @@ MonoBehaviour:
     luck: 10
     difficultyMod: 1
     levelMod: 1
+  FactionID: 2
+  Influence: 5
   prefab: {fileID: 2699185704830635926, guid: 5aef8a887e1204d5bad50c9daeaed3ee, type: 3}
   PhysicsInfo:
     BelongsTo:

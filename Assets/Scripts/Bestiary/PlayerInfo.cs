@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
+using DreamersIncStudio.FactionSystem;
 using Global.Component;
 using MotionSystem.Components;
 using Sirenix.OdinInspector;
@@ -60,6 +61,7 @@ namespace Bestiary
                 WithMovement(info.Move,CreatureType.biped,false).
                 WithCombat(info.Combo).
                 WithVFX().
+                WithFactionInfluence(FactionNames.Player, 100, 1).
                 WithAnimation().
                 WithPlayerControl().
             Build();

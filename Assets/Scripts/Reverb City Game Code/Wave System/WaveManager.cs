@@ -36,7 +36,14 @@ namespace DreamersInc.ReverbCity
                 wave.Stop();
             }
         }
-
+        public static void IncrementDefeatCount(int value = 1)
+        {
+            if (Waves.Count == 0) return;
+            SweepWave.RefreshWith(Waves);
+            foreach (var wave in SweepWave) {
+                wave.IncrementDefeat(value);
+            }
+        }
         public static void Clear()
         {
             SweepWave.RefreshWith(Waves);

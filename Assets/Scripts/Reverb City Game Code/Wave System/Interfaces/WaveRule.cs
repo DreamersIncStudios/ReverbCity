@@ -51,6 +51,7 @@ namespace DreamersInc.WaveSystem.interfaces
             WaveManager.DeregisterWave(this);
             OnWaveEnd.Invoke();
         }
+        public abstract void IncrementDefeat(int value = 1);
         protected void CompleteWave()
         {
             Stop();

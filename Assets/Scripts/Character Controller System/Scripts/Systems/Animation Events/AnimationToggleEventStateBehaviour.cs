@@ -4,6 +4,7 @@ namespace DreamersInc.AnimationEventSystem
 {
     public class AnimationToggleEventStateBehaviour : StateMachineBehaviour
     {
+        
         public string EventName;
         [Range(0f, 1f)] public float OnTriggerTime;
         [Range(0f, 1f)] public float OffTriggerTime;

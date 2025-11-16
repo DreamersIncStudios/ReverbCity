@@ -41,6 +41,10 @@ namespace DreamersInc.WaveSystem
             spawned = 0;
             interval = 0;
         }
+        public override void IncrementDefeat(int value = 1)
+        {
+            throw new System.NotImplementedException();
+        }
         public override void ResetWave()
         {
             timer.Reset();
