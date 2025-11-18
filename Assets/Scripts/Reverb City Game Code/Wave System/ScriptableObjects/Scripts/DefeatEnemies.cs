@@ -1,4 +1,6 @@
 using System;
+using Bestiary;
+using DreamersInc.ReverbCity;
 using DreamersInc.WaveSystem.interfaces;
 using Unity.Properties;
 using UnityEngine;
@@ -51,21 +53,30 @@ namespace DreamersInc.WaveSystem
         }
         public override void IncrementDefeat(int value = 1)
         {
-            throw new NotImplementedException();
+            defeated += (uint)value;
+            spawnCount-= (uint)value;
         }
         public override void FailCheck()
         {
-  
+            if (IsFinished)
+            {
+                CompleteWave();
+                PassedTrial();
+            }
         }
         public override void ResetWave()
         {
-        
-            
+            defeated = 0;
+            KillWaveNpcs(WaveLevel);
+     
         }
-        public override bool IsFinished { get; }
+        public override bool IsFinished => defeated >= requiredEnemiesToDefeat;
         public override void PassedTrial()
         {
-            throw new NotImplementedException();
+            CompleteWave();
+            WaveManager.DeregisterWave(this);
+            Debug.Log($"Wave Completed. Reward player with {Credits}gold and {Exp}exp");
+            Debug.Log("Start Wave Cool down timer");
         }
 
         public override void FailTrial()

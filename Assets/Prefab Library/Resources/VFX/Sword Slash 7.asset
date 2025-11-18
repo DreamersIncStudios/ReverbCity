@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: CharacterControllerSystem::DreamersInc.ComboSystem.VFXSO
   Name: 'testing '
   ID:
-    Part1: 982850511
-    Part2: 1334109117
-    Part3: 2216716944
-    Part4: 232033100
+    Part1: 2216217906
+    Part2: 1075106507
+    Part3: 3157223082
+    Part4: 2823798661
   Prefab: {fileID: 1236453127613114, guid: bfbc37d0bc0e8ff4082a8b2894b3a486, type: 3}
   CreatePoolOnLoad: 1
   KeepPoolAlive: 1

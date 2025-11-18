@@ -66,16 +66,17 @@ namespace DreamersInc.WaveSystem
                 interval -= Time.deltaTime;
             }
 
-            if (IsRunning && interval <= 0 && spawned < spawnCount)
+            if (!IsRunning || !(interval <= 0) || spawned >= spawnCount)
+                return;
+            for (var i = 0; i < 4 * WaveLevel; i++)
             {
-                for (int i = 0; i < 4 * WaveLevel; i++)
-                {
-                    SpawnNPC(new SerializableGuid(), spawnPosition, WaveLevel);
-                    spawned++;
-                }
-
-                interval = SpawnInterval * 60 / WaveLevel;
+                if (!GlobalFunctions.RandomPoint(spawnPosition, 20, out Vector3 pos))
+                    continue;
+                SpawnNPC(new SerializableGuid(), pos, WaveLevel);
+                spawned++;
             }
+
+            interval = SpawnInterval * 60 / WaveLevel;
         }
 
         public override void FailCheck()

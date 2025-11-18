@@ -117,7 +117,7 @@ namespace Bestiary
                 
                 NPCSpawnForWaves.TryGetValue(waveNumber, out var waveInfo);
                 var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-                foreach (var entity in waveInfo.Entities)
+                foreach (var entity in waveInfo.Entities.Where(entity => manager.Exists(entity)))
                 {
                     manager.AddComponent<DeathTag>(entity);
                 }

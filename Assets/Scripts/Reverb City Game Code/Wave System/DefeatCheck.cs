@@ -15,7 +15,7 @@ namespace DreamersInc.ReverbCity
             foreach (var (test, entity) in SystemAPI.Query<BaseCharacterComponent>().WithEntityAccess().WithChangeFilter<BaseCharacterComponent>())
             {
                 if (!(test.HealthRatio <= 0)) continue;
-                
+                WaveManager.IncrementDefeatCount();
       
             }
    

@@ -30,11 +30,12 @@ namespace DreamersInc.WaveSystem.interfaces
             OnWaveStart.Invoke();
             SetUILabel();
         }
+        protected Label label;
         protected void SetUILabel()
         {
             var hudUI = UIManager.GetUI(UIType.HUD);
             var panel = hudUI.rootVisualElement.Q<WaveUIPanel>();
-            var label = Create<Label>("WaveInfo");
+            label = Create<Label>("WaveInfo");
             label.dataSource = this;
             label.SetBinding(nameof(Label.text), new DataBinding()
             {
@@ -55,6 +56,7 @@ namespace DreamersInc.WaveSystem.interfaces
         protected void CompleteWave()
         {
             Stop();
+            label.RemoveFromHierarchy();
             BestiaryManager.KillWaveNpcs(WaveLevel);
             
         }
