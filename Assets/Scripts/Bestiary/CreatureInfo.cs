@@ -9,14 +9,14 @@ using UnityEngine.UIElements;
 
 namespace Bestiary
 {
-    [CreateAssetMenu(menuName = "Create CreatureInfo", fileName = "CreatureInfo", order = 0)]
+    [CreateAssetMenu(menuName = "Bestiary/Create CreatureInfo", fileName = "CreatureInfo", order = 1)]
     public class CreatureInfo : ScriptableObject, ICharacterInfo
     {
         public SerializableGuid Guid => guid;
         public string Name;
        [SerializeField] private SerializableGuid guid;
-       public PlayerCharacterClass Stats=>stats;
-       [SerializeField] PlayerCharacterClass stats;
+       public ICharacterData Stats=>stats;
+       [SerializeField] NPCCharacterClass stats;
         public GameObject Prefab=>prefab;
         public FactionNames FactionID;
         public int Influence;

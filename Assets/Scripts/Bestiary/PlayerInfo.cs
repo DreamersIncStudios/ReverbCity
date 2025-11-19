@@ -10,13 +10,13 @@ using UnityEngine;
 
 namespace Bestiary
 {
-    [CreateAssetMenu(menuName = "Create PlayerInfo", fileName = "PlayerInfo", order = 0)]
+    [CreateAssetMenu(menuName = "Bestiary/Create PlayerInfo", fileName = "PlayerInfo", order = 0)]
     public class PlayerInfo : ScriptableObject, ICharacterInfo
     {
         public SerializableGuid  Guid => guid;
         [SerializeField] private SerializableGuid guid;
         public string Name;
-        public PlayerCharacterClass Stats=>stats;
+        public ICharacterData Stats=>stats;
         [SerializeField] PlayerCharacterClass stats;
         
         public GameObject Prefab=>prefab;

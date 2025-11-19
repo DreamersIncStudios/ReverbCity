@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using Bestiary;
+using Stats;
 using Unity.Entities;
 using UnityEngine;
 using static Bestiary.BestiaryManager;
@@ -7,12 +9,10 @@ namespace DreamersInc.ReverbCity.GameCode
  
     public class Speaker : MonoBehaviour
     {
+        [SerializeField]private StructureInfo structureInfo;
        public Task Init()
-        {
-            var entity = new CharacterBuilder("testing")
-                .Build();
-            RegisterStructure(entity);
-            return Task.CompletedTask;
+       {
+            return SpawnStructure(structureInfo.Guid, gameObject, transform.position, 1);
         }
     } 
 }

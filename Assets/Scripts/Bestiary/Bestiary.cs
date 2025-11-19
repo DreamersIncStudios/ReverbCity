@@ -157,7 +157,7 @@ namespace Bestiary
     public interface ICharacterInfo
     {
         SerializableGuid Guid { get; }
-        public PlayerCharacterClass Stats { get; }
+        public ICharacterData Stats { get; }
 
     }
     

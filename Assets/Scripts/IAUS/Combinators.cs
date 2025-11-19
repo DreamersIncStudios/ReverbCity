@@ -7,7 +7,6 @@ using DreamersIncStudio.FactionSystem;
 using Global.Component;
 using Sirenix.Utilities;
 using Stats.Entities;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
