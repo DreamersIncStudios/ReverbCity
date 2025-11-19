@@ -1,8 +1,13 @@
 using System;
+using AISenses;
 using Bestiary;
 using DreamersInc.ReverbCity;
 using DreamersInc.UIToolkitHelpers;
+using DreamersIncStudio.GAIACollective;
+using Unity.Entities;
 using Unity.Properties;
+using Unity.Transforms;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
@@ -21,15 +26,34 @@ namespace DreamersInc.WaveSystem.interfaces
         [CreateProperty] protected string WaveLevelProperty=>"This need to be overriden";
         protected uint WaveLevel;
 
+        protected Entity WavePack;
+
         public virtual void StartWave(uint waveLevel)
         {
             if(IsRunning) return;
             IsRunning = true;
             WaveLevel = waveLevel;
             WaveManager.RegisterWave(this);
+            CreatePackEntity();
             OnWaveStart.Invoke();
             SetUILabel();
         }
+
+        void CreatePackEntity()
+        {
+            World.DefaultGameObjectInjectionWorld.EntityManager.CreateArchetype(
+                typeof(LocalTransform),
+                typeof(LocalToWorld), typeof(Pack), 
+                typeof(DynamicBuffer<Enemies>), typeof(DynamicBuffer<Allies>), 
+                typeof(DynamicBuffer<AISenses.Resources>), typeof(DynamicBuffer<PlacesOfInterest>)
+            );
+        }
+
+        void DestroyPackEntity()
+        {
+            World.DefaultGameObjectInjectionWorld.EntityManager.DestroyEntity(WavePack);
+        }
+
         protected Label label;
         protected void SetUILabel()
         {
@@ -58,6 +82,7 @@ namespace DreamersInc.WaveSystem.interfaces
             Stop();
             label.RemoveFromHierarchy();
             BestiaryManager.KillWaveNpcs(WaveLevel);
+            DestroyPackEntity();
             
         }
         public abstract void FailCheck();
@@ -71,7 +96,7 @@ namespace DreamersInc.WaveSystem.interfaces
         public abstract bool IsFinished { get; }
         public abstract void PassedTrial();
         public abstract void FailTrial();
-        public bool Pass { get; }
+
         
         bool disposed;
         

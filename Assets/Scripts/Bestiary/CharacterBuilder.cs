@@ -361,6 +361,17 @@ namespace Bestiary
             {
                 return entity;
             }
+
+            public CharacterBuilder WithParent(Entity parent )
+            {
+                if (parent == Entity.Null)
+                    return this;
+                manager.AddComponentData(entity, new Parent()
+                {
+                    Value = parent
+                });
+                return this;
+            }
         }
     }
 }

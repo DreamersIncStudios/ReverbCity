@@ -44,7 +44,7 @@ namespace DreamersInc.WaveSystem
             {
                 for (int i = 0; i < 4 * WaveLevel; i++)
                 {
-                    SpawnNPC(new SerializableGuid(), spawnPosition, WaveLevel);
+                    SpawnNPC(new SerializableGuid(), spawnPosition, WaveLevel, base.WavePack);
                     spawnCount++;
                 }
 

@@ -4,6 +4,7 @@ using Global.Component;
 using MotionSystem.Components;
 using Sirenix.OdinInspector;
 using Stats;
+using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -46,6 +47,20 @@ namespace Bestiary
             var info = GetCreature();
             var entity = new CharacterBuilder(info.Name).
                 WithModel(info.Prefab, position, Quaternion.identity, "NPC").
+                WithEntityPhysics(info.PhysicsInfo, true).
+                WithStats(info.Stats, guid, waveLevel, info.Name).
+                WithMovement(info.Move,CreatureType.biped,false).
+                WithFactionInfluence(info.FactionID, info.Influence, 1).
+                Build();
+            RegisterNPCEnemy(waveLevel,entity);
+            return Task.CompletedTask;
+        }     
+        public static Task SpawnNPC(SerializableGuid guid, Vector3 position, uint waveLevel, Entity wavePack)
+        {
+            var info = GetCreature();
+            var entity = new CharacterBuilder(info.Name).
+                WithModel(info.Prefab, position, Quaternion.identity, "NPC").
+                WithParent(wavePack).
                 WithEntityPhysics(info.PhysicsInfo, true).
                 WithStats(info.Stats, guid, waveLevel, info.Name).
                 WithMovement(info.Move,CreatureType.biped,false).
