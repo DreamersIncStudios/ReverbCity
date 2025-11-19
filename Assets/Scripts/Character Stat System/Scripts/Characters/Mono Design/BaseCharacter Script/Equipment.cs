@@ -27,26 +27,14 @@ namespace Stats
                     case AttributeName.Vitality:
                         GetPrimaryAttribute((int)AttributeName.Vitality).BuffValue += mod.BuffValue * MP;
                         break;
-                    case AttributeName.Awareness:
-                        GetPrimaryAttribute((int)AttributeName.Awareness).BuffValue += mod.BuffValue * MP;
-                        break;
-                    case AttributeName.Speed:
-                        GetPrimaryAttribute((int)AttributeName.Speed).BuffValue += mod.BuffValue * MP;
-                        break;
                     case AttributeName.Skill:
                         GetPrimaryAttribute((int)AttributeName.Skill).BuffValue += mod.BuffValue * MP;
-                        break;
-                    case AttributeName.Resistance:
-                        GetPrimaryAttribute((int)AttributeName.Resistance).BuffValue += mod.BuffValue * MP;
                         break;
                     case AttributeName.Concentration:
                         GetPrimaryAttribute((int)AttributeName.Concentration).BuffValue += mod.BuffValue * MP;
                         break;
                     case AttributeName.WillPower:
                         GetPrimaryAttribute((int)AttributeName.WillPower).BuffValue += mod.BuffValue * MP;
-                        break;
-                    case AttributeName.Charisma:
-                        GetPrimaryAttribute((int)AttributeName.Charisma).BuffValue += mod.BuffValue * MP;
                         break;
                     case AttributeName.Luck:
                         GetPrimaryAttribute((int)AttributeName.Luck).BuffValue += mod.BuffValue * MP;

@@ -31,7 +31,6 @@ namespace DreamersInc.DamageSystem.Interfaces
         public Stat Range_Offense { get; }
         public Stat Melee_Offense {get;}
         public Attributes Skill { get; }
-        public Attributes Speed { get; }
         public WeaponType Type { get; }
     }
 

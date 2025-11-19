@@ -24,7 +24,6 @@ namespace DreamersInc.DamageSystem
         public Stat Range_Offense { get; private set; }
         public Stat Melee_Offense { get; private set; }
         public Attributes Skill { get; private set; }
-        public Attributes Speed { get; private set; }
         
         private Animator animator;
 
@@ -53,7 +52,7 @@ namespace DreamersInc.DamageSystem
             get
             {
                 var prob = Mathf.RoundToInt(Random.Range(0, 255));
-                var threshold =  (Skill.AdjustBaseValue + Speed.AdjustBaseValue) / 2;
+                var threshold =  Skill.AdjustBaseValue ;
                 return prob < threshold;
             }
         }
@@ -162,7 +161,6 @@ namespace DreamersInc.DamageSystem
             Magic_Offense = stats.GetStat((int)StatName.MagicOffence);
             Range_Offense = stats.GetStat((int)StatName.RangedOffence);
             Melee_Offense = stats.GetStat((int)StatName.MeleeOffence);
-            Speed = stats.GetPrimaryAttribute((int)AttributeName.Speed);
             Skill = stats.GetPrimaryAttribute((int)AttributeName.Skill);
             TypeOfDamage = damageType;
 

@@ -21,13 +21,9 @@ namespace Stats.Entities
             this.SpawnID = spawnID;
             this.BaseExp = Exp;
             this.GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(BaseStats.Strength * ModValue);
-            this.GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = (int)(BaseStats.Awareness * ModValue);
-            this.GetPrimaryAttribute((int)AttributeName.Charisma).BaseValue = (int)(BaseStats.Charisma * ModValue);
-            this.GetPrimaryAttribute((int)AttributeName.Resistance).BaseValue = (int)(BaseStats.Resistance * ModValue);
             this.GetPrimaryAttribute((int)AttributeName.WillPower).BaseValue = (int)(BaseStats.WillPower * ModValue);
             this.GetPrimaryAttribute((int)AttributeName.Vitality).BaseValue = (int)(BaseStats.Vitality * ModValue);
             this.GetPrimaryAttribute((int)AttributeName.Skill).BaseValue = (int)(BaseStats.Skill * ModValue);
-            this.GetPrimaryAttribute((int)AttributeName.Speed).BaseValue = (int)(BaseStats.Speed * ModValue);
             this.GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = (int)(BaseStats.Luck * ModValue);
             this.GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = (int)(BaseStats.Concentration * ModValue);
             this.GetVital((int)VitalName.Health).StartValue = 500;
@@ -42,9 +38,6 @@ namespace Stats.Entities
             GetVital((int)VitalName.Health).AddDefiningAttribute(
                 new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Vitality), 3f)
             );
-            GetVital((int)VitalName.Health).AddDefiningAttribute(
-                new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Resistance), 3f)
-                );
             GetVital((int)VitalName.Health).AddDefiningAttribute(
                 new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Level), 10.0f)
                 );
@@ -75,9 +68,6 @@ namespace Stats.Entities
                 new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Vitality), 3f)
             );
             GetVital((int)VitalName.Health).AddModifier(
-                new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Resistance), 3f)
-                );
-            GetVital((int)VitalName.Health).AddModifier(
                 new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Level), 10.0f)
                 );
             GetVital((int)VitalName.Health).AddModifier(
@@ -103,7 +93,7 @@ namespace Stats.Entities
         {
             //Need to Update with Calculation based on FFXV and FFXIII
             GetStat((int)StatName.MeleeOffence).AddDefiningAttribute(
-                new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Strength), 1.5f));
+                new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Strength), 15f));
             GetStat((int)StatName.MeleeOffence).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Skill), 1.250f));
             GetStat((int)StatName.MeleeOffence).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Level), 3.0f));
             GetStat((int)StatName.MeleeDefense).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Vitality), 1));
@@ -111,26 +101,10 @@ namespace Stats.Entities
 
             GetStat((int)StatName.MagicOffence).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Concentration), .5f));
             GetStat((int)StatName.MagicOffence).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.WillPower), .5f));
-            GetStat((int)StatName.MagicOffence).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Charisma), .5f));
 
-            GetStat((int)StatName.MagicDefense).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Strength), .2f));
-            GetStat((int)StatName.MagicDefense).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Charisma), .33f));
-            GetStat((int)StatName.MagicDefense).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Speed), .10f));
-            GetStat((int)StatName.MagicDefense).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Charisma), .45f));
+            GetStat((int)StatName.MagicDefense).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Strength), 2f));
 
             GetStat((int)StatName.RangedOffence).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Concentration), .33f));
-            GetStat((int)StatName.RangedOffence).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Speed), .33f));
-
-            GetStat((int)StatName.RangedDefence).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Speed), .33f));
-            GetStat((int)StatName.RangedDefence).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .33f));
-
-            //Targeting and Motion detection
-            GetStat((int)StatName.RangeMotion).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .33f));
-            GetStat((int)StatName.RangeTarget).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .33f));
-            // Status Changes IE Poison Confused Berzerk etc...
-
-            GetStat((int)StatName.StatusChange).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .33f));
-            GetStat((int)StatName.StatusChange).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Resistance), .33f));
             // Recovery Rates for Mana;
 
             GetStat((int)StatName.ManaRecover).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.WillPower), .25f));
@@ -141,7 +115,7 @@ namespace Stats.Entities
         {
             //Need to Update with Calculation based on FFXV and FFXIII
             GetStat((int)StatName.MeleeOffence).AddModifier(
-                new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Strength), 1.5f));
+                new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Strength), 15f));
             GetStat((int)StatName.MeleeOffence).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Skill), 1.250f));
             GetStat((int)StatName.MeleeOffence).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Level), 3.0f));
             GetStat((int)StatName.MeleeDefense).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Vitality), 1));
@@ -149,27 +123,10 @@ namespace Stats.Entities
 
             GetStat((int)StatName.MagicOffence).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Concentration), .5f));
             GetStat((int)StatName.MagicOffence).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.WillPower), .5f));
-            GetStat((int)StatName.MagicOffence).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Charisma), .5f));
 
-            GetStat((int)StatName.MagicDefense).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Strength), .2f));
-            GetStat((int)StatName.MagicDefense).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Charisma), .33f));
-            GetStat((int)StatName.MagicDefense).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Speed), .10f));
-            GetStat((int)StatName.MagicDefense).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Charisma), .45f));
+            GetStat((int)StatName.MagicDefense).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Strength), 2f));
 
             GetStat((int)StatName.RangedOffence).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Concentration), .33f));
-            GetStat((int)StatName.RangedOffence).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Speed), .33f));
-
-            GetStat((int)StatName.RangedDefence).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Speed), .33f));
-            GetStat((int)StatName.RangedDefence).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .33f));
-
-            //Targeting and Motion detection
-            GetStat((int)StatName.RangeMotion).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .33f));
-            GetStat((int)StatName.RangeTarget).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .33f));
-            // Status Changes IE Poison Confused Berzerk etc...
-
-            GetStat((int)StatName.StatusChange).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .33f));
-            GetStat((int)StatName.StatusChange).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Resistance), .33f));
-            // Recovery Rates for Mana;
 
             GetStat((int)StatName.ManaRecover).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.WillPower), .25f));
             GetStat((int)StatName.ManaRecover).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Concentration), .25f));
@@ -177,25 +134,15 @@ namespace Stats.Entities
 
         public void SetupAbilitesBase()
         {
-            GetAbility((int)AbilityName.Libra).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .55f));
-            GetAbility((int)AbilityName.Detection).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .55f));
-
-            GetAbility((int)AbilityName.Detection).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), 2.75f));
             GetAbility((int)AbilityName.Detection).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Skill), 2.75f));
             GetAbility((int)AbilityName.Detection).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Concentration), 2.75f));
             GetAbility((int)AbilityName.Detection).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Luck), 2.15f));
-
-
 
         }
 
 
         public void SetupAbilitesModifiers()
         {
-            GetAbility((int)AbilityName.Libra).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .55f));
-            GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .55f));
-
-            GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), 2.75f));
             GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Skill), 2.75f));
             GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Concentration), 2.75f));
             GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Luck), 2.15f));
@@ -209,13 +156,9 @@ namespace Stats.Entities
             _level = GetPrimaryAttribute((int)AttributeName.Level).BaseValue = level;
             GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = Str;
             GetPrimaryAttribute((int)AttributeName.Vitality).BaseValue = vit;
-            GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = Awr;
-            GetPrimaryAttribute((int)AttributeName.Speed).BaseValue = Spd;
             GetPrimaryAttribute((int)AttributeName.Skill).BaseValue = Skl;
-            GetPrimaryAttribute((int)AttributeName.Resistance).BaseValue = Res;
             GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = Con;
             GetPrimaryAttribute((int)AttributeName.WillPower).BaseValue = Will;
-            GetPrimaryAttribute((int)AttributeName.Charisma).BaseValue = Chars;
             GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = Lck;
             GetVital((int)VitalName.Health).BuffValue = BaseHealth;
             GetVital((int)VitalName.Mana).BuffValue = BaseMana;

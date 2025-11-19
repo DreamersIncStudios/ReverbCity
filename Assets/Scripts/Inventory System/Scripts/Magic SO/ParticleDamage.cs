@@ -22,7 +22,6 @@ public class ParticleDamage : MonoBehaviour, IDamageDealer
     public Stat Range_Offense { get; private set; }
     public Stat Melee_Offense { get; private set; }
     public Attributes Skill { get; private set; }
-    public Attributes Speed { get; private set; }
     public TypeOfDamage TypeOfDamage { get; private set; }
     public WeaponType Type => type;
     [SerializeField] WeaponType type;
@@ -91,7 +90,7 @@ public class ParticleDamage : MonoBehaviour, IDamageDealer
         get
         {
             var prob = Mathf.RoundToInt(Random.Range(0, 255));
-            var threshold =  (Skill.AdjustBaseValue + Speed.AdjustBaseValue) / 2;
+            var threshold =  Skill.AdjustBaseValue;
             return prob < threshold;
         }
     }
@@ -125,7 +124,6 @@ public class ParticleDamage : MonoBehaviour, IDamageDealer
         Magic_Offense = stats.GetStat((int)StatName.MagicOffence);
         Range_Offense = stats.GetStat((int)StatName.RangedOffence);
         Melee_Offense = stats.GetStat((int)StatName.MeleeOffence);
-        Speed = stats.GetPrimaryAttribute((int)AttributeName.Speed);
         Skill = stats.GetPrimaryAttribute((int)AttributeName.Skill);
         TypeOfDamage = damageType;
         level = (uint)stats.Level;

@@ -25,13 +25,9 @@ namespace Stats
             CharacterStats.Level = CharClass.Level;
             float ModValue = CharClass.LevelMod;
             CharacterStats.GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(CharClass.Strength * ModValue);
-            CharacterStats.GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = (int)(CharClass.Awareness * ModValue);
-            CharacterStats.GetPrimaryAttribute((int)AttributeName.Charisma).BaseValue = (int)(CharClass.Charisma * ModValue);
-            CharacterStats.GetPrimaryAttribute((int)AttributeName.Resistance).BaseValue = (int)(CharClass.Resistance * ModValue);
             CharacterStats.GetPrimaryAttribute((int)AttributeName.WillPower).BaseValue = (int)(CharClass.WillPower * ModValue);
             CharacterStats.GetPrimaryAttribute((int)AttributeName.Vitality).BaseValue = (int)(CharClass.Vitality * ModValue);
             CharacterStats.GetPrimaryAttribute((int)AttributeName.Skill).BaseValue = (int)(CharClass.Skill * ModValue);
-            CharacterStats.GetPrimaryAttribute((int)AttributeName.Speed).BaseValue = (int)(CharClass.Speed * ModValue);
             CharacterStats.GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = (int)(CharClass.Luck * ModValue);
             CharacterStats.GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = (int)(CharClass.Concentration * ModValue);
             CharacterStats.GetVital((int)VitalName.Health).StartValue = 500;

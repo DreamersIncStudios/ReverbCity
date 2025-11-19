@@ -16,15 +16,11 @@ namespace Stats
     public enum AttributeName
     {
         Level,
-        Strength,
+        Strength, // All values derived from Strength will get a 10x modifier
         Vitality,
-        Awareness,
-        Speed,
         Skill,
-        Resistance,
-        Concentration,
-        WillPower,
-        Charisma,
+        WillPower, //copy of magic 
+        Concentration, // Copy of spirit
         Luck
     }
     [System.Serializable]
