@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using DreamersIncStudio.FactionSystem;
+using Global.Component;
 using Sirenix.OdinInspector;
 using Stats;
 using UnityEngine;
@@ -13,9 +15,12 @@ namespace Bestiary
         [SerializeField] private SerializableGuid guid;
         public ICharacterData Stats=>stats;
         [SerializeField] NPCCharacterClass stats;
+        public FactionNames FactionID;
+        public int Influence;
         public GameObject Prefab=>prefab;
         [SerializeField] GameObject prefab;
-        
+        public PhysicsInfo PhysicsInfo;
+
         [HorizontalGroup("ItemSplit", 0.5f), VerticalGroup("ItemSplit/Left"), Button(ButtonSizes.Large),
          GUIColor(0.4f, 0.8f, 1)]
         public void SetID()
@@ -33,25 +38,22 @@ namespace Bestiary
     {
         public static Task SpawnStructure(SerializableGuid guid, Vector3 position, uint waveLevel)
         {
-            var info = GetCreature();
+            var info = GetStructureInfo( guid);
             var entity = new CharacterBuilder(info.Name).
                 WithModel(info.Prefab, position, Quaternion.identity, "NPC").
                 WithEntityPhysics(info.PhysicsInfo, true).
                 WithStats(info.Stats, guid, waveLevel, info.Name).
-                WithMovement(info.Move,CreatureType.biped,false).
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
                 Build();
             RegisterStructure(entity);
             return Task.CompletedTask;
         }   
-        public static Task SpawnStructure(SerializableGuid guid,GameObject go, Vector3 position, uint waveLevel)
+        public static Task SpawnStructure(StructureInfo info,GameObject go, Vector3 position, uint waveLevel)
         {
-            var info = GetCreature();
             var entity = new CharacterBuilder(info.Name).
                 WithExistingModel(go, position, Quaternion.identity, "NPC").
                 WithEntityPhysics(info.PhysicsInfo, true).
-                WithStats(info.Stats, guid, waveLevel, info.Name).
-                WithMovement(info.Move,CreatureType.biped,false).
+                WithStats(info.Stats, info.Guid, waveLevel, info.Name).
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
                 Build();
             RegisterStructure(entity);

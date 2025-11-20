@@ -19,17 +19,17 @@ MonoBehaviour:
     Part3: 2369042088
     Part4: 3749617873
   stats:
-    level: 2
-    strength: 10
-    vitality: 10
-    awareness: 10
-    speed: 10
+    levelRange:
+      x: 3
+      y: 3
+    strength: 85
+    vitality: 54
     skill: 10
-    resistance: 10
-    concentration: 10
-    willPower: 10
-    charisma: 10
+    concentration: 71
+    willPower: 71
     luck: 10
+    baseHealth: 1500
+    baseMana: 100
     difficultyMod: 1
     levelMod: 1
   FactionID: 2

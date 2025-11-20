@@ -14,10 +14,7 @@ namespace Stats
         {
             if (CharClass.LevelMod == 0)
                 CharClass.LevelMod = 1;
-
-            if (CharClass.DifficultyMod == 0)
-                CharClass.DifficultyMod = 1;
-
+            
         }
 
         public void StatsUpdate(BaseCharacter CharacterStats)

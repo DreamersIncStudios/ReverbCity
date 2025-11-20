@@ -186,6 +186,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4501828528604614, guid: 50962d92cd0e5b1488a72423c371e36b, type: 3}
   m_PrefabInstance: {fileID: 542369414}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &107786165 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1482708162960746, guid: 0a8d70af4c2496b4693f7adce75e507f, type: 3}
+  m_PrefabInstance: {fileID: 1258558594}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &126337988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13316,6 +13321,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4916022275676578, guid: 0a8d70af4c2496b4693f7adce75e507f, type: 3}
   m_PrefabInstance: {fileID: 1258558594}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &339287723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107786165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1001 &363852544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13330,7 +13355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4663934569612456, guid: 1d3cd4f3b055efc4abad52c48fcd48c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -47.00003
+      value: -48.00003
       objectReference: {fileID: 0}
     - target: {fileID: 4663934569612456, guid: 1d3cd4f3b055efc4abad52c48fcd48c5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13338,7 +13363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4663934569612456, guid: 1d3cd4f3b055efc4abad52c48fcd48c5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.999864
+      value: -9.999861
       objectReference: {fileID: 0}
     - target: {fileID: 4663934569612456, guid: 1d3cd4f3b055efc4abad52c48fcd48c5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13367,6 +13392,10 @@ PrefabInstance:
     - target: {fileID: 4663934569612456, guid: 1d3cd4f3b055efc4abad52c48fcd48c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 23326741624208944, guid: 1d3cd4f3b055efc4abad52c48fcd48c5, type: 3}
+      propertyPath: m_RayTracingMode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19878,7 +19907,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1482708162960746, guid: 0a8d70af4c2496b4693f7adce75e507f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 339287723}
   m_SourcePrefab: {fileID: 100100000, guid: 0a8d70af4c2496b4693f7adce75e507f, type: 3}
 --- !u!4 &1265548548 stripped
 Transform:

@@ -5,17 +5,13 @@ namespace Stats
         public int Level { get; }
         public int Strength { get; }
         public int Vitality { get; }
-        public int Awareness { get; }
-        public int Speed { get; }
         public int Skill { get; }
-        public int Resistance { get; }
         public int Concentration { get; }
         public int WillPower { get; }
-        public int Charisma { get; }
         public int Luck { get; }
-
+        public int BaseHealth { get; }
+        public int BaseMana { get; }
         //todo review if setters are needed
-        public float DifficultyMod { get; set; }
         public float LevelMod { get; set; }
     }
 }

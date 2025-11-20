@@ -12,7 +12,7 @@ namespace DreamersInc.ReverbCity.GameCode
         [SerializeField]private StructureInfo structureInfo;
        public Task Init()
        {
-            return SpawnStructure(structureInfo.Guid, gameObject, transform.position, 1);
+            return SpawnStructure(structureInfo, gameObject, transform.position, 1);
         }
     } 
 }

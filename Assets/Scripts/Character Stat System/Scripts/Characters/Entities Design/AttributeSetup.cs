@@ -26,8 +26,8 @@ namespace Stats.Entities
             this.GetPrimaryAttribute((int)AttributeName.Skill).BaseValue = (int)(BaseStats.Skill * ModValue);
             this.GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = (int)(BaseStats.Luck * ModValue);
             this.GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = (int)(BaseStats.Concentration * ModValue);
-            this.GetVital((int)VitalName.Health).StartValue = 500;
-            this.GetVital((int)VitalName.Mana).StartValue = 250;
+            this.GetVital((int)VitalName.Health).StartValue = BaseStats.BaseHealth;
+            this.GetVital((int)VitalName.Mana).StartValue = BaseStats.BaseMana;
             StatUpdate();
         }
 

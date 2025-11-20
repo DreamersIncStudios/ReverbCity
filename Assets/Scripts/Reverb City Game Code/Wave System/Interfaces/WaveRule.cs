@@ -41,12 +41,14 @@ namespace DreamersInc.WaveSystem.interfaces
 
         void CreatePackEntity()
         {
-            World.DefaultGameObjectInjectionWorld.EntityManager.CreateArchetype(
+            var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            WavePack = manager.CreateEntity(
                 typeof(LocalTransform),
-                typeof(LocalToWorld), typeof(Pack), 
-                typeof(DynamicBuffer<Enemies>), typeof(DynamicBuffer<Allies>), 
-                typeof(DynamicBuffer<AISenses.Resources>), typeof(DynamicBuffer<PlacesOfInterest>)
+                typeof(LocalToWorld), typeof(Pack)
             );
+            manager.SetName(WavePack, $"Wave Pack {WaveLevel}");
+            manager.AddBuffer<Enemies>(WavePack);
+            manager.AddBuffer<AISenses.Resources>(WavePack);
         }
 
         void DestroyPackEntity()
