@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DreamersIncStudio.FactionSystem;
 using Global.Component;
+using IAUS.ECS;
+using IAUS.ECS.Component;
 using MotionSystem.Components;
 using Sirenix.OdinInspector;
 using Stats;
@@ -17,13 +20,17 @@ namespace Bestiary
         public string Name;
        [SerializeField] private SerializableGuid guid;
        public ICharacterData Stats=>stats;
+       public Rank Rank => rank;
+       [SerializeField] Rank rank;
        [SerializeField] NPCCharacterClass stats;
         public GameObject Prefab=>prefab;
+        
         public FactionNames FactionID;
         public int Influence;
         [SerializeField] GameObject prefab;
         public PhysicsInfo PhysicsInfo;
         public MovementData Move;
+        public List<AIStates> aiStatesToAdd;
 
         [HorizontalGroup("ItemSplit", 0.5f), VerticalGroup("ItemSplit/Left"), Button(ButtonSizes.Large),
          GUIColor(0.4f, 0.8f, 1)]
@@ -51,6 +58,8 @@ namespace Bestiary
                 WithStats(info.Stats, guid, waveLevel, info.Name).
                 WithMovement(info.Move,CreatureType.biped,false).
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
+                WithCharacterDetection(FactionNames.Daemon).
+                WithAI(info.Rank,info.FactionID,info.aiStatesToAdd).
                 Build();
             RegisterNPCEnemy(waveLevel,entity);
             return Task.CompletedTask;

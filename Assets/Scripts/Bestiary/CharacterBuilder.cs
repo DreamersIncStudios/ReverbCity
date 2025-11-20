@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using AISenses;
+using AISenses.VisionSystems;
 using AISenses.VisionSystems.Combat;
 using Dreamers.InventorySystem;
 using Dreamers.InventorySystem.Base;
@@ -8,8 +11,11 @@ using DreamersInc.ComboSystem;
 using DreamersInc.InfluenceMapSystem;
 using DreamersInc.ServiceLocatorSystem;
 using DreamersIncStudio.FactionSystem;
+using DreamersIncStudio.GAIACollective;
 using DreamersStudio.CameraControlSystem;
 using Global.Component;
+using IAUS.ECS;
+using IAUS.ECS.Component;
 using MotionSystem.Components;
 using MotionSystem.Systems;
 using Stats;
@@ -353,6 +359,113 @@ namespace Bestiary
                 });
 
        
+
+                return this;
+            }
+
+            private Entity aiEntity;
+            public CharacterBuilder WithAI(Rank getRank, FactionNames FactionID, List<AIStates> aiStatesToAdd, bool capableOfMelee = false,
+                bool capableOfMagic = false, bool capableOfRange = false, Role role = default)
+            {
+                if (!model || entity == Entity.Null) return this;
+
+                var baseEntityArch = manager.CreateArchetype(
+                    typeof(LocalTransform),
+                    typeof(LocalToWorld)
+                );
+                aiEntity = manager.CreateEntity(baseEntityArch);
+                manager.SetName(aiEntity, "AI Entity");
+                manager.SetComponentData(aiEntity, new LocalTransform()
+                {
+                    Scale = 1
+                });
+                manager.AddComponentData(aiEntity, new Parent()
+                {
+                    Value = entity
+                });
+
+                manager.AddComponentData(aiEntity, new AIStat());
+                manager.AddComponentData(entity, new AIStat());
+
+                manager.AddComponentData(aiEntity, new IAUSBrain()
+                {
+                    rank = getRank,
+                    FactionID = FactionID,
+                    Difficulty = Difficulty.Normal,
+                    Role = role
+                });
+                manager.AddComponentData(aiEntity, new VisionIAUSLink(visionEntity));
+                model.layer = LayerMask.NameToLayer("NPC");
+                bool attackStateAdd = false;
+                var statesToCheck = manager.AddBuffer<StateData>(aiEntity);
+                foreach (var state in aiStatesToAdd)
+                {
+                    statesToCheck.Add(new StateData(state));
+                }
+
+                if (aiStatesToAdd.Contains(AIStates.Attack)
+                    || aiStatesToAdd.Contains(AIStates.Terrorize)
+                    || aiStatesToAdd.Contains(AIStates.AttackGlobalTarget))
+                {
+                    var command = new Command
+                    {
+                        BareHands = true // equip system need to adjust this value
+                    };
+                    manager.AddComponentData(aiEntity, command);
+                    manager.AddComponent<AttackTarget>(aiEntity);
+
+                    var trigger = model.GetComponent<WeaponEventTrigger>();
+                    trigger.OnAnimationEvent += (sender, args) =>
+                    {
+                        if (args.AnimID == 0) return;
+                        command.InputQueue.Enqueue(new AnimationTrigger()
+                        {
+                            AttackType = AttackType.SpecialAttack,
+                            triggerAnimIndex = args.AnimID,
+                            TransitionDuration = args.Duration,
+                            TransitionOffset = args.TransitionOffset,
+                            EndOfCurrentAnim = args.EndofCurrentAnim
+                        });
+                    };
+                    manager.AddComponentObject(aiEntity, trigger);
+
+                    manager.AddComponent<CheckAttackStatus>(aiEntity);
+                    manager.AddComponentData(aiEntity,
+                        new AttackCapable(capableOfMelee, capableOfMagic, capableOfRange));
+                }
+
+                manager.AddComponent<SetupBrainTag>(aiEntity);
+
+                return this;
+            }
+            Entity visionEntity;
+            public CharacterBuilder WithCharacterDetection(FactionNames FactionID)
+            {
+                if (entity == Entity.Null) return this;
+                if (!model) return this;
+                var baseEntityArch = manager.CreateArchetype(
+                    typeof(LocalTransform),
+                    typeof(LocalToWorld)
+                );
+                visionEntity = manager.CreateEntity(baseEntityArch);
+                manager.SetName(visionEntity, "Vision Entity");
+                manager.SetComponentData(visionEntity, new LocalTransform()
+                {
+                    Scale = 1
+                });
+                manager.AddComponentData(visionEntity, new Parent()
+                {
+                    Value = entity
+                });
+
+                var vision = new Vision();
+                vision.InitializeSense(character, (int)FactionID, canSeeLayerMask);
+                //Todo Move to entity by self
+                manager.AddBuffer<Enemies>(visionEntity);
+                manager.AddBuffer<Allies>(visionEntity);
+                manager.AddBuffer<AISenses.Resources>(visionEntity);
+                manager.AddBuffer<PlacesOfInterest>(visionEntity);
+                manager.AddComponentData(visionEntity, vision);
 
                 return this;
             }

@@ -6,6 +6,7 @@ using DreamersIncStudio.GAIACollective;
 using IAUS.ECS.StateBlobSystem;
 using Unity.Collections;
 using Unity.Mathematics;
+using UnityEngine.Serialization;
 
 namespace IAUS.ECS.Component
 {
@@ -20,7 +21,8 @@ namespace IAUS.ECS.Component
         public FactionNames FactionID;
         public Status Attitude;
         public Difficulty Difficulty;
-        public NPCLevel NPCLevel;
+        [FormerlySerializedAs("NPCLevel")]
+        public Rank rank;
         public BlobAssetReference<AIStateBlobAsset> State;
         public Role Role;
         public float2 InfluenceHere;

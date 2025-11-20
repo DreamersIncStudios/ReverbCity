@@ -18,6 +18,7 @@ MonoBehaviour:
     Part2: 1293807236
     Part3: 2369042088
     Part4: 3749617873
+  rank: 0
   stats:
     levelRange:
       x: 3
@@ -113,3 +114,4 @@ MonoBehaviour:
     AnimSpeedMultiplier: 1
     GroundCheckDistance: 0.2
     CombatCapable: 1
+  aiStatesToAdd: 0e000000

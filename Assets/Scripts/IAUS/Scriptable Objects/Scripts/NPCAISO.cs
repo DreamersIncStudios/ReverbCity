@@ -13,11 +13,12 @@ namespace IAUS.ECS
     public class NPCAISO : ScriptableObject
     {
         public string Name { get => nameNPC; }
-        public NPCLevel NPCLevel { get=> NpcLevel; }
+        public Rank Rank { get=> rank; }
 
         [FormerlySerializedAs("name")] [SerializeField] string nameNPC;
         public Difficulty Difficulty;
-        public NPCLevel NpcLevel;
+        [FormerlySerializedAs("NpcLevel")]
+        public Rank rank;
         public int FactionID;
         public List<State> States;
         

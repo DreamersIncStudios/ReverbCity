@@ -10,15 +10,15 @@
 
     //TODO Move to better file location 
 
-    public enum NPCLevel
+    public enum Rank
     {
-        Grunt,
+        Private,
         Specialist,
-        Tower,
-        NPC,
-        Daemon,
-        Beast,
-        WorkerNPC,
-        Spawner
+        Sargeant,
+        SFC,
+        FSG,
+        Lieutenant,
+        Captain
+        
     }
 }

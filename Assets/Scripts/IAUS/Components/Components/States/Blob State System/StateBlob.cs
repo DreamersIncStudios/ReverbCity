@@ -53,14 +53,14 @@ namespace IAUS.ECS.StateBlobSystem
     }
     public struct Identity
     {
-        public NPCLevel NPCLevel;
+        public Rank Rank;
         public int FactionID;
         public AIStates AIStates;
         public Difficulty Difficulty;
 
         public override string ToString()
         {
-            return NPCLevel.ToString() + " " + FactionID.ToString() + " " + Difficulty.ToString() + " " + AIStates.ToString();
+            return Rank.ToString() + " " + FactionID.ToString() + " " + Difficulty.ToString() + " " + AIStates.ToString();
         }
     }
 
@@ -94,7 +94,7 @@ namespace IAUS.ECS.StateBlobSystem
                         Difficulty = brain.ValueRO.Difficulty,
                         AIStates = s.State,
                         FactionID = (int)brain.ValueRO.FactionID,
-                        NPCLevel = brain.ValueRO.NPCLevel
+                        Rank = brain.ValueRO.rank
                     }));
                     s.SetStatus(ActionStatus.Idle);
                     statesToCheck[i] = s; // write back

@@ -35,7 +35,7 @@ namespace IAUS.ECS.StateBlobSystem
                 ID = new Identity
                 {
                     Difficulty = npcState.Difficulty,
-                    NPCLevel = npcState.NPCLevel,
+                    Rank = npcState.Rank,
                     FactionID = npcState.FactionID,
                     AIStates = state.StateName
                 }
