@@ -413,22 +413,7 @@ namespace Bestiary
                     };
                     manager.AddComponentData(aiEntity, command);
                     manager.AddComponent<AttackTarget>(aiEntity);
-
-                    var trigger = model.GetComponent<WeaponEventTrigger>();
-                    trigger.OnAnimationEvent += (sender, args) =>
-                    {
-                        if (args.AnimID == 0) return;
-                        command.InputQueue.Enqueue(new AnimationTrigger()
-                        {
-                            AttackType = AttackType.SpecialAttack,
-                            triggerAnimIndex = args.AnimID,
-                            TransitionDuration = args.Duration,
-                            TransitionOffset = args.TransitionOffset,
-                            EndOfCurrentAnim = args.EndofCurrentAnim
-                        });
-                    };
-                    manager.AddComponentObject(aiEntity, trigger);
-
+                    
                     manager.AddComponent<CheckAttackStatus>(aiEntity);
                     manager.AddComponentData(aiEntity,
                         new AttackCapable(capableOfMelee, capableOfMagic, capableOfRange));

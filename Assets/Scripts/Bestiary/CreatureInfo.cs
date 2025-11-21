@@ -74,6 +74,7 @@ namespace Bestiary
                 WithStats(info.Stats, guid, waveLevel, info.Name).
                 WithMovement(info.Move,CreatureType.biped,false).
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
+                WithAI(info.Rank,info.FactionID,info.aiStatesToAdd).
                 Build();
             RegisterNPCEnemy(waveLevel,entity);
             return Task.CompletedTask;

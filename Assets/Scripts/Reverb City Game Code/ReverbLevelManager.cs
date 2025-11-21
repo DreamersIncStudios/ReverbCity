@@ -7,8 +7,11 @@ using DreamersInc.SceneManagement;
 using DreamersInc.ServiceLocatorSystem;
 using DreamersInc.UIToolkitHelpers;
 using DreamersInc.WaveSystem.interfaces;
+using ImprovedTimers;
 using Unity.Entities;
+using Unity.Properties;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
 using static Bestiary.BestiaryManager;
 namespace DreamersInc.ReverbCity
@@ -25,16 +28,26 @@ namespace DreamersInc.ReverbCity
         private string buttonText;
         [SerializeField]
         private Action buttonAction;
-
+    IntervalTimer timer;
 
         [Header("Spawn Settings")]
         [SerializeField] List<Transform> spawnPoints;
         [Header("Wave Settings")]
         public WaveRule TestRule;
+        [Tooltip( "Time between waves in minutes" )]
+        [Range( 1, 15 )]
         [SerializeField] float timeBetweenWaves;
 
         private EntityManager manager;
         private Entity runningEntity;
+        [CreateProperty] string TimeLeftProperty =>$"Time Until Next Wave: {FormatTime(timer.CurrentTime- timer.nextInterval)}";
+        private string FormatTime(float totalSeconds)
+        {
+            int minutes = Mathf.FloorToInt(totalSeconds / 60f);
+            int seconds = Mathf.FloorToInt(totalSeconds % 60f);
+
+            return $"{minutes:00}:{seconds:00}";
+        }
         public async Task Init()
         {
             await SpawnPlayer(GameMaster.GetPlayerGuid(), spawnPoints[0].position);
@@ -48,6 +61,11 @@ namespace DreamersInc.ReverbCity
             {
                 await speaker.Init();
             }
+            timer = new IntervalTimer(360 * 60, timeBetweenWaves * 60);
+            timer.OnInterval += () =>
+            {
+                TestRule.StartWave(1);
+            };
             await CreateUI();
         }
         
@@ -73,9 +91,18 @@ namespace DreamersInc.ReverbCity
                 TestRule.StartWave(2);
                 panel.RemoveFromClassList("hide");
                 manager.AddComponent<RunningTag>(runningEntity);
+                timer.Start();
             };
             popUpPanel.SetText(headerText, bodyText);
             popUpPanel.SetButton(buttonText, buttonAction);
+            var label = Create<Label>("WaveInfo").AddTo(panel);
+            label.dataSource = this;
+            label.SetBinding(nameof(Label.text), new DataBinding()
+            {
+                dataSourcePath = new PropertyPath(nameof(TimeLeftProperty)),
+                bindingMode = BindingMode.ToTarget
+            });
+                
             return Task.CompletedTask;
         }
     }

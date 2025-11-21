@@ -27,7 +27,7 @@ namespace Stats.Entities
     {
         protected override void OnUpdate()
         {
-            foreach (var (aiStat, parent) in SystemAPI.Query<RefRW<AIStat>, Parent>())
+            foreach (var (aiStat, parent) in SystemAPI.Query<RefRW<AIStat>, Parent>().WithNone<Child>())
             {
                 var baseStat = EntityManager.GetComponentData<BaseCharacterComponent>(parent.Value);
 

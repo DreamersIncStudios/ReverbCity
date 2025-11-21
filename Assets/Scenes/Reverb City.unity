@@ -803,7 +803,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 1351045443}
   TestRule: {fileID: 11400000, guid: 3a27569223676d840a08824a8af8b621, type: 2}
-  timeBetweenWaves: 2
+  timeBetweenWaves: 7.5
 --- !u!1 &367489995
 GameObject:
   m_ObjectHideFlags: 0
@@ -5483,7 +5483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.ProbeVolume
   mode: 0
-  size: {x: 403.01, y: 70.70557, z: 403.01}
+  size: {x: 403.01, y: 68.545105, z: 403.01}
   overrideRendererFilters: 0
   minRendererVolumeSize: 0.1
   objectLayerMask:
@@ -5540,7 +5540,7 @@ Transform:
   m_GameObject: {fileID: 904880414}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 26.762783, z: 0}
+  m_LocalPosition: {x: 0, y: 27.84302, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

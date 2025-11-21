@@ -24,10 +24,6 @@ namespace DreamersInc.ReverbCity
         {
            
             if (Waves.Count == 0) return;
-            if (paused)
-            {
-                return;
-            }
             SweepWave.RefreshWith(Waves);
             foreach (var wave in SweepWave) {
                 wave.Tick();
