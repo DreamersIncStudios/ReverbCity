@@ -7,6 +7,7 @@ using DreamersInc.SceneManagement;
 using DreamersInc.ServiceLocatorSystem;
 using DreamersInc.UIToolkitHelpers;
 using DreamersInc.WaveSystem.interfaces;
+using Unity.Entities;
 using UnityEngine;
 using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
 using static Bestiary.BestiaryManager;
@@ -31,12 +32,18 @@ namespace DreamersInc.ReverbCity
         [Header("Wave Settings")]
         public WaveRule TestRule;
         [SerializeField] float timeBetweenWaves;
+
+        private EntityManager manager;
+        private Entity runningEntity;
         public async Task Init()
         {
             await SpawnPlayer(GameMaster.GetPlayerGuid(), spawnPoints[0].position);
             ServiceLocator.Global.Get<LevelChanger>().FadeIn();
             await Task.Delay(1000);
             var speakers = GameObject.FindObjectsByType<Speaker>(FindObjectsSortMode.None);
+             manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            runningEntity = manager.CreateEntityQuery(typeof(RunningTag)).GetSingletonEntity();
+        manager.RemoveComponent<RunningTag>(runningEntity);
             foreach (var speaker in speakers)
             {
                 await speaker.Init();
@@ -65,6 +72,7 @@ namespace DreamersInc.ReverbCity
             {
                 TestRule.StartWave(2);
                 panel.RemoveFromClassList("hide");
+                manager.AddComponent<RunningTag>(runningEntity);
             };
             popUpPanel.SetText(headerText, bodyText);
             popUpPanel.SetButton(buttonText, buttonAction);

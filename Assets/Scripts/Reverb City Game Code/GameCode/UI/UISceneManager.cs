@@ -30,7 +30,6 @@ namespace DreamersInc.ReverbCity.UI
         void Start()
         {
             UIManager.RegisterUI(UIType.HUD, document);
-            ServiceLocator.Global.Register(GetType(), this);
             scoreCounter = new ScoreCounter(0);
             StartCoroutine(Generate());
             
