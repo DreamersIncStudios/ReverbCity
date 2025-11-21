@@ -9,6 +9,15 @@
     align-items: center;
 
 }
+.ScoreLabel{
+    width: 25%;
+    height: 5%;
+    align-self: flex-end;
+    margin-top: 20px;
+
+    font-size: 40;
+    color: white;
+}
 .PopUpPanel{
     width: 60%;
     border-width: 10px;
@@ -41,3 +50,4 @@ WaveUIPanel{
     color: white;
     font-size: 20;
 }
+

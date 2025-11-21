@@ -22,14 +22,12 @@ MonoBehaviour:
     level: 5
     strength: 23
     vitality: 22
-    awareness: 20
-    speed: 15
     skill: 19
-    resistance: 19
     concentration: 23
     willPower: 19
-    charisma: 15
     luck: 30
+    baseHealth: 750
+    baseMana: 150
     difficultyMod: 0
     levelMod: 1
   prefab: {fileID: 542105128857803620, guid: 566c49719cc2f564494e31beb468b65b, type: 3}

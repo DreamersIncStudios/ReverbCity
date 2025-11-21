@@ -1,13 +1,8 @@
-using System;
 using System.Collections;
-using DreamersInc.ReverbCity.GameCode.UI;
-using JetBrains.Annotations;
 using Unity.Entities;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
-
-#pragma warning disable CS0618 // Type or member is obsolete
+using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
 
 namespace DreamersInc.UIToolkitHelpers
 {

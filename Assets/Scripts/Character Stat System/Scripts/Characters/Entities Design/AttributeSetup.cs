@@ -36,7 +36,7 @@ namespace Stats.Entities
         {
             //health
             GetVital((int)VitalName.Health).AddDefiningAttribute(
-                new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Vitality), 3f)
+                new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Vitality), 10f)
             );
             GetVital((int)VitalName.Health).AddDefiningAttribute(
                 new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Level), 10.0f)

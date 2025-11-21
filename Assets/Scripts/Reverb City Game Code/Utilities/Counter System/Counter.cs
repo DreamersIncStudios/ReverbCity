@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ImprovedTimers;
+using Sirenix.Utilities;
 
 namespace DreamersInc.Trackers{
     public static class CounterManager
@@ -19,6 +20,15 @@ namespace DreamersInc.Trackers{
             }
             counters.Clear();
             sweep.Clear();
+        }
+        public static void Increment(int value = 1)
+        {
+            if(counters.IsNullOrEmpty()) return;
+            sweep.RefreshWith(counters);
+            foreach (var counter in sweep)
+            {
+                counter.Increment(value);
+            }
         }
     }
 
