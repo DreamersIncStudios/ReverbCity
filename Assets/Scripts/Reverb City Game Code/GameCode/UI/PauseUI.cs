@@ -1,11 +1,14 @@
-using System;
 using System.Collections;
 using DreamersInc.InputSystems;
 using DreamersInc.ReverbCity.GameCode.UI;
-using DreamersInc.ServiceLocatorSystem;
 using DreamersInc.UIToolkitHelpers;
+using ImprovedTimers;
 using Unity.Entities;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
+
 namespace DreamersInc.ReverbCity.UI
 {
     public class PauseUI : UIController
@@ -22,6 +25,8 @@ namespace DreamersInc.ReverbCity.UI
             GetPlayerControls();
             _playerControls.PauseMenu.PauseGame.performed += TogglePause;
             _playerControls.PlayerController.PauseGame.performed += TogglePause;
+            _playerControls.PauseMenu.PauseGame.performed += WaveManager.TogglePause;
+            _playerControls.PlayerController.PauseGame.performed += WaveManager.TogglePause;
         }
         private void OnDisable()
         {
@@ -34,6 +39,24 @@ namespace DreamersInc.ReverbCity.UI
            
             StartCoroutine(base.Generate());
             Root.AddClass(HideClass);
+            Root.AddClass("PauseMenu");
+            var panel = Create("PausePanel").AddTo(Root);
+           var label = Create<Label>("PauseLabel").AddTo(panel);
+           label.text = "Paused";
+           var options = Create<Button>("PauseButton").AddTo(panel);
+           options.text = "Options";
+           var  restart = Create<Button>("PauseButton").AddTo(panel);
+           restart.text = "Restart Run";
+           var  save = Create<Button>("PauseButton").AddTo(panel);
+           save.text = "Save Run";
+           var exit  = Create<Button>("PauseButton").AddTo(panel);
+           exit.clicked += () =>
+           {
+               Debug.Log("Exiting Game");
+               Application.Quit();
+           };
+           exit.text = "Exit Game";
+           
             yield return null;
         }
         bool isPaused = false;
@@ -41,6 +64,7 @@ namespace DreamersInc.ReverbCity.UI
         void TogglePause(InputAction.CallbackContext obj)
         {
             isPaused = !isPaused;
+            
             if (!isPaused)
             {
                 Root.AddClass(HideClass);

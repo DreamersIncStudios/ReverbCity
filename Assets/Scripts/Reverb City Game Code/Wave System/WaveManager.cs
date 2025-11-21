@@ -3,6 +3,7 @@ using DreamersInc.WaveSystem.interfaces;
 using ImprovedTimers;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.LowLevel;
 using UnityEngine.PlayerLoop;
 
@@ -12,7 +13,7 @@ namespace DreamersInc.ReverbCity
     {
         private static readonly List<WaveRule> Waves= new List<WaveRule>();
         private static readonly List<WaveRule> SweepWave= new List<WaveRule>();
-
+        private static bool paused = false;
         public static uint PlayerLevel;
         public static uint Fails { get; set; }
 
@@ -21,13 +22,45 @@ namespace DreamersInc.ReverbCity
 
         public static void UpdateWaves()
         {
+           
             if (Waves.Count == 0) return;
+            if (paused)
+            {
+                return;
+            }
             SweepWave.RefreshWith(Waves);
             foreach (var wave in SweepWave) {
                 wave.Tick();
                 wave.FailCheck();
             }
         }
+        public static void TogglePause(InputAction.CallbackContext obj)
+        {
+            paused = !paused;
+            if (paused)
+                PauseWaves();
+            else
+                ResumeWaves();
+        }
+        
+        private static void ResumeWaves()
+        {
+            if (Waves.Count == 0) return;
+            SweepWave.RefreshWith(Waves);
+            foreach (var wave in SweepWave) {
+                wave.Resume();
+            }
+        }  
+        
+        private static void PauseWaves()
+        {
+            if (Waves.Count == 0) return;
+            SweepWave.RefreshWith(Waves);
+            foreach (var wave in SweepWave) {
+                wave.Resume();
+            }
+        }
+        
         public static void StopWaves()
         {
             if (Waves.Count == 0) return;

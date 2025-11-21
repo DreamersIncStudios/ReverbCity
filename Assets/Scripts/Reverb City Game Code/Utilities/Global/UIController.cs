@@ -20,8 +20,6 @@ namespace DreamersInc.UIToolkitHelpers
             Root = document.rootVisualElement;
 
             Root.styleSheets.Add(_styleSheet);
-            //var em = World.DefaultGameObjectInjectionWorld.EntityManager;
-            //runningEntitySingleton = em.CreateEntityQuery(typeof(RunningTag)).GetSingletonEntity();
             yield return new WaitForEndOfFrame();
         }
 

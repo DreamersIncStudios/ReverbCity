@@ -50,4 +50,21 @@ WaveUIPanel{
     color: white;
     font-size: 20;
 }
+.PauseMenu{
+    background-color: rgba(128, 128, 128, 0.68);
+    align-items:  center;
+}
+.PauseButton{
+    font-size: 30px;
+    margin: 10px;
+}
+.PauseLabel{
+    font-size: 100px;
+}
+.PausePanel{
+    align-items: center;
 
+    width: 40%;
+    height: 100%;
+    background-color:  blue;
+}
