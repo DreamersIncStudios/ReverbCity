@@ -82,7 +82,8 @@ namespace AISenses
     public struct Enemies : IBufferElementData, IInteractable
     {
         public Target Target { get; set; }
-        public float Dist { get; }
+        public float Dist => Target.DistanceTo;
+        public int NumberOfTargetingNPCs;
 
         public static implicit operator Target(Enemies e)
         {
@@ -102,7 +103,7 @@ namespace AISenses
     public struct Allies : IBufferElementData, IInteractable
     {
         public Target Target { get; set; }
-        public float Dist { get; }
+        public float Dist => Target.DistanceTo;
 
         public static implicit operator Target(Allies e)
         {
@@ -122,7 +123,8 @@ namespace AISenses
     public struct PlacesOfInterest : IBufferElementData, IInteractable
     {
         public Target Target { get; set; }
-        public float Dist { get; }
+        public float Dist=> Target.DistanceTo;
+        public int NumberOfTargetingNPCs;
 
         public static implicit operator Target(PlacesOfInterest e)
         {
@@ -143,6 +145,7 @@ namespace AISenses
     {
         public Target Target { get; set; }
         public float Dist => Target.DistanceTo;
+        public int NumberOfTargetingNPCs;
 
         public static implicit operator Target(Resources e)
         {

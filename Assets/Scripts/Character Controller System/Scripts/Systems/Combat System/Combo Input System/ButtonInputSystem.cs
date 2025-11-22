@@ -524,7 +524,7 @@ namespace DreamersInc.InputSystems
                     }
                 }).Run();
             
-            interactableQuery.Dispose();
+ 
             entities.Dispose();
             positions.Dispose();
             interactables.Dispose();

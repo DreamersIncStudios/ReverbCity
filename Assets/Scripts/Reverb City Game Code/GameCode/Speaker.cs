@@ -18,7 +18,7 @@ namespace DreamersInc.ReverbCity.GameCode
     
 }
 
-namespace DreamersInc.ReverbCity.GameCode.Entity
+namespace DreamersInc.ReverbCity.GameCode.Entities
 {
     public struct Speaker : IComponentData
     {

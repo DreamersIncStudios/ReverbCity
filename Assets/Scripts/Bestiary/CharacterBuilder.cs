@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using AISenses;
 using AISenses.VisionSystems;
 using AISenses.VisionSystems.Combat;
+using Components.MovementSystem;
 using Dreamers.InventorySystem;
 using Dreamers.InventorySystem.Base;
 using DreamersInc;
 using DreamersInc.CombatSystem;
 using DreamersInc.ComboSystem;
 using DreamersInc.InfluenceMapSystem;
-using DreamersInc.ReverbCity.GameCode.Entity;
+using DreamersInc.ReverbCity.GameCode.Entities;
 using DreamersInc.ServiceLocatorSystem;
 using DreamersIncStudio.FactionSystem;
 using DreamersIncStudio.GAIACollective;
@@ -19,6 +20,7 @@ using IAUS.ECS;
 using IAUS.ECS.Component;
 using MotionSystem.Components;
 using MotionSystem.Systems;
+using ProjectDawn.Navigation;
 using Stats;
 using Stats.Entities;
 using Unity.Entities;
@@ -455,11 +457,43 @@ namespace Bestiary
 
                 return this;
             }
-            
-            public Entity Build()
+            public CharacterBuilder WithAIControl()
             {
-                return entity;
+                if (entity == Entity.Null || !model) return this;
+                var maxSpeed = 0.0f;
+                var collider = model.GetComponent<CapsuleCollider>();
+                manager.AddComponentData(entity, new AgentShape()
+                {
+                    Radius = collider.radius,
+                    Height = collider.height,
+                    Type = ShapeType.Cylinder
+                });
+           
+                        manager.AddComponentData(entity, Agent.Default);
+                        manager.AddComponentData(entity, AgentBody.Default);
+
+
+    
+                manager.AddComponentData(entity, AgentLocomotion.Default);
+             
+         
+
+                manager.AddComponentData(entity, NavMeshPath.Default);
+                manager.AddBuffer<NavMeshNode>(entity);
+
+                manager.AddComponentData(entity, AgentCollider.Default);
+                manager.AddComponentData(entity, AgentSonarAvoid.Default);
+                manager.AddComponentData(entity, AgentSeparation.Default);
+                manager.AddComponentData(entity, AgentSmartStop.Default);
+
+                manager.AddComponentData(aiEntity, new Movement()
+                {
+                    MaxMovementSpeed = 4
+                });
+
+                return this;
             }
+
 
             public CharacterBuilder WithParent(Entity parent )
             {
@@ -488,6 +522,18 @@ namespace Bestiary
                         throw new ArgumentOutOfRangeException(nameof(getType), getType, null);
                 }
                 return this;
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            public Entity Build()
+            {
+                return entity;
             }
         }
     }

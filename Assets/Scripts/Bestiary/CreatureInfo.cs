@@ -60,6 +60,7 @@ namespace Bestiary
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
                 WithCharacterDetection(FactionNames.Daemon).
                 WithAI(info.Rank,info.FactionID,info.aiStatesToAdd).
+                WithAIControl().
                 Build();
             RegisterNPCEnemy(waveLevel,entity);
             return Task.CompletedTask;
@@ -75,6 +76,7 @@ namespace Bestiary
                 WithMovement(info.Move,CreatureType.biped,false).
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
                 WithAI(info.Rank,info.FactionID,info.aiStatesToAdd).
+                WithAIControl().
                 Build();
             RegisterNPCEnemy(waveLevel,entity);
             return Task.CompletedTask;
