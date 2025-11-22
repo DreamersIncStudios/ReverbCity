@@ -79,6 +79,7 @@ namespace AISenses.VisionSystems
         public void OnDestroy(ref SystemState state)
         {
             quadrantMultiHashMap.Dispose();
+            query.Dispose();
         }
 
 
@@ -136,12 +137,12 @@ namespace AISenses.VisionSystems
         partial struct TargetingVisionRayCastJob : IJobEntity
         {
             [ReadOnly] public CollisionWorld World;
-            [ReadOnly] public NativeParallelMultiHashMap<int, TargetQuadrantData> QuadrantMap;
+            [ReadOnly][DeallocateOnJobCompletion] public NativeParallelMultiHashMap<int, TargetQuadrantData> QuadrantMap;
 
-            [ReadOnly] public NativeArray<AIStat> stats;
-            [ReadOnly] public NativeArray<LocalToWorld> Transforms;
+            [ReadOnly][DeallocateOnJobCompletion]  public NativeArray<AIStat> stats;
+            [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> Transforms;
             private const float CellEdgePadding = 50f;
-            [ReadOnly] public DynamicBuffer<Factions> FactionsBuffer;
+            [ReadOnly][DeallocateOnJobCompletion]  public DynamicBuffer<Factions> FactionsBuffer;
 
             void Execute(Entity entity, ref DynamicBuffer<Enemies> enemyBuffer, ref DynamicBuffer<Allies> allyBuffer,
                 ref DynamicBuffer<Resources> resourceBuffer, ref DynamicBuffer<PlacesOfInterest> placeBuffer,

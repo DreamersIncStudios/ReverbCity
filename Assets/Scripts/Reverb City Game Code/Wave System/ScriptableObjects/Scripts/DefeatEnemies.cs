@@ -20,21 +20,16 @@ namespace DreamersInc.WaveSystem
         private float interval;
         private uint spawnCount;
         private uint defeated;
-        public override void StartWave(uint waveLevel)
+        public override void StartWave(uint waveLevel, Vector3 spawnPos = default)
         {
-            base.StartWave(waveLevel);
+            GlobalFunctions.RandomPoint(Vector3.zero, 50, out spawnPosition);
+            base.StartWave(waveLevel, spawnPosition);
             WaveLevel = waveLevel;
             
         }
         public override void Tick()
         {
-                 
-            if (spawnPosition == Vector3.zero)
-            {
-                GlobalFunctions.RandomPoint(Vector3.zero, 50, out Vector3 testing);
-                spawnPosition = testing;    
-                return;
-            }
+  
             if (IsRunning && interval > 0)
             {
                 interval -= Time.deltaTime;

@@ -18,6 +18,8 @@ namespace Bestiary
         public FactionNames FactionID;
         public int Influence;
         public GameObject Prefab=>prefab;
+        public StructureType Type;
+    
         [SerializeField] GameObject prefab;
         public PhysicsInfo PhysicsInfo;
 
@@ -55,6 +57,7 @@ namespace Bestiary
                 WithEntityPhysics(info.PhysicsInfo, true).
                 WithStats(info.Stats, info.Guid, waveLevel, info.Name).
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
+                WithStructure(info.Type).
                 Build();
             RegisterStructure(entity);
             return Task.CompletedTask;

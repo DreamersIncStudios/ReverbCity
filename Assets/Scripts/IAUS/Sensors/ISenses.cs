@@ -142,7 +142,7 @@ namespace AISenses
     public struct Resources : IBufferElementData, IInteractable
     {
         public Target Target { get; set; }
-        public float Dist { get; }
+        public float Dist => Target.DistanceTo;
 
         public static implicit operator Target(Resources e)
         {
@@ -187,7 +187,6 @@ namespace AISenses
         public bool CanSee;
         public int LookAttempt;
         public bool CantFind => LookAttempt > 3;
-        public float PerceptilabilityScore;
 
         public bool Equals(Target other)
         {

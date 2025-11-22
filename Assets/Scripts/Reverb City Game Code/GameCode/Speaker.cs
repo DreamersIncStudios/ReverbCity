@@ -15,11 +15,20 @@ namespace DreamersInc.ReverbCity.GameCode
             return SpawnStructure(structureInfo, gameObject, transform.position, 1);
         }
     } 
+    
 }
 
 namespace DreamersInc.ReverbCity.GameCode.Entity
 {
     public struct Speaker : IComponentData
+    {
+
+    }
+   public struct Antenna  : IComponentData
+    {
+
+    }
+    public struct BatteryCell  : IComponentData
     {
 
     }

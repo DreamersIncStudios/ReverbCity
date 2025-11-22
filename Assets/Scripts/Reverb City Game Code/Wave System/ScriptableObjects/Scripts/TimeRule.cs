@@ -23,15 +23,16 @@ namespace DreamersInc.WaveSystem
         private Vector3 spawnPosition = new Vector3();
         
         EntityManager entityManager;
-        public override void StartWave(uint waveLevel)
+        public override void StartWave(uint waveLevel, Vector3 spawnPos = default)
         {
-            base.StartWave(waveLevel);
+            GlobalFunctions.RandomPoint(Vector3.zero, 750, out Vector3 testing);
+            spawnPosition = testing; 
+            base.StartWave(waveLevel, testing);
             WaveLevel = waveLevel; 
             timer = new CountdownTimer(WaveDuration*60);
             timer.Start();
 
-           GlobalFunctions.RandomPoint(Vector3.zero, 750, out Vector3 testing);
-           spawnPosition = testing; 
+
            entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         }
         public override void Stop()

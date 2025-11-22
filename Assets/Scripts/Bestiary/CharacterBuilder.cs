@@ -9,6 +9,7 @@ using DreamersInc;
 using DreamersInc.CombatSystem;
 using DreamersInc.ComboSystem;
 using DreamersInc.InfluenceMapSystem;
+using DreamersInc.ReverbCity.GameCode.Entity;
 using DreamersInc.ServiceLocatorSystem;
 using DreamersIncStudio.FactionSystem;
 using DreamersIncStudio.GAIACollective;
@@ -470,6 +471,29 @@ namespace Bestiary
                 });
                 return this;
             }
+            public CharacterBuilder WithStructure(StructureType getType)
+            {
+                switch (getType)
+                {
+                    case StructureType.Speaker:
+                        manager.AddComponent<Speaker>(entity);
+                        break;
+                    case StructureType.Antenna:
+                        manager.AddComponent<Antenna>(entity);
+                        break;
+                    case StructureType.BatteryCell:
+                        manager.AddComponent<BatteryCell>(entity);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(getType), getType, null);
+                }
+                return this;
+            }
         }
+    }
+    public enum StructureType{
+        Speaker,
+        Antenna, 
+        BatteryCell,
     }
 }

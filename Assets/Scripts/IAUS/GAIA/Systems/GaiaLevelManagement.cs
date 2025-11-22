@@ -25,12 +25,16 @@ namespace DreamersIncStudio.GAIACollective
                 Transform = managerQuery.ToComponentDataArray<LocalToWorld>(Allocator.TempJob)
             }.Schedule();
         }
-
+        public void OnDestroy(ref SystemState state)
+        {
+            managerQuery.Dispose();
+        }
+     
         public partial struct ManagerAssignment : IJobEntity
         {
-            [ReadOnly] public NativeArray<GaiaLevelManager> LevelManagers;
-            [ReadOnly] public NativeArray<Entity> Managers;
-            [ReadOnly] public NativeArray<LocalToWorld> Transform;
+            [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<GaiaLevelManager> LevelManagers;
+            [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<Entity> Managers;
+            [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> Transform;
 
             void Execute(ref GaiaSpawnBiome biome, in LocalToWorld localToWorld)
             {

@@ -28,24 +28,28 @@ namespace DreamersInc.WaveSystem.interfaces
 
         protected Entity WavePack;
 
-        public virtual void StartWave(uint waveLevel)
+        public virtual void StartWave(uint waveLevel, Vector3 spawnPosition = default)
         {
             if(IsRunning) return;
             IsRunning = true;
             WaveLevel = waveLevel;
             WaveManager.RegisterWave(this);
-            CreatePackEntity();
+            CreatePackEntity(spawnPosition);
             OnWaveStart.Invoke();
             SetUILabel();
         }
 
-        void CreatePackEntity()
+        void CreatePackEntity(Vector3 spawnPosition)
         {
             var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
             WavePack = manager.CreateEntity(
                 typeof(LocalTransform),
                 typeof(LocalToWorld), typeof(Pack)
             );
+            manager.SetComponentData(WavePack, new  LocalTransform()
+            {
+                Position = spawnPosition
+            });
             manager.SetName(WavePack, $"Wave Pack {WaveLevel}");
             manager.AddBuffer<Enemies>(WavePack);
             manager.AddBuffer<AISenses.Resources>(WavePack);

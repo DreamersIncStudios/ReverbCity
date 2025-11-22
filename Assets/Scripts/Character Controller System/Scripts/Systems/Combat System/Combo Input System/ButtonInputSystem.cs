@@ -523,6 +523,12 @@ namespace DreamersInc.InputSystems
                         break;
                     }
                 }).Run();
+            
+            interactableQuery.Dispose();
+            entities.Dispose();
+            positions.Dispose();
+            interactables.Dispose();
+
         }
 
         private void OnStyleModPress(InputAction.CallbackContext obj)

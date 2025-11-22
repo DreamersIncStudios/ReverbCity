@@ -13,9 +13,33 @@ MonoBehaviour:
   m_Name: NPC AI states
   m_EditorClassIdentifier: IAUS::IAUS.ECS.NPCAISO
   nameNPC: test dummy
-  Difficulty: 0
+  Difficulty: 1
   rank: 0
   FactionID: 2
   States:
   - StateName: 14
-    Considerations: []
+    Considerations:
+    - ConsiderationType: 0
+      Scoring:
+        Inverse: 0
+        responseType: 3
+        M: 50
+        K: -0.95
+        B: 0.935
+        C: 0.35
+    - ConsiderationType: 7
+      Scoring:
+        Inverse: 0
+        responseType: 3
+        M: 200
+        K: 1
+        B: 0
+        C: 0.35
+    - ConsiderationType: 1
+      Scoring:
+        Inverse: 0
+        responseType: 0
+        M: 2000
+        K: 1
+        B: 0
+        C: 0.35
