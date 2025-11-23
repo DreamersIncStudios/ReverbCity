@@ -14,8 +14,8 @@ namespace DreamersInc.ReverbCity
     public partial class DefeatCheck : SystemBase
     {
 
-        ComponentLookup<IAUSBrain> brainLookup;        
-        
+        ComponentLookup<IAUSBrain> brainLookup;
+        private Entity player;
         protected override void OnUpdate()
         {
             var ecbSystem = World.GetOrCreateSystemManaged<EndSimulationEntityCommandBufferSystem>(); 

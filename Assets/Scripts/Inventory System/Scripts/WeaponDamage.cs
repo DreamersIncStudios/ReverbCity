@@ -130,7 +130,6 @@ namespace DreamersInc.DamageSystem
             //Todo add Friend filter.
             if (!DoDamage || hit == null || hit == self) return;
             hit.TakeDamage(DamageAmount(), TypeOfDamage, ElementName, ParentEntity, level);
-            Debug.Log($"hit {other.name}:{DamageAmount()}");
             var root = transform.root;
             hit.ReactToHit(.5f, root.position, root.forward);
             var attackType = animator.GetCurrentAnimatorStateInfo(0).tagHash switch

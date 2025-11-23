@@ -8,14 +8,15 @@ namespace DreamersInc.DamageSystem
 {
     public partial class DeathSystem : SystemBase
     {
+        private Entity playerEntity;
         protected override void OnUpdate()
         {
+         
             var ecbSystem = World.GetOrCreateSystemManaged<EndSimulationEntityCommandBufferSystem>();
-
             foreach (var (test, entity) in SystemAPI.Query<BaseCharacterComponent>().WithEntityAccess().WithChangeFilter<BaseCharacterComponent>())
             {
                 if (!(test.HealthRatio <= 0)) continue;
-                
+           
                 var go = test.GORepresentative;
                 Object.Destroy(go);
                 ecbSystem.CreateCommandBuffer().DestroyEntity(entity);

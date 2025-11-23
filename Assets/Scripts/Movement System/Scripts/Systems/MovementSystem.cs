@@ -17,15 +17,15 @@ namespace IAUS.ECS.Systems
 
         {
             agentLookup = GetComponentLookup<AgentBody>();
-            foreach (var (movement, root) in SystemAPI.Query<RefRW<Movement>, RefRO<Parent>>())
+            foreach (var (movement, root) in SystemAPI.Query<RefRW<Movement>, Parent>())
             {
-                var agent = agentLookup[root.ValueRO.Value];
-                movement.ValueRW.DistanceRemaining = agent.RemainingDistance;
+                if(agentLookup.TryGetComponent(root.Value, out var agent))
+                    movement.ValueRW.DistanceRemaining = agent.RemainingDistance;
             }
             foreach (var (movement, root) in SystemAPI.Query<RefRW<Movement>, Parent>())
             {
-                var agent = agentLookup[root.Value];
-
+                if (!agentLookup.TryGetComponent(root.Value, out var agent))
+                    return;
                 if (movement.ValueRO.CanMove)
                 {
                     //rewrite with a set position bool;

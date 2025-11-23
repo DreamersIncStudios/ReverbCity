@@ -31,6 +31,7 @@ namespace Bestiary
         public PhysicsInfo PhysicsInfo;
         public MovementData Move;
         public List<AIStates> aiStatesToAdd;
+        public uint EXP;
 
         [HorizontalGroup("ItemSplit", 0.5f), VerticalGroup("ItemSplit/Left"), Button(ButtonSizes.Large),
          GUIColor(0.4f, 0.8f, 1)]
@@ -55,7 +56,7 @@ namespace Bestiary
             var entity = new CharacterBuilder(info.Name).
                 WithModel(info.Prefab, position, Quaternion.identity, "NPC").
                 WithEntityPhysics(info.PhysicsInfo, true).
-                WithStats(info.Stats, guid, waveLevel, info.Name).
+                WithStats(info.Stats, guid, waveLevel, info.Name, info.EXP).
                 WithMovement(info.Move,CreatureType.biped,false).
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
                 WithCharacterDetection(FactionNames.Daemon).
@@ -72,7 +73,7 @@ namespace Bestiary
                 WithModel(info.Prefab, position, Quaternion.identity, "NPC").
                 WithParent(wavePack).
                 WithEntityPhysics(info.PhysicsInfo, true).
-                WithStats(info.Stats, guid, waveLevel, info.Name).
+                WithStats(info.Stats, guid, waveLevel, info.Name, info.EXP).
                 WithMovement(info.Move,CreatureType.biped,false).
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
                 WithAI(info.Rank,info.FactionID,info.aiStatesToAdd).

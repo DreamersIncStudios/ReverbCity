@@ -87,11 +87,12 @@ namespace Stats.Entities
         public float ManaRatio => (float)CurMana / (float)MaxMana;
 
         public bool Dead => !InvincibleMode && CurHealth <= 0;
-        public uint BaseExp { get; protected set; }
+        public uint BaseExp;
         public uint ExpGiven(uint playerLevel)
         {
-            var mod = Mathf.Pow((2 * Level + 10) / (Level + playerLevel + 10), 2.5f);
-            return (uint)Mathf.CeilToInt((BaseExp * _level)*.2f *mod );
+            float fract = (float)(2 * Level + 10) / (float)(Level + playerLevel + 10);
+            var mod = Mathf.Pow(fract, 2.5f);
+            return (uint)Mathf.CeilToInt((BaseExp * Level)*.2f *mod );
         }
 
         [CreateProperty]
@@ -107,7 +108,7 @@ namespace Stats.Entities
             get => _level;
             private set => _level = value;
         }
-        public uint FreeExp { get; private set; }
+        public uint FreeExp;
 
         public void AddExp(uint exp)
         {

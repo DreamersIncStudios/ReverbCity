@@ -204,15 +204,8 @@ namespace Bestiary
                 {
                     Value = entity
                 });
-                // manager.AddBuffer<ReserveLocationTag>(baseDataEntity);
-                // var meleeAttackPositions = manager.GetBuffer<MeleeAttackPosition>(baseDataEntity);
-                // meleeAttackPositions.Length = 4;
-                // for (var index = 0; index < meleeAttackPositions.Length; index++)
-                // {
-                //     var attackPosition = meleeAttackPositions[index];
-                //     attackPosition.State = OccupiedState.Vacant;
-                //     meleeAttackPositions[index] = attackPosition;
-                // }
+
+                
 
                 return this;
             }

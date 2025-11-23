@@ -27,8 +27,8 @@ namespace DreamersInc.MovementSys
                 for (var i = 0; i < children.Length; i++)
                 {
                     var child = children[i].Value;
-                    if (!moveLookup.HasComponent(child)) continue;
-                    mover = moveLookup[child];
+                    if (!moveLookup.TryGetComponent(child, out mover))
+                        continue;
                     found = true;
                     break;
                 }

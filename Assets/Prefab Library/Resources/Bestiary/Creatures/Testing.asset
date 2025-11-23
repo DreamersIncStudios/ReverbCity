@@ -115,3 +115,4 @@ MonoBehaviour:
     GroundCheckDistance: 0.2
     CombatCapable: 1
   aiStatesToAdd: 0e000000
+  EXP: 250
