@@ -1,11 +1,6 @@
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using System;
 using Unity.Entities;
 using System.Threading.Tasks;
-using DreamersInc.DamageSystem.Interfaces;
-using CharacterClass = Stats.Entities;
 
 namespace Stats.Entities
 {

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Linq;
 using IAUS.ECS.Consideration;
 using Sirenix.Utilities;
 
@@ -42,6 +41,8 @@ namespace IAUS.ECS.StateBlobSystem
             };
             foreach (var consideration in state.Considerations)
             {
+                if(consideration.Scoring.responseType == ResponseType.none)
+                    Debug.LogWarning($"Consideration {npcState.Name} {state.StateName} {consideration.ConsiderationType}has no response type");
                 switch (consideration.ConsiderationType)
                 {
                     case ConsiderationType.Health:

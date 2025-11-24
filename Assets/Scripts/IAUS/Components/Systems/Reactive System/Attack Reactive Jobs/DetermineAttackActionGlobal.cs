@@ -11,7 +11,7 @@ namespace IAUS.ECS.Systems.Reactive
 {
 
 
-    partial struct DetermineAttackAction : IJobEntity
+    partial struct DetermineAttackActionGlobal : IJobEntity
     {
         public float DeltaTime;
         public EntityCommandBuffer.ParallelWriter ECB;
@@ -25,7 +25,7 @@ namespace IAUS.ECS.Systems.Reactive
         private const float TravelMagicRange = 10f;
         private const float TravelRangeRange = 10f;
 
-        void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref AttackActionTag state, in AIStat stat, in LocalToWorld transform, in AttackCapable capable)
+        void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref AttackGlobalTag state, in AIStat stat, in LocalToWorld transform, in AttackCapable capable)
         {
             if (state.AttackPlans.Length != 0) return;
 
@@ -223,11 +223,11 @@ namespace IAUS.ECS.Systems.Reactive
         private static int ScoreGetTargetLocation(in IAttackState state) => state.TargetPosition.Equals(float3.zero) ? 10 : 0;
     }
 
-    public partial struct ExecuteAttackAction : IJobEntity
+    public partial struct ExecuteAttackActionGlobal : IJobEntity
     {
         public float DeltaTime;
         public EntityCommandBuffer.ParallelWriter ECB;
-        private void Execute(Entity entity, [ChunkIndexInQuery] int chunkIndex, ref AttackActionTag state, ref Movement move)
+        private void Execute(Entity entity, [ChunkIndexInQuery] int chunkIndex, ref AttackGlobalTag state, ref Movement move)
         {
             if (state.AttackPlans.IsEmpty) return;
             switch (state.AttackPlans[0])

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Components.MovementSystem;
 using DreamersInc.ComboSystem;
 using IAUS.ECS.Component;
 using IAUS.ECS.Component.Attacking;
@@ -10,7 +9,6 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 using Utilities.ReactiveSystem;
 
 
@@ -104,7 +102,7 @@ namespace IAUS.ECS.Systems.Reactive
                                comboList.AttackSequence.PickAttack(IAttackSequence.AttackType.MeleeAttackPositions)[0]);
                           */
                         EntityManager.RemoveComponent<SelectAndAttack>(entity);
-                        Debug.Log("attacked");
+                 
                     }).Run();
             }
 

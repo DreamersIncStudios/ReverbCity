@@ -1,12 +1,10 @@
 using System;
 using DreamersInc.DamageSystem;
 using DreamersInc.Trackers;
-using Global.Component;
 using IAUS.ECS.Component;
 using Stats.Entities;
 using Unity.Entities;
 using Unity.Transforms;
-using UnityEngine;
 
 namespace DreamersInc.ReverbCity
 {

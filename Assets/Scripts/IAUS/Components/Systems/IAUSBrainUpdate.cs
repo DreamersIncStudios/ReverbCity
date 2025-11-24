@@ -172,6 +172,7 @@ namespace IAUS.ECS.Systems
                                      asset.EnemyInfluence.Output(influenceRatio);
                         mod = 1.0f - (1.0f / 3.0f);
                         score = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * mod) * totalScore);
+                        Debug.Log(  asset.DistanceToTargetEnemy.Output(0.0f) );
                         break;
                     case AIStates.Wait:
                         score = 0.0f;
@@ -222,7 +223,7 @@ namespace IAUS.ECS.Systems
                     CommandBufferParallel.RemoveComponent<MaintenanceTag>(chunkIndex, self);
                     break;
                 case AIStates.AttackGlobalTarget:
-                    CommandBufferParallel.RemoveComponent<DestroyTargetTag>(chunkIndex, self);
+                    CommandBufferParallel.RemoveComponent<AttackGlobalTag>(chunkIndex, self);
                     break;
             }
             switch (high.StateName)
@@ -258,7 +259,7 @@ namespace IAUS.ECS.Systems
                     CommandBufferParallel.AddComponent<MaintenanceTag>(chunkIndex, self);
                     break;
                 case AIStates.AttackGlobalTarget:
-                    CommandBufferParallel.AddComponent<DestroyTargetTag>(chunkIndex, self);
+                    CommandBufferParallel.AddComponent<AttackGlobalTag>(chunkIndex, self);
                     break;
             }
             brain.CurrentState = high.StateName;

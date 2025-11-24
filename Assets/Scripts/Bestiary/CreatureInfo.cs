@@ -9,7 +9,6 @@ using Sirenix.OdinInspector;
 using Stats;
 using Unity.Entities;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Bestiary
 {

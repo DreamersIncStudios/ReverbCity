@@ -38,7 +38,7 @@ MonoBehaviour:
     - ConsiderationType: 1
       Scoring:
         Inverse: 0
-        responseType: 0
+        responseType: 3
         M: 2000
         K: 1
         B: 0

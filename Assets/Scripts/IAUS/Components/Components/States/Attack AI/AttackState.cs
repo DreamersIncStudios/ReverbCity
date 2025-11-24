@@ -18,22 +18,51 @@ namespace IAUS.ECS.Component
         }
     }
 
-
-
-    public struct AttackActionTag : IComponentData
+    public interface IAttackState : IComponentData
     {
-        public float3 TargetPosition;
-        public float3 AttackPosition;
-        public Entity TargetEntity;
-        public int TargetPositionID;
-        public HowToAttack AttackType;
-        public FixedList32Bytes<AttackPlan> AttackPlans;
-        public float AttackResetTimer;
+        public float3 TargetPosition { get; set; }
+        public float3 AttackPosition{ get; set; }
+        public Entity TargetEntity{ get; set; }
+        public int TargetPositionID{ get; set; }
+        public HowToAttack AttackType{ get; set; }
+        public FixedList32Bytes<AttackPlan> AttackPlans{ get; set; }
+        public float AttackResetTimer{ get; set; }
         public bool InAttackCooldown => AttackResetTimer != 0.0f;
+    }
+
+    public struct AttackActionTag : IAttackState
+    {
+        public float3 TargetPosition { get; set; }
+        public float3 AttackPosition{ get; set; }
+        public Entity TargetEntity{ get; set; }
+        public int TargetPositionID{ get; set; }
+        public HowToAttack AttackType{ get; set; }
+        public FixedList32Bytes<AttackPlan> AttackPlans{ get; set; }
+        public float AttackResetTimer{ get; set; }
 
 
     }
+    public struct AttackGlobalTag : IAttackState
+    {
+        public float3 TargetPosition { get; set; }
+        public float3 AttackPosition{ get; set; }
+        public Entity TargetEntity{ get; set; }
+        public int TargetPositionID{ get; set; }
+        public HowToAttack AttackType{ get; set; }
+        public FixedList32Bytes<AttackPlan> AttackPlans{ get; set; }
+        public float AttackResetTimer{ get; set; }
 
+    }
+    public struct TargetThisCommand : IComponentData
+    {
+        public Entity Target;
+        public float3 LastKnownPosition;
+        public TargetThisCommand(Entity targetEntity, float3 targetLastKnownPosition)
+        {
+            Target = targetEntity;
+            LastKnownPosition = targetLastKnownPosition;
+        }
+    }
 
     public enum AttackPlan
     {

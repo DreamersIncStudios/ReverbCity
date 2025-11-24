@@ -1,11 +1,10 @@
 using AISenses;
-using DreamersInc.ReverbCity.GameCode.Entities;
 using DreamersIncStudio.GAIACollective;
 using Global.Component;
+using IAUS.ECS.Component;
 using IAUS.ECS.Systems;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 using Resources = AISenses.Resources;
@@ -187,14 +186,5 @@ namespace DreamersInc.ReverbCity.GameCode.Entities
 
 
     
-    public struct TargetThisCommand : IComponentData
-    {
-        public Entity Target;
-        public float3 LastKnownPosition;
-        public TargetThisCommand(Entity targetEntity, float3 targetLastKnownPosition)
-        {
-            Target = targetEntity;
-            LastKnownPosition = targetLastKnownPosition;
-        }
-    }
+
 }
