@@ -18,6 +18,7 @@ using DreamersStudio.CameraControlSystem;
 using Global.Component;
 using IAUS.ECS;
 using IAUS.ECS.Component;
+using IAUS.ECS.Component.Attacking;
 using MotionSystem.Components;
 using MotionSystem.Systems;
 using ProjectDawn.Navigation;
@@ -191,8 +192,8 @@ namespace Bestiary
 
                 var baseEntityArch = manager.CreateArchetype(
                     typeof(LocalTransform),
-                    typeof(LocalToWorld)
-                    //   typeof(MeleeAttackPosition)
+                    typeof(LocalToWorld),
+                      typeof(MeleeAttackPosition)
                 );
                 var baseDataEntity = manager.CreateEntity(baseEntityArch);
                 manager.SetName(baseDataEntity, "Attack Location Entity");
@@ -205,7 +206,15 @@ namespace Bestiary
                     Value = entity
                 });
 
-                
+                manager.AddBuffer<ReserveLocationTag>(baseDataEntity);
+                var meleeAttackPositions = manager.GetBuffer<MeleeAttackPosition>(baseDataEntity);
+                meleeAttackPositions.Length = 4;
+                for (var index = 0; index < meleeAttackPositions.Length; index++)
+                {
+                    var attackPosition = meleeAttackPositions[index];
+                    attackPosition.State = OccupiedState.Vacant;
+                    meleeAttackPositions[index] = attackPosition;
+                }
 
                 return this;
             }

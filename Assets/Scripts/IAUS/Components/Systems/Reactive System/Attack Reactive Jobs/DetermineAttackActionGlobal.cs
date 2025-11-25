@@ -3,6 +3,7 @@ using System.Linq;
 using Components.MovementSystem;
 using IAUS.ECS.Component;
 using Stats.Entities;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -30,7 +31,6 @@ namespace IAUS.ECS.Systems.Reactive
             if (state.AttackPlans.Length != 0) return;
 
             state.AttackType = DeterminePrimaryAttackType(state, stat, transform, capable);
-
             // Build scored plan list as (plan, score) pairs to keep index without re-searching
             var scoredPlans = new (AttackPlan plan, int score)[]
             {
@@ -50,16 +50,13 @@ namespace IAUS.ECS.Systems.Reactive
 
             // Sort descending by score, stable
             System.Array.Sort(scoredPlans, (a, b) => b.score.CompareTo(a.score));
-
-
+            var tempPlan = new FixedList32Bytes<AttackPlan>();
             foreach (var entry in scoredPlans)
             {
-                if (entry.score <= 0) return;
+                if (entry.score <= 0) continue;
                 if (state.AttackPlans.Length >= 8) return;
                 state.AttackPlans.Add(entry.plan);
-                if (state.AttackPlans.Length >= 8) break;
             }
-
         }
 
         
@@ -227,7 +224,7 @@ namespace IAUS.ECS.Systems.Reactive
     {
         public float DeltaTime;
         public EntityCommandBuffer.ParallelWriter ECB;
-        private void Execute(Entity entity, [ChunkIndexInQuery] int chunkIndex, ref AttackGlobalTag state, ref Movement move)
+        private void Execute(Entity entity, [ChunkIndexInQuery] int chunkIndex, ref AttackGlobalTag state, ref Movement move, in TargetThisCommand command)
         {
             if (state.AttackPlans.IsEmpty) return;
             switch (state.AttackPlans[0])
@@ -284,7 +281,12 @@ namespace IAUS.ECS.Systems.Reactive
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
-
+                    state.AttackPlans.RemoveAt(0);
+                    break;
+                case AttackPlan.GetTargetLocation:
+                    state.TargetEntity = command.Target;
+                    state.TargetPosition = command.LastKnownPosition;
+                    state.AttackPlans.RemoveAt(0);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -172,7 +172,6 @@ namespace IAUS.ECS.Systems
                                      asset.EnemyInfluence.Output(influenceRatio);
                         mod = 1.0f - (1.0f / 3.0f);
                         score = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * mod) * totalScore);
-                        Debug.Log(  asset.DistanceToTargetEnemy.Output(0.0f) );
                         break;
                     case AIStates.Wait:
                         score = 0.0f;

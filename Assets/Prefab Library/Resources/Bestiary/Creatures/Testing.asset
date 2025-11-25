@@ -116,3 +116,10 @@ MonoBehaviour:
     CombatCapable: 1
   aiStatesToAdd: 0e000000
   EXP: 250
+  equipment:
+    EquippedWeapons:
+    - {fileID: 11400000, guid: 6630629b451c9394d8043939aa076047, type: 2}
+    EquippedArmors: []
+  inventory:
+    ItemsInInventory: []
+    MaxInventorySize: 0

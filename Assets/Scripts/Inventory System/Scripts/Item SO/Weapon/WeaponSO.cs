@@ -131,6 +131,7 @@ namespace Dreamers.InventorySystem
                 {
                     WeaponModel = new GameObject();
                  WeaponModel.AddComponent<WeaponDamage>();
+                 if(anim)
                     WeaponModel.transform.SetParent(anim.transform);
                 }
                 weaponDamage=  WeaponModel.GetComponent<WeaponDamage>();

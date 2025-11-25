@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Dreamers.InventorySystem.Base;
 using DreamersIncStudio.FactionSystem;
 using Global.Component;
 using IAUS.ECS;
@@ -31,6 +32,12 @@ namespace Bestiary
         public MovementData Move;
         public List<AIStates> aiStatesToAdd;
         public uint EXP;
+        [Header("Inventory")]
+        public EquipmentSave Equipment => equipment;
+        [SerializeField]private EquipmentSave equipment;
+        public InventorySave Inventory => inventory;
+        [SerializeField]private InventorySave inventory;
+
 
         [HorizontalGroup("ItemSplit", 0.5f), VerticalGroup("ItemSplit/Left"), Button(ButtonSizes.Large),
          GUIColor(0.4f, 0.8f, 1)]
@@ -56,6 +63,7 @@ namespace Bestiary
                 WithModel(info.Prefab, position, Quaternion.identity, "NPC").
                 WithEntityPhysics(info.PhysicsInfo, true).
                 WithStats(info.Stats, guid, waveLevel, info.Name, info.EXP).
+                WithInventorySystem(info.Inventory, info.Equipment).
                 WithMovement(info.Move,CreatureType.biped,false).
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
                 WithCharacterDetection(FactionNames.Daemon).
@@ -73,6 +81,7 @@ namespace Bestiary
                 WithParent(wavePack).
                 WithEntityPhysics(info.PhysicsInfo, true).
                 WithStats(info.Stats, guid, waveLevel, info.Name, info.EXP).
+                WithInventorySystem(info.Inventory, info.Equipment).
                 WithMovement(info.Move,CreatureType.biped,false).
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
                 WithAI(info.Rank,info.FactionID,info.aiStatesToAdd).

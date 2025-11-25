@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using DreamersInc.ComboSystem;
 using IAUS.ECS.Component;
 using IAUS.ECS.Component.Attacking;
 using Unity.Collections;
@@ -16,6 +17,7 @@ using Utilities.ReactiveSystem;
 
 namespace IAUS.ECS.Systems.Reactive
 {
+    
     public partial struct AttackGlobalTagReactor : IComponentReactorTagsForAIBuffer<AttackGlobalTag, StateData>
     {
         public void ComponentAdded(Entity entity, ref AttackGlobalTag newComponent, DynamicBuffer<StateData> AIStateCompoment)
@@ -43,6 +45,8 @@ namespace IAUS.ECS.Systems.Reactive
             }
         }
 
+        
+        
         public partial class ReactiveSystem : AIReactiveSystemBuffer<AttackGlobalTag, StateData, AttackGlobalTagReactor>
         {
             protected override AttackGlobalTagReactor CreateComponentReactor()
@@ -50,18 +54,41 @@ namespace IAUS.ECS.Systems.Reactive
                 return new AttackGlobalTagReactor();
             }
         }
-        public partial class AttackUpdateSystem : SystemBase
+        
+        public partial class AttackUpdateSystem2 : SystemBase
         {
             private BeginSimulationEntityCommandBufferSystem.Singleton ecb;
             protected override void OnCreate()
             {
-                ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+                RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
             }
             protected override void OnUpdate()
             {
+                ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+                
                 var depends = Dependency;
                 
+                depends = new DetermineAttackActionGlobal()
+                {
+                    DeltaTime = SystemAPI.Time.DeltaTime,
+                    ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter(),
+                }.Schedule(depends);
+
+                depends = new ExecuteAttackActionGlobal()
+                {
+                    DeltaTime = SystemAPI.Time.DeltaTime,
+                    ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter(),
+                }.Schedule(depends);
+                
+                depends = new GetAttackPosition()
+                {
+                    ChildBufferLookup = SystemAPI.GetBufferLookup<Child>(),
+                    MeleeAttackPositions = SystemAPI.GetBufferLookup<MeleeAttackPosition>(),
+                    ReserveLocationBuffer = SystemAPI.GetBufferLookup<ReserveLocationTag>(false)
+                }.Schedule(depends);
+                
                 Dependency = depends;
+                
             }
 
             partial struct GetAttackPosition : IJobEntity
@@ -81,31 +108,38 @@ namespace IAUS.ECS.Systems.Reactive
                     state.TargetPosition = float3.zero;
 
                     List<DistCheck> dist = new();
-                    var buffer = MeleeAttackPositions[child];
-                    for (var i = 0; i < buffer.Length - 1; i++)
+                    if (MeleeAttackPositions.HasBuffer(child))
                     {
-                        var index = i;
-                        ;
-                        dist.Add(
-                            new DistCheck()
-                            {
-                                Distance =
-                                    Vector3.Distance(transform.Position, buffer[i].Position),
-                                Index = index
-                            });
-                    }
-
-                    var orderBy = dist.OrderBy(x => x.Distance);
-
-                    foreach (var check in orderBy)
-                    {
-                        if (buffer[check.Index].State != OccupiedState.Vacant) continue;
-                        ReserveLocationBuffer[child].Add(new ReserveLocationTag()
+                        var buffer = MeleeAttackPositions[child];
+                        for (var i = 0; i < buffer.Length - 1; i++)
                         {
-                            ReserveEntity = entity,
-                            ID = check.Index
-                        });
-                        break;
+                            var index = i;
+                            ;
+                            dist.Add(
+                                new DistCheck()
+                                {
+                                    Distance =
+                                        Vector3.Distance(transform.Position, buffer[i].Position),
+                                    Index = index
+                                });
+                        }
+
+                        var orderBy = dist.OrderBy(x => x.Distance);
+
+                        foreach (var check in orderBy)
+                        {
+                            if (buffer[check.Index].State != OccupiedState.Vacant) continue;
+                            ReserveLocationBuffer[child].Add(new ReserveLocationTag()
+                            {
+                                ReserveEntity = entity,
+                                ID = check.Index
+                            });
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError(" Melee Spot Missing");
                     }
                 }
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4261654786423248159}
   - component: {fileID: 2939359015801980563}
   - component: {fileID: 6462578955721844696}
+  - component: {fileID: 785144231639799632}
   m_Layer: 0
   m_Name: Start
   m_TagString: NPC
@@ -141,3 +142,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &785144231639799632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2699185704830635926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d64ef69f4f4ddbaab52d185b06f5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: InventorySystem::DreamersInc.CombatSystem.WeaponEventTrigger

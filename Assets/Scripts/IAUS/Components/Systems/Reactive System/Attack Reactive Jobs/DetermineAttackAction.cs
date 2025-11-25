@@ -51,10 +51,10 @@ namespace IAUS.ECS.Systems.Reactive
             // Sort descending by score, stable
             System.Array.Sort(scoredPlans, (a, b) => b.score.CompareTo(a.score));
 
-
+   
             foreach (var entry in scoredPlans)
             {
-                if (entry.score <= 0) return;
+                if (entry.score <= 0) continue;
                 if (state.AttackPlans.Length >= 8) return;
                 state.AttackPlans.Add(entry.plan);
                 if (state.AttackPlans.Length >= 8) break;
