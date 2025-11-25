@@ -83,7 +83,7 @@ namespace IAUS.ECS.Systems.Reactive
                 depends = new GetAttackPosition()
                 {
                     ChildBufferLookup = SystemAPI.GetBufferLookup<Child>(),
-                    MeleeAttackPositions = SystemAPI.GetBufferLookup<MeleeAttackPosition>(),
+                    MeleeAttackPositions = SystemAPI.GetBufferLookup<MeleeAttackPosition>(false),
                     ReserveLocationBuffer = SystemAPI.GetBufferLookup<ReserveLocationTag>(false)
                 }.Schedule(depends);
                 
@@ -93,8 +93,8 @@ namespace IAUS.ECS.Systems.Reactive
 
             partial struct GetAttackPosition : IJobEntity
             {
-                [ReadOnly] public BufferLookup<MeleeAttackPosition> MeleeAttackPositions;
-                [ReadOnly] public BufferLookup<Child> ChildBufferLookup;
+                 public BufferLookup<MeleeAttackPosition> MeleeAttackPositions;
+                [ReadOnly]public BufferLookup<Child> ChildBufferLookup;
                 [NativeDisableParallelForRestriction] public BufferLookup<ReserveLocationTag> ReserveLocationBuffer;
 
                 void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref LocalTransform transform,
@@ -137,6 +137,7 @@ namespace IAUS.ECS.Systems.Reactive
                             var temp = buffer[check.Index];
                             temp.State = OccupiedState.Occupied;
                             buffer[check.Index] = temp;
+                            state.AttackPosition = buffer[check.Index].Position;
                             break;
                         }
                     }
@@ -144,6 +145,8 @@ namespace IAUS.ECS.Systems.Reactive
                     {
                         Debug.LogError(" Melee Spot Missing");
                     }
+
+                    state.AttackPlans.RemoveAt(0);
                 }
 
                 class DistCheck

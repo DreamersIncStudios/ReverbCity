@@ -114,7 +114,7 @@ MonoBehaviour:
     AnimSpeedMultiplier: 1
     GroundCheckDistance: 0.2
     CombatCapable: 1
-  aiStatesToAdd: 0e000000
+  aiStatesToAdd: 0e00000004000000
   EXP: 250
   equipment:
     EquippedWeapons:

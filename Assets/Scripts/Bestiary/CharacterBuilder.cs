@@ -428,6 +428,7 @@ namespace Bestiary
 
                 return this;
             }
+            
             Entity visionEntity;
             public CharacterBuilder WithCharacterDetection(FactionNames FactionID)
             {
