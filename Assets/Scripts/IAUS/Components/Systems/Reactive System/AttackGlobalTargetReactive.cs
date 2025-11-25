@@ -134,6 +134,9 @@ namespace IAUS.ECS.Systems.Reactive
                                 ReserveEntity = entity,
                                 ID = check.Index
                             });
+                            var temp = buffer[check.Index];
+                            temp.State = OccupiedState.Occupied;
+                            buffer[check.Index] = temp;
                             break;
                         }
                     }
