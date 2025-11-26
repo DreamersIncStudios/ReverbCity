@@ -54,7 +54,7 @@ namespace IAUS.ECS.Systems.Reactive
                 return new AttackTagReactor();
             }
         }
-
+    [UpdateInGroup(typeof(IAUSUpdateGroup))]
         public partial class AttackUpdateSystem : SystemBase
         {
 

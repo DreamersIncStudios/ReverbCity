@@ -14,6 +14,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static DreamersInc.ReverbCity.GameCode.UI.UIExtensionMethods;
 using static Bestiary.BestiaryManager;
+using Timer = System.Timers.Timer;
 namespace DreamersInc.ReverbCity
 {
     public class ReverbLevelManager : MonoBehaviour, ILevelManager
@@ -88,10 +89,15 @@ namespace DreamersInc.ReverbCity
             hudDoc.rootVisualElement.Add(panel);
             buttonAction += () =>
             {
-                TestRule.StartWave(2);
+                var delayTimer = new CountdownTimer(5);
+                delayTimer.OnTimerStop += () =>
+                {
+                    TestRule.StartWave(2);
+                    timer.Start();
+                };
+                delayTimer.Start();
                 panel.RemoveFromClassList("hide");
                 manager.AddComponent<RunningTag>(runningEntity);
-                timer.Start();
             };
             popUpPanel.SetText(headerText, bodyText);
             popUpPanel.SetButton(buttonText, buttonAction);

@@ -9,6 +9,7 @@ namespace IAUS.ECS.Systems
     public partial class MovementSystem : SystemBase
     {
         ComponentLookup<AgentBody> agentLookup;
+        ComponentLookup<AgentLocomotion> agentLocLookup;
         protected override void OnCreate()
         {
         }
@@ -26,6 +27,8 @@ namespace IAUS.ECS.Systems
             {
                 if (!agentLookup.TryGetComponent(root.Value, out var agent))
                     return;
+                if (!agentLocLookup.TryGetComponent(root.Value, out var agentLoc))
+                    return;
                 if (movement.ValueRO.CanMove)
                 {
                     //rewrite with a set position bool;
@@ -33,6 +36,7 @@ namespace IAUS.ECS.Systems
                     if (!NavMesh.SamplePosition(movement.ValueRO.TargetLocation, out var hit, 5, NavMesh.AllAreas)) return;
                     movement.ValueRW.TargetLocation = hit.position;
                     agent.SetDestination(hit.position);
+                    agentLoc.StoppingDistance = movement.ValueRO.StoppingDistance;
 
                     movement.ValueRW.SetTargetLocation = false;
                 }
@@ -42,6 +46,7 @@ namespace IAUS.ECS.Systems
                 }
 
                 agentLookup[root.Value] = agent;
+                agentLocLookup[root.Value] = agentLoc;
             }
         }
     }

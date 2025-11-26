@@ -34,36 +34,40 @@ namespace IAUS.ECS.Component
     public struct AttackActionTag : IAttackState
     {
         public float3 TargetPosition { get=>targetPosition; set=>targetPosition = value; }
-        [ShowInInspector] float3 targetPosition { get; set; }
+        [SerializeField]
+        private float3 targetPosition;
         public float3 AttackPosition{get => attackPosition; set => attackPosition= value; }
-        [SerializeField] float3 attackPosition{ get; set; }
+        [SerializeField]
+        private float3 attackPosition;
         public Entity TargetEntity{get => targetEntity; set => targetEntity = value; }
-        Entity targetEntity;
+        [SerializeField] Entity targetEntity;
         public int TargetPositionID{ get => targetPositionID; set => targetPositionID = value; }
-        int targetPositionID;
+        [SerializeField] int targetPositionID;
         public HowToAttack AttackType;
         public FixedList32Bytes<AttackPlan> AttackPlans;
         
         public float AttackResetTimer {get => attackResetTimer; set => attackResetTimer = value; }
-        private float attackResetTimer;
+        [SerializeField]  private float attackResetTimer;
 
 
     }
     public struct AttackGlobalTag : IAttackState
     {
         public float3 TargetPosition { get=>targetPosition; set=>targetPosition = value; }
-        [ShowInInspector] float3 targetPosition { get; set; }
+        [SerializeField]
+        private float3 targetPosition;
         public float3 AttackPosition{get => attackPosition; set => attackPosition= value; }
-        [SerializeField] float3 attackPosition{ get; set; }
+        [SerializeField]
+        private float3 attackPosition;
         public Entity TargetEntity{get => targetEntity; set => targetEntity = value; }
-        Entity targetEntity;
+        [SerializeField] Entity targetEntity;
         public int TargetPositionID{ get => targetPositionID; set => targetPositionID = value; }
-        int targetPositionID;
+        [SerializeField] int targetPositionID;
         public HowToAttack AttackType;
         public FixedList32Bytes<AttackPlan> AttackPlans;
+        
         public float AttackResetTimer {get => attackResetTimer; set => attackResetTimer = value; }
-        private float attackResetTimer;
-
+       [SerializeField] private float attackResetTimer;
      
     }
     

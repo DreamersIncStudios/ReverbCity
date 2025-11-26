@@ -12,11 +12,11 @@ namespace Components.MovementSystem
         public bool CanMove;
 
         public float DistanceRemaining;
-
+        public float StoppingDistance;
 
         public bool SetTargetLocation { get; set; }
 
-        public void SetLocation(float3 position)
+        public void SetLocation(float3 position, float i = 0.0f)
         {
             TargetLocation = position;
             SetTargetLocation = true;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Components.MovementSystem;
 using IAUS.ECS.Component;
 using Stats.Entities;
@@ -14,7 +13,6 @@ namespace IAUS.ECS.Systems.Reactive
 
     partial struct DetermineAttackActionGlobal : IJobEntity
     {
-        public float DeltaTime;
         public EntityCommandBuffer.ParallelWriter ECB;
 
         // Thresholds/constants extracted for readability and reuse
@@ -31,6 +29,7 @@ namespace IAUS.ECS.Systems.Reactive
             if (state.AttackPlans.Length != 0) return;
 
             state.AttackType = DeterminePrimaryAttackType(state, stat, transform, capable);
+
             // Build scored plan list as (plan, score) pairs to keep index without re-searching
             var scoredPlans = new (AttackPlan plan, int score)[]
             {
@@ -39,28 +38,28 @@ namespace IAUS.ECS.Systems.Reactive
                 (AttackPlan.Wander, WanderScore),
                 (AttackPlan.GetTargetLocation, ScoreGetTargetLocation(state)),
                 (AttackPlan.GetAttackLocation, ScoreGetAttackLocation(state)),
-                (AttackPlan.MoveToLocationMelee, ScoreTravelToTargetMelee(state, stat, transform, capable)),
-                (AttackPlan.MoveToLocationMagic, ScoreTravelToTargetMagic(state, stat, transform, capable)),
-                (AttackPlan.MoveToLocationRange, ScoreTravelToTargetRange(state, stat, transform, capable)),
-                (AttackPlan.AttackMelee, ScoreMelee(state, stat, transform, capable)),
-                (AttackPlan.AttackMagic, ScoreMagic(state, stat, transform, capable)),
-                (AttackPlan.AttackRange, ScoreRange(state, stat, transform, capable)),
+                (AttackPlan.MoveToLocationMelee, state.TargetPosition.Equals(float3.zero)?0: ScoreTravelToTargetMelee(state, stat, transform, capable)),
+                (AttackPlan.MoveToLocationMagic, state.TargetPosition.Equals(float3.zero)?0: ScoreTravelToTargetMagic(state, stat, transform, capable)),
+                (AttackPlan.MoveToLocationRange,state.TargetPosition.Equals(float3.zero)?0:  ScoreTravelToTargetRange(state, stat, transform, capable)),
+                (AttackPlan.AttackMelee, state.AttackPosition.Equals(float3.zero)?0: ScoreMelee(state, stat, transform, capable)),
+                (AttackPlan.AttackMagic, state.AttackPosition.Equals(float3.zero)?0: ScoreMagic(state, stat, transform, capable)),
+                (AttackPlan.AttackRange, state.AttackPosition.Equals(float3.zero)?0: ScoreRange(state, stat, transform, capable)),
                 (AttackPlan.Evade, ScoreEvade(state, stat))
             };
-
-            // Sort descending by score, stable
+            
             System.Array.Sort(scoredPlans, (a, b) => b.score.CompareTo(a.score));
-            var tempPlan = new FixedList32Bytes<AttackPlan>();
+
+   
             foreach (var entry in scoredPlans)
             {
                 if (entry.score <= 0) continue;
                 if (state.AttackPlans.Length >= 8) return;
                 state.AttackPlans.Add(entry.plan);
+                if (state.AttackPlans.Length >= 8) break;
             }
-        }
 
-        
-        
+        }
+        private int WanderScore => 0;
         
         private HowToAttack DeterminePrimaryAttackType(IAttackState state, AIStat stat, LocalToWorld transform, AttackCapable capable)
         {
@@ -75,6 +74,34 @@ namespace IAUS.ECS.Systems.Reactive
             System.Array.Sort(typeScores, (a, b) => b.score.CompareTo(a.score));
             return typeScores[0].type;
         }
+        
+        private static bool IsHealthAtLeast(AIStat stats, float threshold) => stats.HealthRatio > threshold;
+
+        private bool IsCoverInRange()
+        {
+            return false;
+        }
+
+        private bool IsManaLow()
+        {
+            return false;
+        }
+
+        private bool IsAmmoLow()
+        {
+            return false;
+        }
+        private bool IsInAttackRange(in IAttackState state, float range, in LocalToWorld transform)
+        {
+            if (state.AttackPosition.Equals(float3.zero) && state.TargetPosition.Equals(float3.zero)) return false;
+            var distance = Vector3.Distance(transform.Position, !state.AttackPosition.Equals(float3.zero) ? state.AttackPosition : state.TargetPosition);
+            return distance <= range;
+        }
+        
+        private static bool HasMultipleAttackCapabilities(in AttackCapable capable) =>
+            capable is { CapableOfMagic: true, CapableOfMelee: true }
+                or { CapableOfMagic: true, CapableOfProjectile: true }
+                or { CapableOfMelee: true, CapableOfProjectile: true };
 
         private int ScoreMelee(IAttackState state, AIStat stats, LocalToWorld transform, AttackCapable capable)
         {
@@ -94,7 +121,7 @@ namespace IAUS.ECS.Systems.Reactive
                 if (!capable.CapableOfMagic && IsManaLow()) score++;
                 if (!capable.CapableOfProjectile && IsAmmoLow()) score++;
             }
-
+            
             if (!IsInAttackRange(state, MeleeRange, transform)) return score;
             return score + 1;
         }
@@ -132,40 +159,20 @@ namespace IAUS.ECS.Systems.Reactive
             if (!IsInAttackRange(state, MeleeRange, transform)) return score;
             return score + 1;
         }
-
-        private static bool IsHealthAtLeast(AIStat stats, float threshold) => stats.HealthRatio > threshold;
-
-        private bool IsCoverInRange()
+        private int ComputeRestScore(IAttackState state, AIStat stats)
         {
-            return false;
+            var score = 0;
+            if (stats.HealthRatio < LowHealthThreshold) return score;
+            if (state.InAttackCooldown) score = 3;
+            return score;
         }
+        private static int ScoreGetAttackLocation(in IAttackState state) => state.AttackPosition.Equals(float3.zero) ? 10 : 0;
 
-        private bool IsManaLow()
-        {
-            return false;
-        }
-
-        private bool IsAmmoLow()
-        {
-            return false;
-        }
-
-        private bool IsInAttackRange(in IAttackState state, float range, in LocalToWorld transform)
-        {
-            if (state.AttackPosition.Equals(float3.zero)) return false;
-            var distance = Vector3.Distance(transform.Position, state.AttackPosition);
-            return distance <= range;
-        }
-
-        private static bool HasMultipleAttackCapabilities(in AttackCapable capable) =>
-            capable is { CapableOfMagic: true, CapableOfMelee: true }
-                or { CapableOfMagic: true, CapableOfProjectile: true }
-                or { CapableOfMelee: true, CapableOfProjectile: true };
-
+        private static int ScoreGetTargetLocation(in IAttackState state) => state.TargetPosition.Equals(float3.zero) ? 15 : 0;
         private int ScoreTravelToTargetMelee(IAttackState state, AIStat stats, LocalToWorld transform, AttackCapable capable)
         {
             if (!capable.CapableOfMelee) return 0;
-            if (IsInAttackRange(state, TravelMeleeRange, transform)) return 0;
+            if (IsInAttackRange(state, TravelMeleeRange, transform) ) return 0;
 
             int score = 1;
             if (stats.HealthRatio < LowHealthThreshold) return score;
@@ -199,99 +206,89 @@ namespace IAUS.ECS.Systems.Reactive
             if (capable.CapableOfMelee) score++;
             return score;
         }
-
-        private int WanderScore => 0;
-
         private int ScoreEvade(IAttackState state, AIStat stats)
         {
             return stats.HealthRatio > LowHealthThreshold ? 0 : 2;
         }
 
-        private int ComputeRestScore(IAttackState state, AIStat stats)
-        {
-            var score = 0;
-            if (stats.HealthRatio < LowHealthThreshold) return score;
-            if (state.InAttackCooldown) score = 3;
-            return score;
-        }
-
-        private static int ScoreGetAttackLocation(in IAttackState state) => state.AttackPosition.Equals(float3.zero) ? 10 : 0;
-
-        private static int ScoreGetTargetLocation(in IAttackState state) => state.TargetPosition.Equals(float3.zero) ? 10 : 0;
     }
 
     public partial struct ExecuteAttackActionGlobal : IJobEntity
     {
         public float DeltaTime;
         public EntityCommandBuffer.ParallelWriter ECB;
-        private void Execute(Entity entity, [ChunkIndexInQuery] int chunkIndex, ref AttackGlobalTag state, ref Movement move, in TargetThisCommand command)
+        private void Execute(Entity entity, [ChunkIndexInQuery] int chunkIndex, ref AttackGlobalTag state, ref Movement move, in TargetThisCommand command) 
         {
             if (state.AttackPlans.IsEmpty) return;
             switch (state.AttackPlans[0])
             {
                 case AttackPlan.None:
-                    Debug.LogError("Npc was able to enter Execute Plan with Plan being established");
-                    //     DeterminePlan();
                     break;
                 case AttackPlan.Rest:
-                    state.AttackResetTimer -= DeltaTime;
-                    if (state.AttackResetTimer <= 0.0f)
-                    {
-                        state.AttackResetTimer = 0.0f;
+                    break;
+                case AttackPlan.Wander:
+                    break;
+                case AttackPlan.GetTargetLocation:
+                    state.TargetEntity= command.Target;
+                    state.TargetPosition = command.LastKnownPosition;
+                    if(!state.TargetPosition.Equals(float3.zero))
                         state.AttackPlans.RemoveAt(0);
-                    }
-
+                    break;
+                case AttackPlan.GetAttackLocation:
                     break;
                 case AttackPlan.MoveToLocationMelee:
                 case AttackPlan.MoveToLocationMagic:
                 case AttackPlan.MoveToLocationRange:
-                    if (!move.TargetLocation.Equals(state.TargetPosition) &&
-                        !state.AttackPosition.Equals(float3.zero))
-                        move.SetLocation(state.AttackPosition);
-                    if (move.DistanceRemaining < 5)
+                    if (move.DistanceRemaining < 2 & move.TargetLocation.Equals(state.AttackPosition))
                         state.AttackPlans.RemoveAt(0);
+
+                    if (move.DistanceRemaining < 10 & move.TargetLocation.Equals(state.TargetPosition))
+                    {
+                        state.AttackPlans.RemoveAt(0);
+                        state.AttackResetTimer = 15;
+                    }
+
+                    if (!move.TargetLocation.Equals(state.AttackPosition))
+                    {
+                        if (!state.AttackPosition.Equals(float3.zero))
+                            move.SetLocation(state.AttackPosition);
+
+                    }
+                    if (!move.TargetLocation.Equals(state.TargetPosition))
+                    {
+                        if (!state.TargetPosition.Equals(float3.zero))
+                        {
+                            move.SetLocation(state.TargetPosition, 8);
+                            move.SetTargetLocation = true;
+                        }
+                    }
+
                     break;
                 case AttackPlan.AttackMelee:
-                    state.AttackResetTimer = 15; //Todo make a variable based off attack and difficulty 
-                    ECB.AddComponent<SelectAndAttack>(chunkIndex, entity);
-                    state.AttackPlans.RemoveAt(0);
+                    if(state.TargetPosition.Equals(float3.zero))
+                        state.AttackPlans.RemoveAt(0);
                     break;
                 case AttackPlan.AttackMagic:
-                    state.AttackResetTimer = 15;
-                    state.AttackPlans.RemoveAt(0);
+                    if(state.TargetPosition.Equals(float3.zero))
+                        state.AttackPlans.RemoveAt(0);
+                    
                     break;
                 case AttackPlan.AttackRange:
-                    state.AttackResetTimer = 15;
-                    state.AttackPlans.RemoveAt(0);
+                    if(state.TargetPosition.Equals(float3.zero))
+                        state.AttackPlans.RemoveAt(0);
                     break;
                 case AttackPlan.Evade:
                     break;
-                case AttackPlan.GetAttackLocation:
-
-                    switch (state.AttackType)
-                    {
-                        case HowToAttack.None:
-                            break;
-                        case HowToAttack.Melee:
-                            break;
-                        case HowToAttack.Magic:
-                            break;
-                        case HowToAttack.Range:
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                    state.AttackPlans.RemoveAt(0);
+                case AttackPlan.MoveToInRange:
                     break;
-                case AttackPlan.GetTargetLocation:
-                    state.TargetEntity = command.Target;
-                    state.TargetPosition = command.LastKnownPosition;
-                    state.AttackPlans.RemoveAt(0);
+                case AttackPlan.PauseInTargetRange:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
         }
+
+        
     }
+    
 }

@@ -54,7 +54,7 @@ namespace IAUS.ECS.Systems.Reactive
                 return new AttackGlobalTagReactor();
             }
         }
-        
+        [UpdateInGroup(typeof(IAUSUpdateGroup))]
         public partial class AttackUpdateSystem2 : SystemBase
         {
             private BeginSimulationEntityCommandBufferSystem.Singleton ecb;
@@ -70,7 +70,6 @@ namespace IAUS.ECS.Systems.Reactive
                 
                 depends = new DetermineAttackActionGlobal()
                 {
-                    DeltaTime = SystemAPI.Time.DeltaTime,
                     ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter(),
                 }.Schedule(depends);
 
@@ -105,7 +104,7 @@ namespace IAUS.ECS.Systems.Reactive
                         return;
                     state.TargetEntity = command.Target;
                     var child = ChildBufferLookup[command.Target][0].Value;
-                    state.TargetPosition = float3.zero;
+                    state.AttackPosition = float3.zero;
 
                     List<DistCheck> dist = new();
                     if (MeleeAttackPositions.HasBuffer(child))

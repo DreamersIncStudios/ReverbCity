@@ -62,6 +62,7 @@ namespace Bestiary
             var entity = new CharacterBuilder(info.Name).
                 WithModel(info.Prefab, position, Quaternion.identity, "NPC").
                 WithEntityPhysics(info.PhysicsInfo, true).
+                WithAnimation().
                 WithStats(info.Stats, guid, waveLevel, info.Name, info.EXP).
                 WithInventorySystem(info.Inventory, info.Equipment).
                 WithMovement(info.Move,CreatureType.biped,false).
@@ -80,6 +81,7 @@ namespace Bestiary
                 WithModel(info.Prefab, position, Quaternion.identity, "NPC").
                 WithParent(wavePack).
                 WithEntityPhysics(info.PhysicsInfo, true).
+                WithAnimation().
                 WithStats(info.Stats, guid, waveLevel, info.Name, info.EXP).
                 WithInventorySystem(info.Inventory, info.Equipment).
                 WithMovement(info.Move,CreatureType.biped,false).
