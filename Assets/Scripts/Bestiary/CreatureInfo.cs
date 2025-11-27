@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dreamers.InventorySystem.Base;
+using DreamersInc.ComboSystem;
 using DreamersIncStudio.FactionSystem;
 using Global.Component;
 using IAUS.ECS;
@@ -36,6 +37,7 @@ namespace Bestiary
         public EquipmentSave Equipment => equipment;
         [SerializeField]private EquipmentSave equipment;
         public InventorySave Inventory => inventory;
+        public NPCAttackSequence Sequence;
         [SerializeField]private InventorySave inventory;
 
 
@@ -70,6 +72,7 @@ namespace Bestiary
                 WithCharacterDetection(FactionNames.Daemon).
                 WithAI(info.Rank,info.FactionID,info.aiStatesToAdd).
                 WithAIControl().
+                WithNPCAttack(info.Sequence).
                 Build();
             RegisterNPCEnemy(waveLevel,entity);
             return Task.CompletedTask;
@@ -88,6 +91,7 @@ namespace Bestiary
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
                 WithAI(info.Rank,info.FactionID,info.aiStatesToAdd).
                 WithAIControl().
+                WithNPCAttack(info.Sequence).
                 Build();
             RegisterNPCEnemy(waveLevel,entity);
             return Task.CompletedTask;

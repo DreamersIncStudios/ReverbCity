@@ -1,5 +1,8 @@
-﻿using Unity.Entities;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace Components.MovementSystem
 {
@@ -22,7 +25,11 @@ namespace Components.MovementSystem
             SetTargetLocation = true;
             CanMove = true;
         }
+        public bool PositionCheck(float3 position)
+        {
+            return Mathf.Approximately(position.x, TargetLocation.x) && Mathf.Approximately(position.z, TargetLocation.z);
 
+        }
     }
 
 

@@ -18,6 +18,7 @@ namespace IAUS.ECS.Systems
 
         {
             agentLookup = GetComponentLookup<AgentBody>();
+            agentLocLookup = GetComponentLookup<AgentLocomotion>();
             foreach (var (movement, root) in SystemAPI.Query<RefRW<Movement>, Parent>())
             {
                 if(agentLookup.TryGetComponent(root.Value, out var agent))

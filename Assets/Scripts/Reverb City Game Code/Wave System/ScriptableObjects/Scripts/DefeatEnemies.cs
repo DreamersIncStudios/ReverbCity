@@ -30,21 +30,7 @@ namespace DreamersInc.WaveSystem
         public override void Tick()
         {
   
-            if (IsRunning && interval > 0)
-            {
-                interval -= Time.deltaTime;
-            }
-
-            if (IsRunning && interval <= 0 && spawnCount<MaxSpawnCount)
-            {
-                for (int i = 0; i < 4 * WaveLevel; i++)
-                {
-                    SpawnNPC(new SerializableGuid(), spawnPosition, WaveLevel, base.WavePack);
-                    spawnCount++;
-                }
-
-                interval = SpawnInterval * 60 / WaveLevel;
-            }
+     
         }
         public override void IncrementDefeat(int value = 1)
         {

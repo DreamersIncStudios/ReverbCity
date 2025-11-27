@@ -120,6 +120,7 @@ MonoBehaviour:
     EquippedWeapons:
     - {fileID: 11400000, guid: 6630629b451c9394d8043939aa076047, type: 2}
     EquippedArmors: []
+  Sequence: {fileID: 11400000, guid: 75d4f3fe06e364e4b90ddec1cf4551bf, type: 2}
   inventory:
     ItemsInInventory: []
     MaxInventorySize: 0

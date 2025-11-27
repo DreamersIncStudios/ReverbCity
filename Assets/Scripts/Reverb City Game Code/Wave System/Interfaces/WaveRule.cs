@@ -41,18 +41,8 @@ namespace DreamersInc.WaveSystem.interfaces
 
         void CreatePackEntity(Vector3 spawnPosition)
         {
-            var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            WavePack = manager.CreateEntity(
-                typeof(LocalTransform),
-                typeof(LocalToWorld), typeof(Pack)
-            );
-            manager.SetComponentData(WavePack, new  LocalTransform()
-            {
-                Position = spawnPosition
-            });
-            manager.SetName(WavePack, $"Wave Pack {WaveLevel}");
-            manager.AddBuffer<Enemies>(WavePack);
-            manager.AddBuffer<AISenses.Resources>(WavePack);
+            BestiaryManager.SpawnPack(new SerializableGuid(), spawnPosition);
+
         }
 
         void DestroyPackEntity()

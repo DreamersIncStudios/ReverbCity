@@ -192,8 +192,8 @@ namespace Bestiary
 
                 var baseEntityArch = manager.CreateArchetype(
                     typeof(LocalTransform),
-                    typeof(LocalToWorld),
-                      typeof(MeleeAttackPosition)
+                    typeof(LocalToWorld)
+                     
                 );
                 var baseDataEntity = manager.CreateEntity(baseEntityArch);
                 manager.SetName(baseDataEntity, "Attack Location Entity");
@@ -206,16 +206,7 @@ namespace Bestiary
                     Value = entity
                 });
 
-                manager.AddBuffer<ReserveLocationTag>(baseDataEntity);
-                var meleeAttackPositions = manager.GetBuffer<MeleeAttackPosition>(baseDataEntity);
-                meleeAttackPositions.Length = 4;
-                for (var index = 0; index < meleeAttackPositions.Length; index++)
-                {
-                    var attackPosition = meleeAttackPositions[index];
-                    attackPosition.State = OccupiedState.Vacant;
-                    meleeAttackPositions[index] = attackPosition;
-                }
-
+           
                 return this;
             }
             public CharacterBuilder WithMovement(MovementData move, CreatureType creatureType, bool ai = false)
@@ -416,7 +407,7 @@ namespace Bestiary
                     {
                         BareHands = true // equip system need to adjust this value
                     };
-                    manager.AddComponentData(aiEntity, command);
+                    manager.AddComponentData(entity, command);
                     manager.AddComponent<AttackTarget>(aiEntity);
                     
                     manager.AddComponent<CheckAttackStatus>(aiEntity);
@@ -485,9 +476,10 @@ namespace Bestiary
                 manager.AddBuffer<NavMeshNode>(entity);
 
                 manager.AddComponentData(entity, AgentCollider.Default);
-                manager.AddComponentData(entity, AgentSonarAvoid.Default);
+              //  manager.AddComponentData(entity, AgentSonarAvoid.Default);
                 manager.AddComponentData(entity, AgentSeparation.Default);
                 manager.AddComponentData(entity, AgentSmartStop.Default);
+                manager.AddComponent<GiveUpStopTimer>(entity);
 
                 manager.AddComponentData(aiEntity, new Movement()
                 {
@@ -527,9 +519,16 @@ namespace Bestiary
                 return this;
             }
             
-            
-            
-            
+            public CharacterBuilder WithNPCAttack(NPCAttackSequence sequence)
+            {
+                if (entity == Entity.Null) return this;
+                if (!model) return this;
+                manager.AddComponentObject(aiEntity, new NPCAttack()
+                {
+                    AttackSequence = sequence
+                });
+                return this;
+            }
             
             
             

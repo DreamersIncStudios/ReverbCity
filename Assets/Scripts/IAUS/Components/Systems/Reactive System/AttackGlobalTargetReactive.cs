@@ -78,82 +78,12 @@ namespace IAUS.ECS.Systems.Reactive
                     DeltaTime = SystemAPI.Time.DeltaTime,
                     ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter(),
                 }.Schedule(depends);
-                
-                depends = new GetAttackPosition()
-                {
-                    ChildBufferLookup = SystemAPI.GetBufferLookup<Child>(),
-                    MeleeAttackPositions = SystemAPI.GetBufferLookup<MeleeAttackPosition>(false),
-                    ReserveLocationBuffer = SystemAPI.GetBufferLookup<ReserveLocationTag>(false)
-                }.Schedule(depends);
-                
+            
                 Dependency = depends;
                 
             }
 
-            partial struct GetAttackPosition : IJobEntity
-            {
-                 public BufferLookup<MeleeAttackPosition> MeleeAttackPositions;
-                [ReadOnly]public BufferLookup<Child> ChildBufferLookup;
-                [NativeDisableParallelForRestriction] public BufferLookup<ReserveLocationTag> ReserveLocationBuffer;
-
-                void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref LocalTransform transform,
-                    ref AttackGlobalTag state, in TargetThisCommand command)
-                {
-                    if (state.AttackPlans.IsEmpty) return;
-                    if (state.AttackPlans[0] != AttackPlan.GetAttackLocation)
-                        return;
-                    state.TargetEntity = command.Target;
-                    var child = ChildBufferLookup[command.Target][0].Value;
-                    state.AttackPosition = float3.zero;
-
-                    List<DistCheck> dist = new();
-                    if (MeleeAttackPositions.HasBuffer(child))
-                    {
-                        var buffer = MeleeAttackPositions[child];
-                        for (var i = 0; i < buffer.Length - 1; i++)
-                        {
-                            var index = i;
-                            ;
-                            dist.Add(
-                                new DistCheck()
-                                {
-                                    Distance =
-                                        Vector3.Distance(transform.Position, buffer[i].Position),
-                                    Index = index
-                                });
-                        }
-
-                        var orderBy = dist.OrderBy(x => x.Distance);
-
-                        foreach (var check in orderBy)
-                        {
-                            if (buffer[check.Index].State != OccupiedState.Vacant) continue;
-                            ReserveLocationBuffer[child].Add(new ReserveLocationTag()
-                            {
-                                ReserveEntity = entity,
-                                ID = check.Index
-                            });
-                            var temp = buffer[check.Index];
-                            temp.State = OccupiedState.Occupied;
-                            buffer[check.Index] = temp;
-                            state.AttackPosition = buffer[check.Index].Position;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogError(" Melee Spot Missing");
-                    }
-
-                    state.AttackPlans.RemoveAt(0);
-                }
-
-                class DistCheck
-                {
-                    public float Distance;
-                    public int Index;
-                }
-            }
+           
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DreamersInc.ComboSystem;
@@ -54,7 +55,7 @@ namespace IAUS.ECS.Systems.Reactive
                 return new AttackTagReactor();
             }
         }
-    [UpdateInGroup(typeof(IAUSUpdateGroup))]
+        [UpdateInGroup(typeof(IAUSUpdateGroup))]
         public partial class AttackUpdateSystem : SystemBase
         {
 
@@ -64,6 +65,7 @@ namespace IAUS.ECS.Systems.Reactive
                 ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             }
 
+            [Obsolete("Obsolete")]
             protected override void OnUpdate()
             {
                 var depends = Dependency;
@@ -80,111 +82,24 @@ namespace IAUS.ECS.Systems.Reactive
                     ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter(),
                 }.Schedule(depends);
 
-                depends = new GetAttackPosition()
-                {
-                    ChildBufferLookup = SystemAPI.GetBufferLookup<Child>(),
-                    MeleeAttackPositions = SystemAPI.GetBufferLookup<MeleeAttackPosition>(),
-                    ReserveLocationBuffer = SystemAPI.GetBufferLookup<ReserveLocationTag>(false)
-                }.Schedule(depends);
-                depends = new CheckAttackPosition()
-                {
-                    ChildBufferLookup = SystemAPI.GetBufferLookup<Child>(),
-                    MeleeBufferLookup = SystemAPI.GetBufferLookup<MeleeAttackPosition>(),
-                    LocalTransformLookup = SystemAPI.GetComponentLookup<LocalTransform>()
-                }.Schedule(depends);
                 Dependency = depends;
+
                 Entities.WithoutBurst().WithStructuralChanges().ForEach(
-                    (Entity entity, Command handler, Animator anim, NPCAttack comboList, in SelectAndAttack select) =>
+                    (Entity entity, NPCAttack comboList, in SelectAndAttack select, in Parent root) =>
                     {
+                        var handler = EntityManager.GetComponentObject<Command>(root.Value);
+                        var anim = EntityManager.GetComponentObject<Animator>(root.Value);
                         handler.InputQueue ??= new Queue<AnimationTrigger>();
                         if (anim.IsInTransition(0)) return;
-                        /*   handler.InputQueue.Enqueue(
-                               comboList.AttackSequence.PickAttack(IAttackSequence.AttackType.MeleeAttackPositions)[0]);
-                          */
+                        handler.InputQueue.Enqueue(
+                            comboList.AttackSequence.PickAttack(IAttackSequence.AttackType.Melee)[0]);
+
                         EntityManager.RemoveComponent<SelectAndAttack>(entity);
-                 
+
                     }).Run();
             }
-
-            partial struct GetAttackPosition : IJobEntity
-            {
-                [ReadOnly] public BufferLookup<MeleeAttackPosition> MeleeAttackPositions;
-                [ReadOnly] public BufferLookup<Child> ChildBufferLookup;
-                [NativeDisableParallelForRestriction] public BufferLookup<ReserveLocationTag> ReserveLocationBuffer;
-
-                void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref LocalTransform transform,
-                    ref AttackActionTag state)
-                {
-                    if (state.AttackPlans.IsEmpty) return;
-                    if (state.AttackPlans[0] != AttackPlan.GetAttackLocation)
-                        return;
-
-                    var child = ChildBufferLookup[state.TargetEntity][0].Value;
-                    state.TargetPosition = float3.zero;
-
-                    List<DistCheck> dist = new();
-                    var buffer = MeleeAttackPositions[child];
-                    for (var i = 0; i < buffer.Length - 1; i++)
-                    {
-                        var index = i;
-                        ;
-                        dist.Add(
-                            new DistCheck()
-                            {
-                                Distance =
-                                    Vector3.Distance(transform.Position, buffer[i].Position),
-                                Index = index
-                            });
-                    }
-
-                    var orderBy = dist.OrderBy(x => x.Distance);
-
-                    foreach (var check in orderBy)
-                    {
-                        if (buffer[check.Index].State != OccupiedState.Vacant) continue;
-                        ReserveLocationBuffer[child].Add(new ReserveLocationTag()
-                        {
-                            ReserveEntity = entity,
-                            ID = check.Index
-                        });
-                        var temp = buffer[check.Index];
-                        temp.State = OccupiedState.Occupied;
-                        buffer[check.Index] = temp;
-                        break;
-                    }
-                }
-
-                class DistCheck
-                {
-                    public float Distance;
-                    public int Index;
-                }
-            }
-
-
-            private partial struct CheckAttackPosition : IJobEntity
-            {
-                public ComponentLookup<LocalTransform> LocalTransformLookup;
-                public BufferLookup<Child> ChildBufferLookup;
-                public BufferLookup<MeleeAttackPosition> MeleeBufferLookup;
-                void Execute(ref AttackActionTag state)
-                {
-                    if (state.TargetPositionID == -1) return;
-                    if (state.TargetPositionID > 4)
-                    {
-                        state.TargetPositionID = -1;
-                        state.AttackPlans.Insert(0, AttackPlan.GetAttackLocation);
-                        return;
-                    }
-
-                    var dist = Vector3.Distance(state.TargetPosition, LocalTransformLookup[state.TargetEntity].Position);
-                    if (dist < 10) return;
-                    var child = ChildBufferLookup[state.TargetEntity][0].Value;
-                    state.TargetPosition = MeleeBufferLookup[child][state.TargetPositionID];
-                    if (state.AttackPlans[0] != AttackPlan.MoveToLocationMelee)
-                        state.AttackPlans.Insert(0, AttackPlan.MoveToLocationMelee);
-                }
-            }
         }
+
+
     }
 }

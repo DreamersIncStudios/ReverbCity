@@ -225,6 +225,12 @@ namespace IAUS.ECS.Systems.Reactive
                 case AttackPlan.None:
                     break;
                 case AttackPlan.Rest:
+                    state.AttackResetTimer -= DeltaTime;
+                    if (state.AttackResetTimer <= 0.0f)
+                    {
+                        state.AttackResetTimer = 0.0f;
+                        state.AttackPlans.RemoveAt(0);
+                    }
                     break;
                 case AttackPlan.Wander:
                     break;
@@ -239,10 +245,11 @@ namespace IAUS.ECS.Systems.Reactive
                 case AttackPlan.MoveToLocationMelee:
                 case AttackPlan.MoveToLocationMagic:
                 case AttackPlan.MoveToLocationRange:
-                    if (move.DistanceRemaining < 2 & move.TargetLocation.Equals(state.AttackPosition))
+                    if (move.DistanceRemaining < 2 && move.PositionCheck(state.AttackPosition) && !move.TargetLocation.Equals(float3.zero))
+                    {
                         state.AttackPlans.RemoveAt(0);
-
-                    if (move.DistanceRemaining < 10 & move.TargetLocation.Equals(state.TargetPosition))
+                    }
+                    if (move.DistanceRemaining < 10 && move.PositionCheck(state.TargetPosition)&& !move.TargetLocation.Equals(float3.zero))
                     {
                         state.AttackPlans.RemoveAt(0);
                         state.AttackResetTimer = 15;
@@ -252,7 +259,8 @@ namespace IAUS.ECS.Systems.Reactive
                     {
                         if (!state.AttackPosition.Equals(float3.zero))
                             move.SetLocation(state.AttackPosition);
-
+                        return;
+    
                     }
                     if (!move.TargetLocation.Equals(state.TargetPosition))
                     {
@@ -265,17 +273,13 @@ namespace IAUS.ECS.Systems.Reactive
 
                     break;
                 case AttackPlan.AttackMelee:
-                    if(state.TargetPosition.Equals(float3.zero))
-                        state.AttackPlans.RemoveAt(0);
-                    break;
                 case AttackPlan.AttackMagic:
-                    if(state.TargetPosition.Equals(float3.zero))
-                        state.AttackPlans.RemoveAt(0);
-                    
-                    break;
                 case AttackPlan.AttackRange:
                     if(state.TargetPosition.Equals(float3.zero))
                         state.AttackPlans.RemoveAt(0);
+                    state.AttackResetTimer = 15; //Todo make a variable based off attack and difficulty 
+                    ECB.AddComponent<SelectAndAttack>(chunkIndex, entity);
+                    state.AttackPlans.RemoveAt(0);
                     break;
                 case AttackPlan.Evade:
                     break;
