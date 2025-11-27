@@ -115,6 +115,16 @@ namespace DreamersIncStudio.GAIACollective
         }
     }
 
+    [InternalBufferCapacity(10)]
+    public struct PackTargets : IBufferElementData
+    {
+        public Entity Target;
+        public PackTargets(Entity target)
+        {
+            Target = target;
+        }
+    }
+
     public struct PackRole
     {
         public Role Role;

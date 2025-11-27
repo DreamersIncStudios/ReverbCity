@@ -29,10 +29,13 @@ namespace Bestiary
 
     public partial class BestiaryManager
     {
-        public static Task SpawnPack(SerializableGuid guid, Vector3 position)
+        public static void SpawnPack(SerializableGuid guid, Vector3 position,Entity target,  out Entity wavePack)
         {
-            var pack = new PackBuilder(guid.ToHexString()).Build();
-            return Task.CompletedTask;
+             wavePack = new PackBuilder(guid.ToHexString())
+                 .WithTarget(target)
+                 .Build();
+            Debug.Log("Check");
+             
         }
         
         public class PackBuilder
@@ -48,7 +51,7 @@ namespace Bestiary
                     typeof(Pack)
                 );
                 entity = manager.CreateEntity(baseEntityArch);
-                manager.SetName(entity, entityName != string.Empty ? entityName : "NPC Data");
+                manager.SetName(entity,  "Pack Data");
                 manager.SetComponentData(entity, new LocalTransform()
                 {
                     Scale = 1
@@ -56,11 +59,19 @@ namespace Bestiary
             }
             
             
+       
+
+            public PackBuilder WithTarget(Entity target)
+            {
+                var buffer = manager.AddBuffer<PackTargets>(entity);
+                buffer.Add(new PackTargets(target));
+                return this;
+            }
+            
             public Entity Build()
             {
                 return entity;
             }
-            
         }
     }
 }

@@ -3,6 +3,7 @@ using DreamersIncStudio.FactionSystem;
 using Global.Component;
 using Sirenix.OdinInspector;
 using Stats;
+using Unity.Entities;
 using UnityEngine;
 
 namespace Bestiary
@@ -42,7 +43,7 @@ namespace Bestiary
         {
             var info = GetStructureInfo( guid);
             var entity = new CharacterBuilder(info.Name).
-                WithModel(info.Prefab, position, Quaternion.identity, "NPC").
+                WithModel(info.Prefab, position, Quaternion.identity, "Structure").
                 WithEntityPhysics(info.PhysicsInfo, true).
                 WithStats(info.Stats, guid, waveLevel, info.Name).
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
@@ -53,7 +54,7 @@ namespace Bestiary
         public static Task SpawnStructure(StructureInfo info,GameObject go, Vector3 position, uint waveLevel)
         {
             var entity = new CharacterBuilder(info.Name).
-                WithExistingModel(go, position, Quaternion.identity, "NPC").
+                WithExistingModel(go, position, Quaternion.identity, "Structure").
                 WithEntityPhysics(info.PhysicsInfo, true).
                 WithStats(info.Stats, info.Guid, waveLevel, info.Name).
                 WithFactionInfluence(info.FactionID, info.Influence, 1).
@@ -61,6 +62,17 @@ namespace Bestiary
                 Build();
             RegisterStructure(entity);
             return Task.CompletedTask;
+        }   
+        public static void SpawnStructure(StructureInfo info,Vector3 position, uint waveLevel, out Entity Target)
+        {
+           Target = new CharacterBuilder(info.Name).
+                WithModel(info.Prefab, position, Quaternion.identity, "Structure").
+                WithEntityPhysics(info.PhysicsInfo, true).
+                WithStats(info.Stats, info.Guid, waveLevel, info.Name).
+                WithFactionInfluence(info.FactionID, info.Influence, 1).
+                WithStructure(info.Type).
+                Build();
+            RegisterStructure(Target);
         }
     }
 }

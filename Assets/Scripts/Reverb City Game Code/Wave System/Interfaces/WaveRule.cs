@@ -27,12 +27,17 @@ namespace DreamersInc.WaveSystem.interfaces
         protected uint WaveLevel;
 
         protected Entity WavePack;
+        protected Entity TargetEntity;
+        [SerializeField]
+        private StructureInfo strucureToDefend;
 
         public virtual void StartWave(uint waveLevel, Vector3 spawnPosition = default)
         {
             if(IsRunning) return;
             IsRunning = true;
             WaveLevel = waveLevel;
+            
+            BestiaryManager.SpawnStructure(strucureToDefend, spawnPosition, waveLevel, out TargetEntity);
             WaveManager.RegisterWave(this);
             CreatePackEntity(spawnPosition);
             OnWaveStart.Invoke();
@@ -41,7 +46,7 @@ namespace DreamersInc.WaveSystem.interfaces
 
         void CreatePackEntity(Vector3 spawnPosition)
         {
-            BestiaryManager.SpawnPack(new SerializableGuid(), spawnPosition);
+            BestiaryManager.SpawnPack(new SerializableGuid(), spawnPosition, TargetEntity, out WavePack);
 
         }
 

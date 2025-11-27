@@ -54,14 +54,10 @@ namespace DreamersInc.ReverbCity
             await SpawnPlayer(GameMaster.GetPlayerGuid(), spawnPoints[0].position);
             ServiceLocator.Global.Get<LevelChanger>().FadeIn();
             await Task.Delay(1000);
-            var speakers = GameObject.FindObjectsByType<Speaker>(FindObjectsSortMode.None);
              manager = World.DefaultGameObjectInjectionWorld.EntityManager;
             runningEntity = manager.CreateEntityQuery(typeof(RunningTag)).GetSingletonEntity();
         manager.RemoveComponent<RunningTag>(runningEntity);
-            foreach (var speaker in speakers)
-            {
-                await speaker.Init();
-            }
+       
             timer = new IntervalTimer(360 * 60, timeBetweenWaves * 60);
             timer.OnInterval += () =>
             {
