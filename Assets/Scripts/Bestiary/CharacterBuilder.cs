@@ -195,17 +195,6 @@ namespace Bestiary
                     typeof(LocalToWorld)
                      
                 );
-                var baseDataEntity = manager.CreateEntity(baseEntityArch);
-                manager.SetName(baseDataEntity, "Attack Location Entity");
-                manager.SetComponentData(baseDataEntity, new LocalTransform()
-                {
-                    Scale = 1
-                });
-                manager.AddComponentData(baseDataEntity, new Parent()
-                {
-                    Value = entity
-                });
-
            
                 return this;
             }
@@ -494,10 +483,7 @@ namespace Bestiary
             {
                 if (parent == Entity.Null)
                     return this;
-                manager.AddComponentData(entity, new Parent()
-                {
-                    Value = parent
-                });
+                var leg = manager.GetBuffer<LinkedEntityGroup>(parent).Add(entity);
                 return this;
             }
             public CharacterBuilder WithStructure(StructureType getType)

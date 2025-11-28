@@ -20,14 +20,13 @@ namespace DreamersInc.WaveSystem
         private float interval;
         [SerializeField] int spawnCount;
         [CreateProperty] public new string WaveLevelProperty => timer.IsFinished ? "Wave Completed" : $"Wave  Time Remaining {timer.CurrentTime}";
-        private Vector3 spawnPosition = new Vector3();
         
         EntityManager entityManager;
-        public override void StartWave(uint waveLevel, Vector3 spawnPos = default)
+        public override void StartWave(uint waveLevel)
         {
             GlobalFunctions.RandomPoint(Vector3.zero, 750, out Vector3 testing);
             spawnPosition = testing; 
-            base.StartWave(waveLevel, testing);
+            base.StartWave(waveLevel);
             WaveLevel = waveLevel; 
             timer = new CountdownTimer(WaveDuration*60);
             timer.Start();
@@ -73,7 +72,7 @@ namespace DreamersInc.WaveSystem
             {
                 if (!GlobalFunctions.RandomPoint(spawnPosition, 20, out Vector3 pos))
                     continue;
-                SpawnNPC(new SerializableGuid(), pos, WaveLevel);
+                SpawnNPC(new SerializableGuid(), pos, WaveLevel, WavePack);
                 spawned++;
             }
 

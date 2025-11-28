@@ -30,8 +30,9 @@ namespace DreamersInc.WaveSystem.interfaces
         protected Entity TargetEntity;
         [SerializeField]
         private StructureInfo strucureToDefend;
+        protected Vector3 spawnPosition;
 
-        public virtual void StartWave(uint waveLevel, Vector3 spawnPosition = default)
+        public virtual void StartWave(uint waveLevel)
         {
             if(IsRunning) return;
             IsRunning = true;

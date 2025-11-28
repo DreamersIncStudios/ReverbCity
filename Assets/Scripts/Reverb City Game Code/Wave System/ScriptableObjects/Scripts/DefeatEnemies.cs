@@ -2,6 +2,7 @@ using System;
 using Bestiary;
 using DreamersInc.ReverbCity;
 using DreamersInc.WaveSystem.interfaces;
+using Unity.Mathematics;
 using Unity.Properties;
 using UnityEngine;
 using Utilities;
@@ -20,17 +21,39 @@ namespace DreamersInc.WaveSystem
         private float interval;
         private uint spawnCount;
         private uint defeated;
-        public override void StartWave(uint waveLevel, Vector3 spawnPos = default)
+        public override void StartWave(uint waveLevel)
         {
-            GlobalFunctions.RandomPoint(Vector3.zero, 50, out spawnPosition);
-            base.StartWave(waveLevel, spawnPosition);
+            GlobalFunctions.RandomPoint(Vector3.zero, 50, out float3 testing);
+            spawnPosition = testing;
+            base.StartWave(waveLevel);
             WaveLevel = waveLevel;
             
         }
         public override void Tick()
         {
   
-     
+            if (spawnPosition == Vector3.zero)
+            {
+                GlobalFunctions.RandomPoint(Vector3.zero, 750, out Vector3 testing);
+                spawnPosition = testing;    
+                return;
+            }
+            if (IsRunning && interval > 0)
+            {
+                interval -= Time.deltaTime;
+            }
+
+            if (!IsRunning || !(interval <= 0) || spawnCount >= MaxSpawnCount)
+                return;
+            for (var i = 0; i < 4 * WaveLevel; i++)
+            {
+                if (!GlobalFunctions.RandomPoint(spawnPosition, 75, out Vector3 pos))
+                    continue;
+                SpawnNPC(new SerializableGuid(), pos, WaveLevel,  WavePack);
+                spawnCount++;
+            }
+
+            interval = SpawnInterval * 60 / WaveLevel;
         }
         public override void IncrementDefeat(int value = 1)
         {

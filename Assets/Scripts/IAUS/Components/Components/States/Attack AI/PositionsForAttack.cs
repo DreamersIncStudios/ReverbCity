@@ -81,12 +81,17 @@ namespace IAUS.ECS.Component.Attacking
                     return;
                 for (int i = 0; i < attackPositions.Length; i++)
                 {
+                    var removed = true;
                     foreach (var target in targets)
                     {
                         if (target.Target.Equals(attackPositions[i].TargetEntity))
+                        {
+                            removed = false;
                             break;
+                        }
                     }
-                    attackPositions.RemoveAt(i);
+                    if (removed)
+                        attackPositions.RemoveAt(i);
                 }
             }
         }

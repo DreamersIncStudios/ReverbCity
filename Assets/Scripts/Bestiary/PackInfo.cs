@@ -48,7 +48,8 @@ namespace Bestiary
                 var baseEntityArch = manager.CreateArchetype(
                     typeof(LocalTransform),
                     typeof(LocalToWorld),
-                    typeof(Pack)
+                    typeof(Pack),
+                    typeof(LinkedEntityGroup)
                 );
                 entity = manager.CreateEntity(baseEntityArch);
                 manager.SetName(entity,  "Pack Data");

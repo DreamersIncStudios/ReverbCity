@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Defeat 10 Enemies
   m_EditorClassIdentifier: Assembly-CSharp::DreamersInc.WaveSystem.DefeatEnemies
   strucureToDefend: {fileID: 11400000, guid: d2612bfc956c42b41b6650ead4ec12ac, type: 2}
-  MaxSpawnCount: 50
+  MaxSpawnCount: 20
   requiredEnemiesToDefeat: 10
   SpawnInterval: 1
