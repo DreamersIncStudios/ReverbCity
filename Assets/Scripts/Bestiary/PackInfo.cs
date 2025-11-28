@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using DreamersIncStudio.GAIACollective;
+using IAUS.ECS.Component.Attacking;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Unity.Entities;
@@ -34,7 +35,6 @@ namespace Bestiary
              wavePack = new PackBuilder(guid.ToHexString())
                  .WithTarget(target)
                  .Build();
-            Debug.Log("Check");
              
         }
         
@@ -65,6 +65,7 @@ namespace Bestiary
             {
                 var buffer = manager.AddBuffer<PackTargets>(entity);
                 buffer.Add(new PackTargets(target));
+                manager.AddBuffer<AttackPosition>(entity);
                 return this;
             }
             
